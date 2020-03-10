@@ -74,7 +74,6 @@ pip install pip -U
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
 
-
 ## 参考
 
 - [Reference Guide](https://pip.pypa.io/en/stable/reference/)
