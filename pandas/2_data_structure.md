@@ -2,10 +2,10 @@
 
 - [数据结构](#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84)
   - [简介](#%e7%ae%80%e4%bb%8b)
-- [`Series`](#series)
-  - [`Series`操作总结](#series%e6%93%8d%e4%bd%9c%e6%80%bb%e7%bb%93)
-  - [创建 `Series`](#%e5%88%9b%e5%bb%ba-series)
-    - [通过数组创建](#%e9%80%9a%e8%bf%87%e6%95%b0%e7%bb%84%e5%88%9b%e5%bb%ba)
+  - [`Series`](#series)
+    - [`Series`操作总结](#series%e6%93%8d%e4%bd%9c%e6%80%bb%e7%bb%93)
+    - [创建 `Series`](#%e5%88%9b%e5%bb%ba-series)
+      - [通过ndarray创建](#%e9%80%9a%e8%bf%87ndarray%e5%88%9b%e5%bb%ba)
     - [创建 Series 时指定 index](#%e5%88%9b%e5%bb%ba-series-%e6%97%b6%e6%8c%87%e5%ae%9a-index)
     - [为 Series 数据和 index 指定名称](#%e4%b8%ba-series-%e6%95%b0%e6%8d%ae%e5%92%8c-index-%e6%8c%87%e5%ae%9a%e5%90%8d%e7%a7%b0)
     - [通过 dict 创建](#%e9%80%9a%e8%bf%87-dict-%e5%88%9b%e5%bb%ba)
@@ -33,18 +33,21 @@ Pandas 包含三种类型数据：
 
 它们在创建后，均可以动态修改数值，即是 value mutable。`Series`在创建后，长度不再改变。
 
-# `Series`
-Pandas 中 Series 为一维标记数组 (labeled array)。基本特征是：
-- 可以是任意的数据类型(integers, strings, floating point numbers, python object, etc.)
-- 一个Series 的数据必须为同种类型
+## `Series`
 
-`Series` 为 `ndarray` 的子类，所以 `ndarray` 包含的方法，Series也可以调用。
+Pandas 中 Series 为一维标记数组 (labeled array)。其基本特征为：
+
+- 可以保存任意数据类型(integers, strings, floating point numbers, python object, etc.)
+- 一个 `Series` 的数据必须为同种类型
+
+`Series` 为 `ndarray` 的子类，所以 `ndarray` 包含的方法，`Series` 也可以调用。
 
 `Series` 结构示意图：
 
-![](images/2019-08-28-14-38-46.png)
+![Series](images/2019-08-28-14-38-46.png)
 
-## `Series`操作总结
+### `Series`操作总结
+
 | 操作               | 说明                                                                        |
 | ------------------ | --------------------------------------------------------------------------- |
 | s[0]               | 获得第一个值                                                                |
@@ -62,21 +65,26 @@ Pandas 中 Series 为一维标记数组 (labeled array)。基本特征是：
 | s.iloc[start:end]  | 切片，即使超过范围也没事儿                                                  |
 | s.sort_index()     | 按照 index label 进行排序，返回排序后的 Series，原Series不变                |
 
+### 创建 `Series`
 
-## 创建 `Series`
 基本语法：
+
 ```py
 pd.Series(data, index=index)
 ```
 
-data 可以是多种类型数据，包括：
+data 接受数据类型有：
+
 - list
 - array
 - dict
 
-index 是轴标签，即，对每行数据进行标记，如果不指定，默认为数字标号。
+`index` 是轴标签，即，对每行数据进行标记，如果不指定，默认为数字标号。
 
-### 通过数组创建
+#### 通过ndarray创建
+
+如果 `data` 类型为 `ndarray`，`index` 的长度必须和 `data` 相同。如果不指定 index，会自动创建一个 `[0,...,len(data)-1]`。
+
 使用 `ndarray` 也可以创建 `Series`，将数组替换为 ndarray，操作完全相同。
 
 例：通过数组创建 Series

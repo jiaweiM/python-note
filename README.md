@@ -6,4 +6,5 @@
 
 ## Tools
 
+- [Visual Studio Code](py_vscode/0_vscode_toc.md)
 - [pip](tools/pip.md)
