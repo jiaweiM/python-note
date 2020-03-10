@@ -6,7 +6,7 @@
   - [一个具体例子](#%e4%b8%80%e4%b8%aa%e5%85%b7%e4%bd%93%e4%be%8b%e5%ad%90)
   - [启用测试框架](#%e5%90%af%e7%94%a8%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6)
   - [识别测试](#%e8%af%86%e5%88%ab%e6%b5%8b%e8%af%95)
-  - [测试配置](#%e6%b5%8b%e8%af%95%e9%85%8d%e7%bd%ae)
+  - [配置](#%e9%85%8d%e7%bd%ae)
     - [通用配置](#%e9%80%9a%e7%94%a8%e9%85%8d%e7%bd%ae)
     - [unittest 配置](#unittest-%e9%85%8d%e7%bd%ae)
     - [pytest 配置](#pytest-%e9%85%8d%e7%bd%ae)
@@ -121,7 +121,7 @@ VS Code 根据当前启用的测试框架规则识别测试。可以通过 `Pyth
 
 > 如果总是 *Test discovery failed*，可以尝试升级测试框架，比如升级 pytest `pip install --upgrade pytest`
 
-## 测试配置
+## 配置
 
 单元测试的配置分为两部分，通用设置以及特定测试框架的配置。
 
