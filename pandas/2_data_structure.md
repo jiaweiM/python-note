@@ -2,23 +2,28 @@
 
 - [数据结构](#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84)
   - [简介](#%e7%ae%80%e4%bb%8b)
-  - [`Series`](#series)
+  - [Series](#series)
+    - [Series 属性](#series-%e5%b1%9e%e6%80%a7)
     - [`Series`操作总结](#series%e6%93%8d%e4%bd%9c%e6%80%bb%e7%bb%93)
     - [创建 `Series`](#%e5%88%9b%e5%bb%ba-series)
       - [通过ndarray创建](#%e9%80%9a%e8%bf%87ndarray%e5%88%9b%e5%bb%ba)
-    - [创建 Series 时指定 index](#%e5%88%9b%e5%bb%ba-series-%e6%97%b6%e6%8c%87%e5%ae%9a-index)
+      - [创建 Series 时指定 index](#%e5%88%9b%e5%bb%ba-series-%e6%97%b6%e6%8c%87%e5%ae%9a-index)
     - [为 Series 数据和 index 指定名称](#%e4%b8%ba-series-%e6%95%b0%e6%8d%ae%e5%92%8c-index-%e6%8c%87%e5%ae%9a%e5%90%8d%e7%a7%b0)
     - [通过 dict 创建](#%e9%80%9a%e8%bf%87-dict-%e5%88%9b%e5%bb%ba)
-  - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
-- [`DataFrame`](#dataframe)
-  - [`DataFrame`操作总结](#dataframe%e6%93%8d%e4%bd%9c%e6%80%bb%e7%bb%93)
-  - [创建 `DataFrame`](#%e5%88%9b%e5%bb%ba-dataframe)
-  - [通过 `Series` dict 创建](#%e9%80%9a%e8%bf%87-series-dict-%e5%88%9b%e5%bb%ba)
-  - [创建 `DataFrame` 时提供 index:](#%e5%88%9b%e5%bb%ba-dataframe-%e6%97%b6%e6%8f%90%e4%be%9b-index)
-  - [创建时同时提供 index 和 columns](#%e5%88%9b%e5%bb%ba%e6%97%b6%e5%90%8c%e6%97%b6%e6%8f%90%e4%be%9b-index-%e5%92%8c-columns)
-  - [通过 `ndarray` 或 list 的 `dict` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e6%88%96-list-%e7%9a%84-dict-%e5%88%9b%e5%bb%ba)
-  - [创建时提供 index](#%e5%88%9b%e5%bb%ba%e6%97%b6%e6%8f%90%e4%be%9b-index)
-  - [通过 `ndarray` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e5%88%9b%e5%bb%ba)
+    - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
+  - [DataFrame](#dataframe)
+    - [属性](#%e5%b1%9e%e6%80%a7)
+      - [size](#size)
+      - [shape](#shape)
+    - [DataFrame 操作](#dataframe-%e6%93%8d%e4%bd%9c)
+      - [索引](#%e7%b4%a2%e5%bc%95)
+    - [创建 `DataFrame`](#%e5%88%9b%e5%bb%ba-dataframe)
+      - [通过 `Series` dict 创建](#%e9%80%9a%e8%bf%87-series-dict-%e5%88%9b%e5%bb%ba)
+        - [为 dict 提供 index](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index)
+        - [为 dict 提供 index 和 columns](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index-%e5%92%8c-columns)
+      - [通过 `ndarray` 或 list 的 `dict` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e6%88%96-list-%e7%9a%84-dict-%e5%88%9b%e5%bb%ba)
+      - [创建时提供 index](#%e5%88%9b%e5%bb%ba%e6%97%b6%e6%8f%90%e4%be%9b-index)
+      - [通过 `ndarray` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e5%88%9b%e5%bb%ba)
   - [查询 - position](#%e6%9f%a5%e8%af%a2---position)
 
 ## 简介
@@ -33,7 +38,7 @@ Pandas 包含三种类型数据：
 
 它们在创建后，均可以动态修改数值，即是 value mutable。`Series`在创建后，长度不再改变。
 
-## `Series`
+## Series
 
 Pandas 中 Series 为一维标记数组 (labeled array)。其基本特征为：
 
@@ -45,6 +50,12 @@ Pandas 中 Series 为一维标记数组 (labeled array)。其基本特征为：
 `Series` 结构示意图：
 
 ![Series](images/2019-08-28-14-38-46.png)
+
+### Series 属性
+
+| 属性 | 说明     |
+| ---- | -------- |
+| size | 数据个数 |
 
 ### `Series`操作总结
 
@@ -144,7 +155,8 @@ s1.index
 RangeIndex(start=0, stop=7, step=1)
 ```
 
-### 创建 Series 时指定 index
+#### 创建 Series 时指定 index
+
 ```py
 data1=[33,19,14,89,11,-5,9]
 index1=['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
@@ -187,6 +199,7 @@ Name: Daily Temperatures, dtype: int64
 ```
 
 ### 通过 dict 创建
+
 通过 `dict` 创建，如果未指定 `index`, 则 `dict` 的 `key` 自动转换为 index；如果指定了 `index`，则以index 作为键值从 dict 取值创建 Series，如果 dict 中没有对应的键值，则以 NaN 作为结果。
 
 - 通过 dict 创建 Series
@@ -206,13 +219,17 @@ Wed    15
 dtype: int64
 ```
 
-## `Series` 和 `ndarray` 类似
+### `Series` 和 `ndarray` 类似
+
 - 例：演示 Series 类似于 ndarray 的操作
+
 ```py
 s=pd.Series(np.random.randn(5),index=['a','b','c','d','e'])s
 ```
+
 Out:
-```
+
+```cmd
 a   -1.184990
 b   -0.404359
 c    0.636425
@@ -222,9 +239,11 @@ dtype: float64
 ```
 
 - 乘法
-```
+
+```py
 s*2
 ```
+
 Out:
 ```
 a   -2.369981
@@ -274,10 +293,11 @@ dtype: float64
 | s.get('f')         | 获得和'f'对应的值，如果不存在在 index label，返回 None.                     |
 | s.get('f', np.nan) | 获得和 'f' 对应的值，如果不存在，返回 np.nan.                               |
 | s[s>s.median()]    | 返回大于 s 中值的所有值                                                     |
-	
 
-# `DataFrame`
+## DataFrame
+
 `DataFrame` 在 pandas 中是二维带标签数组，你可以将其看做 Excel 表格、SQL表格或值类型为 `Series` 的字典。`DataFrame` 不同列的数据类型可以不同，在Pandas 中使用最为广泛。另外：
+
 - 每列的数据类型相同
 - 每行包含索引 0…n
 
@@ -289,9 +309,45 @@ dtype: float64
 
 ![](images/2019-08-28-15-19-25.png)
 
-## `DataFrame`操作总结
+### 属性
 
-**索引操作**
+| 属性  | 说明                            |
+| ----- | ------------------------------- |
+| size  | 元素个数                        |
+| shape | 返回表示 DataFrame 维数的 tuple |
+
+#### size
+
+返回对象中元素个数。对 `Series` 返回行数，对 `DataFrame`，返回行数乘以列数。
+
+例如：
+
+```py
+def test_series_size():
+    s = pd.Series({'a': 1, 'b': 2, 'c': 3})
+    assert s.size == 3
+
+
+def test_dataframe_size():
+    df = pd.DataFrame({'col1': [1, 2], 'col2': [3, 4]})
+    assert df.size == 4
+```
+
+#### shape
+
+返回表示 DataFrame 维度的 tuple 对象。例如：
+
+```py
+df = pd.DataFrame({'col1': [1, 2], 'col2': [3, 4]})
+assert df.shape == (2, 2)
+df = pd.DataFrame({"col1": [1, 2], "col2": [3, 4], "col3": [5, 6]})
+assert df.shape == (2, 3)
+```
+
+
+### DataFrame 操作
+
+#### 索引
 
 | 操作                          | 语法            | 返回类型    |
 | ----------------------------- | --------------- | ----------- |
@@ -316,15 +372,16 @@ dtype: float64
 | df.sort_index(axis=0, ascending=True) | 按照行的 index label 进行排序，返回排序后的DataFrame, 原始数据不变.axis 指定排序用行还是列，默认采用每一行的index label，axis=1采用列的 index label.ascending, 默认升序，可以设置为降序 |
 | df.sort_values(by="")                 |                                                                                                                                                                                         |
 
+### 创建 `DataFrame`
 
-## 创建 `DataFrame`
+构造函数：
 
-**构造函数**
 ```py
 DataFrame(data, index=, columns= )
 ```
 
-DataFrame 接受多种类型的输入数据：
+`DataFrame` 接受多种类型的输入：
+
 - 1D `ndarray`、lists、dicts 或 `Series`  的 dict
 - 2D `numpy.ndarray`
 - `Series`
@@ -334,14 +391,17 @@ DataFrame 接受多种类型的输入数据：
 
 > 如果输入数据为 `dict` 类型，且没有指定 `columns`，则 `DataFrame` 的列根据 dict 的插入顺序排序。
 
-## 通过 `Series` dict 创建
+#### 通过 `Series` dict 创建
+
 输出的 indexes 为不同 `Series` index的并集，例：
+
 ```py
 dict1 = {'one': pd.Series([1., 2., 3.], index=['a', 'b', 'c']),
          'two': pd.Series([1., 2., 3., 4.], index=['a', 'b', 'c', 'd'])}
 df = pd.DataFrame(dict1)
 print(df)
 ```
+
 对应数据为：
 |     | one | two |
 | --- | --- | --- |
@@ -352,10 +412,12 @@ print(df)
 
 其中 columns 为自动创建，row index 为两个 `Series`的并集。`one` 的缺失值由 `NaN` 填充。
 
-## 创建 `DataFrame` 时提供 index:
+##### 为 dict 提供 index
+
 ```py
 df = pd.DataFrame(dict1, index=['d', 'b', 'a'])
 ```
+
 对应数据为：
 |     | one | two |
 | --- | --- | --- |
@@ -365,10 +427,12 @@ df = pd.DataFrame(dict1, index=['d', 'b', 'a'])
 
 即，将 index 对应的 row 对应的数据提取出来创建 `DataFrame`.
 
-## 创建时同时提供 index 和 columns
+##### 为 dict 提供 index 和 columns
+
 ```py
 df = pd.DataFrame(dict1, index=['d', 'b', 'a'], columns=['two', 'three'])
 ```
+
 两者对数据进行筛选，获得如下结果：
 |     | two | three |
 | --- | --- | ----- |
@@ -377,20 +441,22 @@ df = pd.DataFrame(dict1, index=['d', 'b', 'a'], columns=['two', 'three'])
 | a   | 1.0 | NaN   |
 
 获取 index 和 columns 信息：
+
 ```py
 df.index
 df.columns
 ```
 
+#### 通过 `ndarray` 或 list 的 `dict` 创建
 
-
-## 通过 `ndarray` 或 list 的 `dict` 创建
 `ndarray` s的长度必须相同，如果提供 index，index的长度也必须和数组相同。如果不提供 index，则默认 index 为 `range(n)`，n为数组长度。
+
 ```py
 d = {'one': [1., 2., 3., 4.],
      'two': [4., 3., 2., 1.]}
 df = pd.DataFrame(d)
 ```
+
 数据如下：
 |     | one | two |
 | --- | --- | --- |
@@ -399,10 +465,12 @@ df = pd.DataFrame(d)
 | 2   | 3.0 | 2.0 |
 | 3   | 4.0 | 1.0 |
 
-## 创建时提供 index
+#### 创建时提供 index
+
 ```py
 df = pd.DataFrame(d, index=['a', 'b', 'c', 'd'])
 ```
+
 数据如下：
 |     | one | two |
 | --- | --- | --- |
@@ -440,7 +508,8 @@ df = pd.DataFrame(
 
 ![](images/2019-08-28-15-26-40.png)
 
-## 通过 `ndarray` 创建
+#### 通过 `ndarray` 创建
+
 ```py
 import numpy as np
 import pandas as pd

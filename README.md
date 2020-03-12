@@ -1,5 +1,9 @@
 # Python Study Notes
 
+Python notes
+
+- [string](basic/string.md)
+
 ## Library
 
 - [pandas](pandas/0_pandas_toc.md)
