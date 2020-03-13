@@ -4,6 +4,7 @@
 
 - [简介](1_intro.md)
 - [数据结构](data_structures.md)
+  - [DataFrame](2_1_dataframe.md)
 - [index and select](index_select.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)
