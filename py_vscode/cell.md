@@ -1,11 +1,6 @@
-- [Linting](#linting)
 - [Jupyter](#jupyter)
   - [Jupyter 单元格](#jupyter-%e5%8d%95%e5%85%83%e6%a0%bc)
   - [Python 交互窗口](#python-%e4%ba%a4%e4%ba%92%e7%aa%97%e5%8f%a3)
-
-
-# Linting
-Linting 用于检查 Python 源码，高亮代码中语法错误和风格问题。例如，Linting 会检测未初始化或者未定义的变量的使用，对未定义函数的调用，缺少括号等各种问题。在 VS Code 中默认使用 Pylint，你也可以自定义选择其它的 linters。通过 **Python: Enable Linting** 命令启用或禁用 linting。
 
 # Jupyter
 

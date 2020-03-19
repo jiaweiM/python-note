@@ -1,5 +1,7 @@
-# Visual Studio Code with Python
+# VSCode Python
 
+- [简介](1_intro.md)
+- [Linting](4_linting.md)
 - [Work with Jupyter](2_jupyter.md)
 
 ## Reference
