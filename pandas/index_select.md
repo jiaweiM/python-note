@@ -1,19 +1,22 @@
-# Indexing and selecting data
+# 数据的索引和选择
 
-- [Indexing and selecting data](#indexing-and-selecting-data)
+- [数据的索引和选择](#%e6%95%b0%e6%8d%ae%e7%9a%84%e7%b4%a2%e5%bc%95%e5%92%8c%e9%80%89%e6%8b%a9)
   - [简介](#%e7%ae%80%e4%bb%8b)
-  - [索引的选择](#%e7%b4%a2%e5%bc%95%e7%9a%84%e9%80%89%e6%8b%a9)
     - [.loc](#loc)
     - [.iloc](#iloc)
   - [索引基础](#%e7%b4%a2%e5%bc%95%e5%9f%ba%e7%a1%80)
     - [额外说明](#%e9%a2%9d%e5%a4%96%e8%af%b4%e6%98%8e)
   - [按属性访问](#%e6%8c%89%e5%b1%9e%e6%80%a7%e8%ae%bf%e9%97%ae)
-  - [按标签选择](#%e6%8c%89%e6%a0%87%e7%ad%be%e9%80%89%e6%8b%a9)
+  - [按标签选择（.loc）](#%e6%8c%89%e6%a0%87%e7%ad%be%e9%80%89%e6%8b%a9loc)
+  - [按位置选择（.iloc）](#%e6%8c%89%e4%bd%8d%e7%bd%ae%e9%80%89%e6%8b%a9iloc)
   - [Boolean indexing](#boolean-indexing)
     - [布尔：或](#%e5%b8%83%e5%b0%94%e6%88%96)
     - [布尔：非](#%e5%b8%83%e5%b0%94%e9%9d%9e)
     - [使用布尔向量](#%e4%bd%bf%e7%94%a8%e5%b8%83%e5%b0%94%e5%90%91%e9%87%8f)
     - [List 推导和 map](#list-%e6%8e%a8%e5%af%bc%e5%92%8c-map)
+  - [where()](#where)
+    - [实例](#%e5%ae%9e%e4%be%8b)
+  - [query()](#query)
 
 ## 简介
 
@@ -23,11 +26,9 @@ pandas 对象的轴标签（axis labeling）信息有许多用途：
 - 辅助数据对齐。
 - 方便直观地获取和设置数据集的子集。
 
-下面讨论最后一条，即切片以及获取、设置 pandas 数据集。重点放在 `Series` 和 `DataFrame` 上。
+下面讨论最后一条，即切片以及获取、设置 pandas 数据。重点放在 `Series` 和 `DataFrame` 上。
 
-> Python 和 NumPy 索引运算符 `[]` 及属性运算符 `.` 提供了快速访问 pandas 数据结构的功能。如果你已经知道如何处理 Python 字典和 NumPy 数组，下面实际要学的东西不多。不过，由于预先不知道要访问的数据类型，直接使用标准运算符存在一些优化限制。对于生产代码，建议使用本章中优化过的 pandas 数据访问方法。
-
-## 索引的选择
+> Python 和 NumPy 索引运算符 `[]` 及属性运算符 `.` 提供了快速访问 pandas 数据结构的功能。不过，由于预先不知道要访问的数据类型，直接使用标准运算符存在一些优化限制。对于生产代码，建议使用本章中优化过的 pandas 数据访问方法。
 
 pandas 目前支持三种多轴（multi-axis）索引：
 
@@ -48,7 +49,7 @@ pandas 目前支持三种多轴（multi-axis）索引：
 
 ### .loc
 
-`.loc` 主要基于标签，但也可以和布尔数组一起使用。
+`.loc` 基于标签，但也可以和布尔数组一起使用。
 
 当对应项找不到时，`.loc` 抛出 `KeyError`。
 
@@ -225,7 +226,14 @@ Out:
 
 ![dataframe](images/2020-03-13-19-48-00.png)
 
-## 按标签选择
+## 按标签选择（.loc）
+
+使用要点
+
+- 在进行切片时
+
+## 按位置选择（.iloc）
+
 
 
 
@@ -380,3 +388,80 @@ df.loc[criterion & (df['b'] == 'x'), 'b': 'c']
    b         c
 3  x  0.155084
 ```
+
+## where()
+
+使用布尔向量从 `Series` 中选择一般返回数据子集。
+
+- 如果 `cond` 为 True，使用原数据
+- 如果为 False,使用 `other` 提供的数据
+
+为了保证选择结果和原数据具有相同的 shape，可以使用 `Series` 和 `DataFrame` 的 `where` 方法。
+
+where 方法签名：
+
+```py
+Series.where(self,cond,other=nan,inplace=False,axis=None,level=None,errors='raise',try_cast=False)
+```
+
+对`cond` 为 False 的数值，替换其值。
+
+参数：
+
+1. `cond`
+
+类型：bool 类型的 Series/DataFrame，或 callable。
+
+如果 `cond` 为 True，保留原值，否则以 `other` 替换。如果 `cond` 为 callable，则根据 Series/DataFrame 进行计算，返回值必须为 boolean Series/DataFrame or array。`callable` 不能修改输入的 Series/DataFrame。
+
+2. `other`
+
+类型：scalar, Series/DataFrame, or callable
+
+对 `cond` 为 False 的数据，以 `other` 替代。如果 `other` 为 callable 类型，则根据原数据进行计算，返回值必须为 scalar, Series/DataFrame 类型。callable 不允许修改输入 Series/DataFrame.
+
+3. `inplace`
+
+类型：bool, default False
+
+是否对数据进行原位操作。
+
+4. `axis`
+
+类型：int, default None.
+
+是否对其 axis.
+
+5. `level`
+
+Alignment level if needed.
+
+6. `errors`
+
+类型： str, {'raise', 'ignore'}, default 'raise'
+
+该参数不影响结果，结果总会转换为合适的 dtype。
+
+- 'raise'，抛出异常。
+- 'ignore'，抑制异常。
+
+7. `try_cast`
+
+类型：bool, default False
+
+尝试将结果转换为输入类型。
+
+返回：和调用者相同的类型。
+
+说明：
+
+`DataFrame.where()` 签名和 `numpy.where()` 略有不同，`df11.where(m, df2)` 基本上等价于 `np.where(m, df1, df2)`。
+
+### 实例
+
+
+
+## query()
+
+`DataFrame` 的 `query()` 方法可以通过表达式选择。
+

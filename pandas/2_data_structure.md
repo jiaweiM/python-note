@@ -16,6 +16,8 @@ Pandas 包含三种类型数据：
 
 它们在创建后，均可以动态修改数值，即是 value mutable。`Series`在创建后，长度不再改变。
 
+`Panel` 在 0.25.0 移除。
+
 ## 查询 - position
 
 Pandas 提供了基于索引的操作方法。

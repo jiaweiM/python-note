@@ -3,6 +3,11 @@ import pandas as pd
 import pandas.testing as ptest
 
 
+def test_create():
+    s = pd.Series([1, 3, 5, np.nan, 6, 8])
+    assert s.size == 6
+
+
 def test_sort_values():
     """sort by values"""
     s = pd.Series([np.nan, 1, 3, 10, 5])

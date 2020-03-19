@@ -2,6 +2,12 @@ import numpy as np
 import pandas as pd
 
 
+def test_create():
+    dates = pd.date_range("20190101", periods=6)
+    df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
+    assert df.size == 24
+
+
 def test_series_size():
     s = pd.Series({'a': 1, 'b': 2, 'c': 3})
     assert s.size == 3

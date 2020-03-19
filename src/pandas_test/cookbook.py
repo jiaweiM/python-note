@@ -2,17 +2,15 @@
 # # Cookbook
 # 这是一个简短的示例库，并提供了一些有用的 pandas 链接。
 #
-# 下面的示例只隐式导入了 Pandas (pd) 和 Numpy (np) ，其它的都显式导入。
+# 下面的示例隐式导入 Pandas (pd) 和 Numpy (np) ，其它的显式导入。
 #
-# 下面的示例是为 Python 3 编写，对早期 Python 版本可能需要调整一下。
+# 所有示例以 Python 3 编写，对早期 Python 版本可能部分不兼容。
 
 # %% [markdown]
 # ## Idioms
 #
-# 有一些简洁的pandas 用例。
+# 有一些简洁的 pandas 用例。
 #
-# if-then/if-then-else on one column, and assignment to another one or more columns:
-
 # %%
 import pandas as pd
 import numpy as np
@@ -29,21 +27,21 @@ df
 # %% [markdown]
 # ### if-then...
 #
-# 对列执行 if 操作
+# - 对一列执行 if 操作，对另一列赋值
 
 # %%
 df.loc[df.AAA >= 5, 'BBB'] = -1  # 如果 AAA >= 5，就设置对应的 BBB 为 -1
 df
 
 # %% [markdown]
-# if 操作，对两列进行赋值
+# - 对一列执行 if 操作，对另两列赋值
 
 # %%
 df.loc[df.AAA >= 5, ['BBB', 'CCC']] = 555  # 如果 AAA >= 5，则对应 BBB 和 CCC 设置为 555
 df
 
 # %% [markdown]
-# 另一个 if-then 操作
+# - 另一个 if-then 操作
 
 # %%
 df.loc[df.AAA < 5, ['BBB', 'CCC']] = 2000  # 如果 AAA < 5，则将 BBB 和 CCC 设置为 2000

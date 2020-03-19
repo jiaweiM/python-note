@@ -3,8 +3,8 @@
 - [DataFrame](#dataframe)
   - [简介](#%e7%ae%80%e4%bb%8b)
   - [属性](#%e5%b1%9e%e6%80%a7)
-      - [size](#size)
-      - [shape](#shape)
+    - [size](#size)
+    - [shape](#shape)
   - [创建 `DataFrame`](#%e5%88%9b%e5%bb%ba-dataframe)
     - [通过 `Series` dict 创建](#%e9%80%9a%e8%bf%87-series-dict-%e5%88%9b%e5%bb%ba)
       - [为 dict 提供 index](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index)
@@ -15,6 +15,7 @@
   - [DataFrame 操作](#dataframe-%e6%93%8d%e4%bd%9c)
     - [索引](#%e7%b4%a2%e5%bc%95)
     - [DataFrame.sort_values](#dataframesortvalues)
+    - [DataFrame.sort_index](#dataframesortindex)
 
 ## 简介
 
@@ -35,10 +36,12 @@
 
 | 属性  | 说明                            |
 | ----- | ------------------------------- |
+| index | DataFrame 的索引（行标签）      |
 | size  | 元素个数                        |
 | shape | 返回表示 DataFrame 维数的 tuple |
 
-#### size
+
+### size
 
 返回对象中元素个数。对 `Series` 返回行数，对 `DataFrame`，返回行数乘以列数。
 
@@ -55,7 +58,7 @@ def test_dataframe_size():
     assert df.size == 4
 ```
 
-#### shape
+### shape
 
 返回表示 DataFrame 维度的 tuple 对象。例如：
 
@@ -333,3 +336,34 @@ Out:
 4   D    7    2
 3   NaN  8    4
 ```
+
+### DataFrame.sort_index
+
+`DataFrame.sort_index(self,axis=0,level=None,ascending=True,inplace=False,kind='quicksort',na_position='last',sort_remaining=True,ignore_index:bool=False)`
+
+根据标签排序。
+
+参数：
+
+1. axis, {0 or 'index', 1 or 'columns'}, default 0
+
+排序的轴。0 表示行，1表示列。
+
+2. level, int or level name or list of ints or list of level names
+
+如果不是 None，则对指定索引级别中的值进行排序。
+
+3. ascending: bool, default True
+
+升序或降序排列。
+
+4. inplace: bool, default False
+
+是否原位排序。
+
+5. kind: {‘quicksort’, ‘mergesort’, ‘heapsort’}, default ‘quicksort’
+
+排序算法。对 DataFrame，仅对单列或单个标签排序时有效。
+
+6. na_position{‘first’, ‘last’}, default ‘last’
+7. sort_remaining bool, default True

@@ -4,8 +4,9 @@
 
 - [简介](1_intro.md)
 - [数据结构](data_structures.md)
-  - [DataFrame](2_1_dataframe.md)
-- [index and select](index_select.md)
+  - [Series](2_1_series.md)
+  - [DataFrame](2_2_dataframe.md)
+- [数据的索引和选择](index_select.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)
   - [CSV](5_io_csv.md)
