@@ -6,6 +6,9 @@
   - [数学函数](#%e6%95%b0%e5%ad%a6%e5%87%bd%e6%95%b0)
   - [math 模块](#math-%e6%a8%a1%e5%9d%97)
   - [函数](#%e5%87%bd%e6%95%b0)
+    - [abs](#abs)
+    - [all](#all)
+    - [any](#any)
     - [range](#range)
     - [zip](#zip)
       - [unzipping](#unzipping)
@@ -95,6 +98,46 @@
 | tan(x)   | Returns tangent of x where x is in radian            |
 
 ## 函数
+
+### [abs](../src/python_test/abs_test.py)
+
+`abs(x)`
+
+计算绝对值。`x` 可以为整数或浮点数。对复数返回模。
+
+- 整数
+- 浮点数
+- 复数
+
+如果 `x` 定义了 `__abs__()` 函数，`abs(x)` 返回 `x.__abs__()`.
+
+### [all](../src/python_test/all_test.py)
+
+`all(iterable)`
+
+如果 `iterable` 的所有元素为 true，返回 `True`。等价于：
+
+```py
+def all(iterable):
+  for element in iterable:
+    if not element:
+      return False
+  return True
+```
+
+### [any](../src/python_test/any_test.py)
+
+`any(iterable)`
+
+`iterable` 的任意对象为 true，返回 `True`。如果 iterable 为空，返回 `False`。等价于：
+
+```py
+def any(iterable):
+  for element in iterable:
+    if element:
+      return True
+  return False
+```
 
 ### range
 
