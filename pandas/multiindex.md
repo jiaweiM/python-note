@@ -14,7 +14,7 @@
 
 ### 创建 MultiIndex 对象
 
-`MultiIndex` 存储 axis labels，可以将 `MultiIndex` 看作 tuple 数组，每个 tuple 都是 unique的。
+相对标准 `Index` 对象，`MultiIndex` 分层存储 axis labels。可以将 `MultiIndex` 看作 tuple 数组，每个 tuple 为 unique。
 
 可以使用多种对象创建 `MultiIndex`：
 
@@ -23,4 +23,8 @@
 - 交叉的可迭代对象（`MultiIndex.from_product()`）
 - DataFrame （`MultiIndex.from_frame()`）
 
-当将 tuples 列表传递给 `Index` 参数，会返回 `MultiIndex`。
+当将 tuples 列表传递给 `Index` 构造函数，会返回 `MultiIndex`。下面演示创建 MultiIndex 的各种方法：
+
+```
+
+```

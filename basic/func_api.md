@@ -6,10 +6,11 @@
   - [数学函数](#%e6%95%b0%e5%ad%a6%e5%87%bd%e6%95%b0)
   - [math 模块](#math-%e6%a8%a1%e5%9d%97)
   - [函数](#%e5%87%bd%e6%95%b0)
+    - [range](#range)
     - [zip](#zip)
       - [unzipping](#unzipping)
-  - [type()](#type)
-  - [isinstance()](#isinstance)
+    - [type()](#type)
+    - [isinstance](#isinstance)
 
 ## 基本函数
 
@@ -94,6 +95,21 @@
 | tan(x)   | Returns tangent of x where x is in radian            |
 
 ## 函数
+
+### range
+
+`range(stop)`
+
+`range(start, stop[, step])`
+
+range 类型表示 immutable 数字序列，一般用在 for 循环中指定循环次数：
+
+- 生成 [start, stop) 之间的整数序列
+- step 表示增量值，默认为 1
+- 如果 step 为 0 或负值，返回 empty 序列
+- 如果 step 为 0，抛出 `ValueError`
+
+[使用实例](../src/python_test/range_test.py)
 
 ### zip
 
@@ -195,7 +211,7 @@ assert numbers == (1, 2, 3, 4)
 assert letters == ('a', 'b', 'c', 'd')
 ```
 
-## type()
+### type()
 
 `type()` 函数有两种形式：
 
@@ -204,7 +220,7 @@ type(object) # return type of the given object
 type(name, bases, dict) # return a new type object
 ```
 
-## isinstance()
+### isinstance
 
 `isinstance()` 检查对象是否为指定类型的实例。语法：
 
@@ -217,7 +233,7 @@ isinstance(object, classinfo)
 | Object    | 待检查对象                                |
 | classinfo | class, type, or tuple of clases and types |
 
-**类测试**
+- 类测试
 
 ```py
 class Foo:
@@ -233,7 +249,7 @@ def test_param():
 
 只要实例是 tuple 中任意一个类型的实例，返回 `true`.
 
-**基本类型测试**
+- 基本类型测试
 
 ```py
 def test_native():
