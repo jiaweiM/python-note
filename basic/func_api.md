@@ -4,6 +4,11 @@
   - [基本函数](#%e5%9f%ba%e6%9c%ac%e5%87%bd%e6%95%b0)
   - [字符串函数](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0)
   - [数学函数](#%e6%95%b0%e5%ad%a6%e5%87%bd%e6%95%b0)
+  - [math 模块](#math-%e6%a8%a1%e5%9d%97)
+  - [函数列表](#%e5%87%bd%e6%95%b0%e5%88%97%e8%a1%a8)
+    - [zip](#zip)
+  - [type()](#type)
+  - [isinstance()](#isinstance)
 
 ## 基本函数
 
@@ -72,6 +77,70 @@
 | ------------------------ | ------------------------------------------------- |
 | round(number[, ndigits]) | rounds the number, you can also specify precision | in the second argument |
 | power(a, b)              | Return a raise to the power of b                  |
-| abs(x)                   | Return absoute value of x                         |
+| abs(x)                   | 对整数或浮点数返回绝对值；对复数，返回模          |
 | max(x1, x2, …, xn)       | Return largest value among supplied arguments     |
 | min(x1, x2, …, xn)       | Returns smallest value among supplied arguments   |
+
+## math 模块
+
+| 方法     | 说明                                                 |
+| -------- | ---------------------------------------------------- |
+| ceil(x)  | Rounds the number up and returns its nearest integer |
+| floor(x) | Rounds the down up and returns its nearest integer   |
+| sqrt(x)  | Returns the square root of the number                |
+| sin(x)   | Returns sin of x where x is in radian                |
+| cos(x)   | Returns cosine of x where x is in radian             |
+| tan(x)   | Returns tangent of x where x is in radian            |
+
+## 函数列表
+
+### zip
+
+
+
+## type()
+`type()` 函数有两种形式：
+```py
+type(object) # return type of the given object
+type(name, bases, dict) # return a new type object
+```
+
+## isinstance()
+`isinstance()` 检查对象是否为指定类型的实例。语法：
+```py
+isinstance(object, classinfo)
+```
+
+| 参数      | 说明                                      |
+| --------- | ----------------------------------------- |
+| Object    | 待检查对象                                |
+| classinfo | class, type, or tuple of clases and types |
+
+**类测试**
+```py
+class Foo:
+    a = 5
+
+
+def test_param():
+    foo_ins = Foo()
+    assert isinstance(foo_ins, Foo)
+    assert not isinstance(foo_ins, (list, tuple))
+    assert isinstance(foo_ins, (list, tuple, Foo))
+```
+
+只要实例是 tuple 中任意一个类型的实例，返回 `true`.
+
+**基本类型测试**
+```py
+def test_native():
+    numbers = [1, 2, 3]
+
+    assert isinstance(numbers, list)
+    assert not isinstance(numbers, dict)
+    assert isinstance(numbers, (dict, list))
+
+    number = 5
+    assert not isinstance(number, list)
+    assert isinstance(number, int)
+```

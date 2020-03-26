@@ -7,9 +7,11 @@
   - [Series](2_1_series.md)
   - [DataFrame](2_2_dataframe.md)
 - [数据的索引和选择](index_select.md)
+- [MultiIndex](multiindex.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)
   - [CSV](5_io_csv.md)
+  - [Excel](io_excel.md)
 
 ## 参考
 

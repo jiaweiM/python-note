@@ -18,6 +18,8 @@
     - [实例](#%e5%ae%9e%e4%be%8b)
   - [query()](#query)
 
+***
+
 ## 简介
 
 pandas 对象的轴标签（axis labeling）信息有许多用途：
@@ -233,9 +235,6 @@ Out:
 - 在进行切片时
 
 ## 按位置选择（.iloc）
-
-
-
 
 ## Boolean indexing
 
@@ -459,9 +458,26 @@ Alignment level if needed.
 
 ### 实例
 
+- 默认替换值为 nan
 
+```py
+s = pd.Series(range(5))
+s1 = s.where(s > 0)
+```
+
+Out:
+
+```cmd
+0    NaN
+1    1.0
+2    2.0
+3    3.0
+4    4.0
+dtype: float64
+```
+
+- 
 
 ## query()
 
 `DataFrame` 的 `query()` 方法可以通过表达式选择。
-

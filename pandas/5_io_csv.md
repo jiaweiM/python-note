@@ -31,4 +31,3 @@ df = pd.read_csv('sample.csv')
 - index_col, int, str, sequence of int/str, False, default `None`
 
 用作 DataFrame 行标签的列，以字符串名称或 column index 的形式给出。如果是 int/str 序列，则使用 `MultiIndex`。
-
