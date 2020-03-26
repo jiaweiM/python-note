@@ -10,6 +10,7 @@
     - [默认参数](#%e9%bb%98%e8%ae%a4%e5%8f%82%e6%95%b0)
     - [可变参数 *args](#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0-args)
     - [**kwargs](#kwargs)
+  - [Unpacking Argument Lists](#unpacking-argument-lists)
   - [Lambda 函数](#lambda-%e5%87%bd%e6%95%b0)
 
 ***
@@ -136,7 +137,9 @@ def sum(*args):
 
 > 注意：args 只是一个传统命名，此处可以使用任意有效的标识符，如 *myargs等。
 
-使用 `*args` 还可以将可迭代变量传递给函数，如：
+- `*` 将序列/集合解压缩为位置参数
+
+例如：
 
 ```py
 def my_three(a, b, c):
@@ -152,7 +155,7 @@ my_three(*a) # here list is broken into three elements
 
 `**kwargs` 可用于传递可变数目的关键字参数。
 
-方法调用中作为参数传递：
+- 方法调用中作为参数传递
 
 ```py
 def my_three(a, b, c):
@@ -166,6 +169,30 @@ my_three(**a)
 
 - 参数名和键名相同;
 - 参数数目和字典大小相同。
+
+## Unpacking Argument Lists
+
+如果参数已在 list 或 tuple 中，但是调用函数需要单独的位置参数。例如 `range()` 函数需要 `start` 和 `stop` 参数。如果两者是一起存在的，可以使用 `*` 运算符从 list 或 tuple 中 unpack 参数：
+
+```py
+args = [3, 6] # list
+list(range(*args)) # 从 list unpack 参数
+```
+
+`range(*args)` 等价于 `range(3, 6)`。
+
+类似的，字典可以通过 `**` 运算符传递关键字参数：
+
+```py
+>>> def parrot(voltage, state='a stiff', action='voom'):
+...     print("-- This parrot wouldn't", action, end=' ')
+...     print("if you put", voltage, "volts through it.", end=' ')
+...     print("E's", state, "!")
+...
+>>> d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+>>> parrot(**d)
+-- This parrot wouldn't VOOM if you put four million volts through it. E's bleedin' demised !
+```
 
 ## Lambda 函数
 
