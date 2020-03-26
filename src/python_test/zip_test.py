@@ -37,3 +37,10 @@ def test_unequal_len():
     assert l[0] == (0, 0)
     assert l[1] == (1, 1)
     assert l[2] == (2, 2)
+
+
+def test_unzip():
+    pairs = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]
+    numbers, letters = zip(*pairs)
+    assert numbers == (1, 2, 3, 4)
+    assert letters == ('a', 'b', 'c', 'd')

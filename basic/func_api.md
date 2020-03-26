@@ -7,6 +7,7 @@
   - [math 模块](#math-%e6%a8%a1%e5%9d%97)
   - [函数](#%e5%87%bd%e6%95%b0)
     - [zip](#zip)
+      - [unzipping](#unzipping)
   - [type()](#type)
   - [isinstance()](#isinstance)
 
@@ -175,20 +176,23 @@ assert l[1] == (1, 1)
 assert l[2] == (2, 2)
 ```
 
+- zip in Python 2
 
+在 Python 2中，`zip()` 返回 tuple `list`。`list` 长度和输入最短的 iterable 对象相同。如果无输入参数，返回空 `list`。
 
+而 Python 3 中，`zip()` 返回的是 iterator。使用 iterator 的好处是在需要时才生成数据，内存占用更少。
 
-`zip` 和 `*` 结合可用于 unzip list:
+#### unzipping
+
+有 `zip()` 函数，为什么没有 `unzip()` 函数。因为`zip` 和 `*` 结合就实现了 unzip 功能。
+
+假如你有一个 tuple 列表，然后你希望将 tuple 分解，获得独立的列表。实现方式如下：
 
 ```py
->>> x = [1, 2, 3]
->>> y = [4, 5, 6]
->>> zipped = zip(x, y)
->>> list(zipped)
-[(1, 4), (2, 5), (3, 6)]
->>> x2, y2 = zip(*zip(x, y))
->>> x == list(x2) and y == list(y2)
-True
+pairs = [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]
+numbers, letters = zip(*pairs)
+assert numbers == (1, 2, 3, 4)
+assert letters == ('a', 'b', 'c', 'd')
 ```
 
 ## type()
