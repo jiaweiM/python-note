@@ -5,7 +5,7 @@
   - [字符串函数](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0)
   - [数学函数](#%e6%95%b0%e5%ad%a6%e5%87%bd%e6%95%b0)
   - [math 模块](#math-%e6%a8%a1%e5%9d%97)
-  - [函数列表](#%e5%87%bd%e6%95%b0%e5%88%97%e8%a1%a8)
+  - [函数](#%e5%87%bd%e6%95%b0)
     - [zip](#zip)
   - [type()](#type)
   - [isinstance()](#isinstance)
@@ -92,21 +92,118 @@
 | cos(x)   | Returns cosine of x where x is in radian             |
 | tan(x)   | Returns tangent of x where x is in radian            |
 
-## 函数列表
+## 函数
 
 ### zip
 
+`zip(*iterables)`
 
+将多个 iterable 对象聚合在一起构成一个迭代器。
+
+返回 tuple 迭代器，可以传入任意数目的 iterable 对象：
+
+- 第 i 个 tuple 包含所有iterable对象的第 i 个元素。当最短的iterable对象耗尽，迭代器停止。
+- 无参数，返回空 iterator。
+- 一个参数，返回的iterator 的 tuple 长度为1。
+- 多个参数，tuple 长度为iterable参数个数。
+
+对 lists, tuples, strings 等可迭代对象，迭代的顺序保持不变。
+
+- 多个参数
+
+```py
+numbers = [1, 2, 3]
+letters = ['a', 'b', 'c']
+zipped = zip(numbers, letters)
+zips = list(zipped)
+assert zips[0] == (1, 'a')
+assert zips[1] == (2, 'b')
+assert zips[2] == (3, 'c')
+```
+
+- set 参数
+
+对 set 顺序无法保证
+
+```py
+s1 = {2, 3, 1}
+s2 = {'b', 'a', 'c'}
+l1 = list(zip(s1, s2))
+print(l1)
+```
+
+Out:
+
+```cmd
+[(1, 'c'), (2, 'a'), (3, 'b')]
+```
+
+- 无参数
+
+无参数，返回空 iterator
+
+```py
+zipped = zip()
+l = list(zipped)
+assert l == []
+```
+
+`zip()` 只迭代到最短对象的长度，如果不希望截断，可以使用 `itertools.zip_longest()`。
+
+- 一个参数
+
+一个参数，返回的 iterator 的 tuple 长度为1.
+
+```py
+a = [1, 2, 3]
+zipped = zip(a)
+l = list(zipped)
+assert l[0] == (1,)
+assert l[1] == (2,)
+assert l[2] == (3,)
+```
+
+- 参数长度不等
+
+如果参数长度不等，`zip()` 返回元素的个数和最短的iterable长度相同。哪些较长 iterable 参数余下元素忽略。例如：
+
+```py
+l = list(zip(range(3), range(100)))
+assert len(l) == 3
+assert l[0] == (0, 0)
+assert l[1] == (1, 1)
+assert l[2] == (2, 2)
+```
+
+
+
+
+`zip` 和 `*` 结合可用于 unzip list:
+
+```py
+>>> x = [1, 2, 3]
+>>> y = [4, 5, 6]
+>>> zipped = zip(x, y)
+>>> list(zipped)
+[(1, 4), (2, 5), (3, 6)]
+>>> x2, y2 = zip(*zip(x, y))
+>>> x == list(x2) and y == list(y2)
+True
+```
 
 ## type()
+
 `type()` 函数有两种形式：
+
 ```py
 type(object) # return type of the given object
 type(name, bases, dict) # return a new type object
 ```
 
 ## isinstance()
+
 `isinstance()` 检查对象是否为指定类型的实例。语法：
+
 ```py
 isinstance(object, classinfo)
 ```
@@ -117,6 +214,7 @@ isinstance(object, classinfo)
 | classinfo | class, type, or tuple of clases and types |
 
 **类测试**
+
 ```py
 class Foo:
     a = 5
@@ -132,6 +230,7 @@ def test_param():
 只要实例是 tuple 中任意一个类型的实例，返回 `true`.
 
 **基本类型测试**
+
 ```py
 def test_native():
     numbers = [1, 2, 3]

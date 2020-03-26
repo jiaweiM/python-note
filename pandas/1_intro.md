@@ -2,6 +2,8 @@
 
 pandas 是一个提供快速、灵活数据结构的Python软件包，使得“关系”和“标记”数据的使用更为简单直观。
 
+[GitHub 地址](https://github.com/pandas-dev/pandas)
+
 pandas 适合多种类型数据的分析：
 
 - 表格数据，如 SQL 表格后 Excel 表格。
