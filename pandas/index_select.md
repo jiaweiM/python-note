@@ -12,13 +12,12 @@
     - [布尔：非](#%e5%b8%83%e5%b0%94%e9%9d%9e)
     - [使用布尔向量](#%e4%bd%bf%e7%94%a8%e5%b8%83%e5%b0%94%e5%90%91%e9%87%8f)
     - [List 推导和 map](#list-%e6%8e%a8%e5%af%bc%e5%92%8c-map)
-  - [where()](#where)
-    - [实例](#%e5%ae%9e%e4%be%8b)
   - [query()](#query)
 
 ***
 
 ## 简介
+
 
 pandas 对象的轴标签（axis labeling）信息有许多用途：
 
@@ -385,96 +384,6 @@ df.loc[criterion & (df['b'] == 'x'), 'b': 'c']
    b         c
 3  x  0.155084
 ```
-
-## where()
-
-使用布尔向量从 `Series` 中选择一般返回数据子集。
-
-- 如果 `cond` 为 True，使用原数据
-- 如果为 False,使用 `other` 提供的数据
-
-为了保证选择结果和原数据具有相同的 shape，可以使用 `Series` 和 `DataFrame` 的 `where` 方法。
-
-where 方法签名：
-
-```py
-Series.where(self,cond,other=nan,inplace=False,axis=None,level=None,errors='raise',try_cast=False)
-```
-
-对`cond` 为 False 的数值，替换其值。
-
-参数：
-
-1. `cond`
-
-类型：bool 类型的 Series/DataFrame，或 callable。
-
-如果 `cond` 为 True，保留原值，否则以 `other` 替换。如果 `cond` 为 callable，则根据 Series/DataFrame 进行计算，返回值必须为 boolean Series/DataFrame or array。`callable` 不能修改输入的 Series/DataFrame。
-
-2. `other`
-
-类型：scalar, Series/DataFrame, or callable
-
-对 `cond` 为 False 的数据，以 `other` 替代。如果 `other` 为 callable 类型，则根据原数据进行计算，返回值必须为 scalar, Series/DataFrame 类型。callable 不允许修改输入 Series/DataFrame.
-
-3. `inplace`
-
-类型：bool, default False
-
-是否对数据进行原位操作。
-
-4. `axis`
-
-类型：int, default None.
-
-是否对其 axis.
-
-5. `level`
-
-Alignment level if needed.
-
-6. `errors`
-
-类型： str, {'raise', 'ignore'}, default 'raise'
-
-该参数不影响结果，结果总会转换为合适的 dtype。
-
-- 'raise'，抛出异常。
-- 'ignore'，抑制异常。
-
-7. `try_cast`
-
-类型：bool, default False
-
-尝试将结果转换为输入类型。
-
-返回：和调用者相同的类型。
-
-说明：
-
-`DataFrame.where()` 签名和 `numpy.where()` 略有不同，`df11.where(m, df2)` 基本上等价于 `np.where(m, df1, df2)`。
-
-### 实例
-
-- 默认替换值为 nan
-
-```py
-s = pd.Series(range(5))
-s1 = s.where(s > 0)
-```
-
-Out:
-
-```cmd
-0    NaN
-1    1.0
-2    2.0
-3    3.0
-4    4.0
-dtype: float64
-```
-
-- 
 
 ## query()
 

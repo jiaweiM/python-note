@@ -3,11 +3,15 @@
 ## 教程
 
 - [简介](1_intro.md)
-- [数据结构](data_structures.md)
-  - [Series](2_1_series.md)
-  - [DataFrame](2_2_dataframe.md)
+- [数据结构](data.md)
+  - [Series](data_series.md)
+  - [DataFrame](data_frame.md)
 - [数据的索引和选择](index_select.md)
   - [按位置选择](select_position.md)
+  - [where](select_where.md)
+  - [Index 对象](index_object.md)
+  - [set/reset index](index_set.md)
+  - [返回视图还是副本](index_view_copy.md)
 - [MultiIndex](multiindex.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)

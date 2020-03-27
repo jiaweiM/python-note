@@ -1,8 +1,9 @@
 import pandas as pd
-df = pd.DataFrame({"col1": [1, 2, 3],
-                   "col2": [4, 5, 6],
-                   "col3": [7, 8, 9]},
-                  index=["row1", "row2", "row3"])
-df1 = df.iloc[[0, 2], [1, 2]]
+import numpy as np
+
+df = pd.DataFrame(np.array(([1, 2, 3], [4, 5, 6])),
+                  index=['mouse', 'rabbit'],
+                  columns=['one', 'two', 'three'])
+df1 = df.filter(regex='e$', axis=1)
 print(df)
 print(df1)

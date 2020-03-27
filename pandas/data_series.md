@@ -11,6 +11,8 @@
     - [为 Series 数据和 index 指定名称](#%e4%b8%ba-series-%e6%95%b0%e6%8d%ae%e5%92%8c-index-%e6%8c%87%e5%ae%9a%e5%90%8d%e7%a7%b0)
     - [通过 dict 创建](#%e9%80%9a%e8%bf%87-dict-%e5%88%9b%e5%bb%ba)
     - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
+  - [索引、选择](#%e7%b4%a2%e5%bc%95%e9%80%89%e6%8b%a9)
+    - [reindex](#reindex)
   - [描述统计](#%e6%8f%8f%e8%bf%b0%e7%bb%9f%e8%ae%a1)
     - [Series.value_counts](#seriesvaluecounts)
 
@@ -362,6 +364,12 @@ dtype: float64
 | s.get('f')         | 获得和'f'对应的值，如果不存在在 index label，返回 None.                     |
 | s.get('f', np.nan) | 获得和 'f' 对应的值，如果不存在，返回 np.nan.                               |
 | s[s>s.median()]    | 返回大于 s 中值的所有值                                                     |
+
+## 索引、选择
+
+### reindex
+
+
 
 ## 描述统计
 

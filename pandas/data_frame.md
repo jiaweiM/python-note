@@ -6,7 +6,7 @@
     - [size](#size)
     - [shape](#shape)
   - [创建 `DataFrame`](#%e5%88%9b%e5%bb%ba-dataframe)
-    - [通过 `Series` dict 创建](#%e9%80%9a%e8%bf%87-series-dict-%e5%88%9b%e5%bb%ba)
+    - [`Series` dict](#series-dict)
       - [为 dict 提供 index](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index)
       - [为 dict 提供 index 和 columns](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index-%e5%92%8c-columns)
     - [通过 `ndarray` 或 list 的 `dict` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e6%88%96-list-%e7%9a%84-dict-%e5%88%9b%e5%bb%ba)
@@ -70,7 +70,6 @@ df = pd.DataFrame({"col1": [1, 2], "col2": [3, 4], "col3": [5, 6]})
 assert df.shape == (2, 3)
 ```
 
-
 ## 创建 `DataFrame`
 
 构造函数：
@@ -90,7 +89,7 @@ DataFrame(data, index=, columns= )
 
 > 如果输入数据为 `dict` 类型，且没有指定 `columns`，则 `DataFrame` 的列根据 dict 的插入顺序排序。
 
-### 通过 `Series` dict 创建
+### `Series` dict
 
 输出的 indexes 为不同 `Series` index的并集，例：
 
@@ -256,7 +255,7 @@ print(df)
 
 `DataFrame.sort_values(self,by,axis=0,asecending=True,inplace=False,kind='quicksort',na_position='last',ignore_index=False)`
 
-根据任一轴的值进行排序。
+根据值进行排序。
 
 参数：
 
