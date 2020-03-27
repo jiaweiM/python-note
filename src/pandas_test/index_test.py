@@ -16,3 +16,9 @@ def test_map():
     criterion = df2['a'].map(lambda x: x.startswith('t'))
     var = df2[criterion]
     print(var)
+
+
+def test_iloc():
+    s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
+    s2 = s1.loc['c':]
+    print(s2)

@@ -16,6 +16,7 @@
     - [索引](#%e7%b4%a2%e5%bc%95)
     - [DataFrame.sort_values](#dataframesortvalues)
     - [DataFrame.sort_index](#dataframesortindex)
+    - [DataFrame.pivot_table](#dataframepivottable)
 
 ## 简介
 
@@ -367,3 +368,7 @@ Out:
 
 6. na_position{‘first’, ‘last’}, default ‘last’
 7. sort_remaining bool, default True
+
+### DataFrame.pivot_table
+
+`DataFrame.pivot_table(self, values=None, index=None)`

@@ -15,6 +15,7 @@
   - [测试分组](#%e6%b5%8b%e8%af%95%e5%88%86%e7%bb%84)
   - [捕获 stdout/stderr 输出](#%e6%8d%95%e8%8e%b7-stdoutstderr-%e8%be%93%e5%87%ba)
     - [默认行为](#%e9%bb%98%e8%ae%a4%e8%a1%8c%e4%b8%ba)
+  - [运行命令选项](#%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4%e9%80%89%e9%a1%b9)
   - [Reference](#reference)
 
 ## 命名
@@ -259,6 +260,10 @@ class TestClass(object):
 ### 默认行为
 
 测试执行过程中任何 `stdout` 和 `stderr` 输出都被捕获。如果 test 或 setup 方法失败，其对应捕获的输出和traceback会输出。（该行为可以通过 `--show-capture` 命令选项设置）
+
+## 运行命令选项
+
+
 
 ## Reference
 

@@ -38,9 +38,9 @@ pd.read_excel('path_to_file.xls', sheet_name='Sheet1')
 
 ### 读取多个 Sheet
 
-要读取一个文件的多个 sheets，需要用到 `ExcelFile` 类。
+要一次读取多个 sheets，需要用到 `ExcelFile` 类，该类包装 Excel 文件。
 
-这种方式一次性读取 excel 内容到内存，速度较快。
+这种方式一次性读取所有 excel 内容到内存，速度较快。
 
 ```py
 xlsx = pd.ExcelFile('path_to_file.xls')
@@ -55,7 +55,7 @@ with pd.ExcelFile('path_to_file.xls') as xls:
     df2 = pd.read_excel(xls, 'Sheet2')
 ```
 
-使用 `ExcelFile` 方便使用不同的参数解析不同的 sheets:
+使用 `ExcelFile` 方便使用不同的参数解析 sheets:
 
 ```py
 data = {}
@@ -82,7 +82,7 @@ data = pd.read_excel('path_to_file.xls', ['Sheet1', 'Sheet2'],
                      index_col=None, na_values=['NA'])
 ```
 
-也可以使用 `xlrd.book.Book` 对创建 `ExcelFile`。使用该方法可以控制读取 excel 文件的方式。例如：设置 `xlrd.open_workbook()` 参数 `on_demand=True`，可以在需要时才载入 sheets:
+也可以使用 `xlrd.book.Book` 对象创建 `ExcelFile`。使用该方法可以控制读取 excel 文件的方式。例如：设置 `xlrd.open_workbook()` 参数 `on_demand=True`，可以在需要时才载入 sheets:
 
 ```py
 import xlrd

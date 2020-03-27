@@ -7,11 +7,13 @@
   - [Series](2_1_series.md)
   - [DataFrame](2_2_dataframe.md)
 - [数据的索引和选择](index_select.md)
+  - [按位置选择](select_position.md)
 - [MultiIndex](multiindex.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)
   - [CSV](5_io_csv.md)
   - [Excel](io_excel.md)
+- [单元测试工具](testing.md)
 
 ## 参考
 
@@ -26,3 +28,4 @@
 - https://www.datacamp.com/community/tutorials/pandas-tutorial-dataframe-python
 - https://github.com/alfredessa/pdacookbook
 - https://bitbucket.org/hrojas/learn-pandas
+- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/index.html)

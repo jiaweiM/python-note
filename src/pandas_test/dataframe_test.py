@@ -8,6 +8,17 @@ def test_create():
     assert df.size == 24
 
 
+def test_create_col3():
+    df = pd.DataFrame({
+        "Name": ["Braund, Mr. Owen Harris",
+                 "Allen, Mr. William Henry",
+                 "Bonnell, Miss. Elizabeth"],
+        "Age": [22, 35, 58],
+        "Sex": ["male", "male", "female"]
+    })
+    print(df)
+
+
 def test_series_size():
     s = pd.Series({'a': 1, 'b': 2, 'c': 3})
     assert s.size == 3

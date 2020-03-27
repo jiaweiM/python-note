@@ -11,6 +11,8 @@
     - [为 Series 数据和 index 指定名称](#%e4%b8%ba-series-%e6%95%b0%e6%8d%ae%e5%92%8c-index-%e6%8c%87%e5%ae%9a%e5%90%8d%e7%a7%b0)
     - [通过 dict 创建](#%e9%80%9a%e8%bf%87-dict-%e5%88%9b%e5%bb%ba)
     - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
+  - [描述统计](#%e6%8f%8f%e8%bf%b0%e7%bb%9f%e8%ae%a1)
+    - [Series.value_counts](#seriesvaluecounts)
 
 ## 简介
 
@@ -360,3 +362,42 @@ dtype: float64
 | s.get('f')         | 获得和'f'对应的值，如果不存在在 index label，返回 None.                     |
 | s.get('f', np.nan) | 获得和 'f' 对应的值，如果不存在，返回 np.nan.                               |
 | s[s>s.median()]    | 返回大于 s 中值的所有值                                                     |
+
+## 描述统计
+
+### Series.value_counts
+
+`Series.value_counts(self, normalize=False, sort=True, ascending=False, bins=None, dropna=True)`
+
+返回包含 unique values 数目的 Series.
+
+返回的对象按降序排列，从而保证第一个元素是出现最多的。默认排除 NA 值。
+
+例如：
+
+```py
+>>> index = pd.Index([3, 1, 2, 3, 4, np.nan])
+>>> index.value_counts()
+3.0    2
+4.0    1
+2.0    1
+1.0    1
+dtype: int64
+```
+
+- normalize
+
+若将 `normalize` 设置为 True，用总和归一化所有值：
+
+```py
+>>> s = pd.Series([3, 1, 2, 3, 4, np.nan])
+>>> s.value_counts(normalize=True)
+3.0    0.4
+4.0    0.2
+2.0    0.2
+1.0    0.2
+dtype: float64
+```
+
+- bins
+
