@@ -13,6 +13,7 @@
     - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
   - [索引、选择](#%e7%b4%a2%e5%bc%95%e9%80%89%e6%8b%a9)
     - [reindex](#reindex)
+    - [reset_index](#resetindex)
   - [描述统计](#%e6%8f%8f%e8%bf%b0%e7%bb%9f%e8%ae%a1)
     - [Series.value_counts](#seriesvaluecounts)
 
@@ -369,7 +370,119 @@ dtype: float64
 
 ### reindex
 
+### reset_index
 
+`Series.reset_index(self, level=None, drop=False, name=None, inplace=False)`
+
+创建重置 index的 Series 或 DataFrame。
+
+当需要将 index 添加为 column 时很有用，或者去除无意义的 index，将其重置为默认值。
+
+1. level: int, str, tuple, or list, default optional
+
+对 `MultiIndex`的 `Series`，只移除指定 level 的 index。默认移除所有 levels.
+
+2. drop: bool, default False
+
+如果为 true，直接舍弃 index，而不添加为 column。
+
+3. name: object, optional
+
+原 Series 值对应column 名称，默认为`self.name`。如果 `drop` 为 True，则不添加新列，所以返回值为 `Series`，就不需要该参数，直接忽略。
+
+4. inplace: bool, default False
+
+修改原 `Series`，而不创建新对象。
+
+**返回**：Series 或 DataFrame
+
+- 如果 `drop` 为 False (默认值)，返回 DataFrame。新添加的 column 为 DataFrame 的第一列，随后是原 `Series` 的值。
+- 如果 `drop` 为 True，返回 Series。
+- 如果 `inplace=True`，不返回值。
+
+例如：
+
+```py
+>>> s = pd.Series([1, 2, 3, 4], name='foo',
+              index=pd.Index(['a', 'b', 'c', 'd'], name='idx'))
+```
+
+- `drop` 默认为 false，即默认返回 DataFrame，新的 column 名称为 index 中 `Index` 的 `name` 字段，原 Series 的 column 名称为 Series 的 `name` 字段。
+
+```py
+>>> s.reset_index()
+  idx  foo
+0   a    1
+1   b    2
+2   c    3
+3   d    4
+```
+
+- 使用 `name` 参数修改原 `Series` 值的 column 名称：
+
+```py
+>>> s.reset_index(name='values')
+  idx  values
+0   a       1
+1   b       2
+2   c       3
+3   d       4
+```
+
+- 将 `drop` 设置为 True，获得新的 Series
+
+```py
+>>> s.reset_index(drop=True)
+0    1
+1    2
+2    3
+3    4
+Name: foo, dtype: int64
+```
+
+- 将 `replace` 设置为 True，不返回值，修改原 Series
+
+```py
+>>> s.reset_index(inplace=True, drop=True)
+>>> s
+0    1
+1    2
+2    3
+3    4
+Name: foo, dtype: int64
+```
+
+对包含多层 index 的 `Series` 对象，`level` 参数很有用
+
+```py
+>>> arrays = [np.array(['bar', 'bar', 'baz', 'baz']),
+          np.array(['one', 'two', 'one', 'two'])]
+>>> s2 = pd.Series(range(4), name='foo',
+    index=pd.MultiIndex.from_arrays(arrays, names=['a', 'b']))
+```
+
+- 移除指定 level 的 index
+
+```py
+>>> s2.reset_index(level='a')
+       a  foo
+b
+one  bar    0
+two  bar    1
+one  baz    2
+two  baz    3
+```
+
+- 如果不指定 level，移除所有 index
+
+```py
+>>> s2.reset_index()
+     a    b  foo
+0  bar  one    0
+1  bar  two    1
+2  baz  one    2
+3  baz  two    3
+```
 
 ## 描述统计
 
