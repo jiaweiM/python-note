@@ -16,6 +16,10 @@
     - [reset_index](#resetindex)
   - [描述统计](#%e6%8f%8f%e8%bf%b0%e7%bb%9f%e8%ae%a1)
     - [Series.value_counts](#seriesvaluecounts)
+  - [Accerrors](#accerrors)
+    - [字符串处理（str）](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%a4%84%e7%90%86str)
+  - [参考](#%e5%8f%82%e8%80%83)
+    - [map](#map)
 
 ## 简介
 
@@ -521,4 +525,18 @@ dtype: float64
 ```
 
 - bins
+
+## Accerrors
+
+pandas 在不同访问器下提供特定于 dtype 的方法。它们在 Series 单独的命令空间，只应用于特定的数据类型。
+
+### 字符串处理（str）
+
+
+
+## 参考
+
+### map
+
+根据输入映射 `Series` 值。
 

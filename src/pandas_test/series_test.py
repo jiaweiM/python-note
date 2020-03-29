@@ -79,3 +79,4 @@ def test_apply_keyword():
 def test_apply_numpy_func():
     s = pd.Series([20, 21, 12])
     s1 = s.apply(np.log)
+

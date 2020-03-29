@@ -9,6 +9,30 @@ def test_unpacking():
     assert c == [3, 4, 5, 6, 7, 8]
 
 
+def test_unpack():
+    p = (4, 5)
+    x, y = p
+    assert x == 4
+    assert y == 5
+
+
+def test_unpack_str():
+    s = 'hello'
+    a, b, c, d, e = s
+    assert a == 'h'
+    assert b == 'e'
+    assert c == 'l'
+    assert d == 'l'
+    assert e == 'o'
+
+
+def test_unpack_long():
+    records = [('foo', 1, 2),
+               ('bar', 'hello'),
+               ('foo', 3, 4), ]
+    
+
+
 def test_ctr():
     # 我会推荐你总是使用括号,来指明元组的开始与结束
     # 尽管括号是一个可选选项。

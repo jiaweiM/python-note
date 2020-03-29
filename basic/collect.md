@@ -6,10 +6,6 @@
     - [创建 List](#%e5%88%9b%e5%bb%ba-list)
     - [操作和函数](#%e6%93%8d%e4%bd%9c%e5%92%8c%e5%87%bd%e6%95%b0)
     - [List Comprehension](#list-comprehension)
-  - [Tuple](#tuple)
-    - [创建 tuple](#%e5%88%9b%e5%bb%ba-tuple)
-    - [装箱和拆箱](#%e8%a3%85%e7%ae%b1%e5%92%8c%e6%8b%86%e7%ae%b1)
-    - [作为 dict 的 key](#%e4%bd%9c%e4%b8%ba-dict-%e7%9a%84-key)
   - [Set](#set)
     - [创建 set](#%e5%88%9b%e5%bb%ba-set)
     - [set 操作](#set-%e6%93%8d%e4%bd%9c)
@@ -19,12 +15,18 @@
     - [创建 Dictionary](#%e5%88%9b%e5%bb%ba-dictionary)
     - [操作和方法](#%e6%93%8d%e4%bd%9c%e5%92%8c%e6%96%b9%e6%b3%95)
     - [方法](#%e6%96%b9%e6%b3%95)
+  - [解压](#%e8%a7%a3%e5%8e%8b)
+    - [字符串解压](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%a7%a3%e5%8e%8b)
+    - [部分解压](#%e9%83%a8%e5%88%86%e8%a7%a3%e5%8e%8b)
+    - [解压多个元素](#%e8%a7%a3%e5%8e%8b%e5%a4%9a%e4%b8%aa%e5%85%83%e7%b4%a0)
 
 ***
 
 ## 简介
 
 Python 内置集合类型包括：list, dict, set, tuple.
+
+- [Tuple](collect_tuple.md)
 
 ## List
 
@@ -64,7 +66,7 @@ list5 = list("python") # Create a list with characters p, y, t, h, o, n
 | a_list[3:]                        | [3, -1)                                                                                                      |
 | a_list[:]                         | 全部， 复制列表                                                                                              |
 | s1 + s2                           | Concatenates two sequences s1 ans s2                                                                         |
-| s * n, n * s                      | n copies of sequence s concatenated                                                                          |
+| `s * n`, `n * s`                  | n copies of sequence s concatenated                                                                          |
 | a_list = a_list + [2.0, 3]        | + 号连接两个列表创建一个新的列表                                                                             |
 | count(x: object): int             | Returns the number of times element x appears in the list                                                    |
 | x in s                            | true if element x is in sequence s.                                                                          |
@@ -101,77 +103,6 @@ list2 = [ x +1 for x in range(10)] # list in range [1, 10]
 list3 = [x for x in range(10) if x %2 == 0] # [0, 2, 4, 6, 8]
 list4 = [x*2 for x in range(10) if x % 2 == 0]  # [0, 4, 8, 12, 16]
 ```
-
-## Tuple
-
-Python Tuple 和 list 十分类似，但是不能修改。tuple 是不可变的 list。
-
-所以，使用 tuple 更安全，因此，建议能使用 tuple 的地方，应该尽量使用 tuple。
-
-- Tuple 比 list快，如果不修改内容，使用 Tuple 更好；
-- Tuple 可以作为字典的 key值，因为它不可修改，List 则不可以。
-
-尝试修改 Tuple 的值抛出 TypeError.
-
-Tuple 不可变，所以它没有 list 的任何修改内容的方法，如 append(), extend(), insert(), remove() 和 pop()。这些方法Tuple 都没有。
-
-all(), any(), enumerate(), max(), min(), sorted(), len(), tuple() 等内置函数可用于 Tuple。
-
-| 方法                     | 说明                                      |
-| ------------------------ | ----------------------------------------- |
-| a_tuple[1:3]             | 将 a_tuple 的[1,3) 元素创建一个新的 tuple |
-| a_tuple.index('example') |                                           |
-| "z" in a_tuple, not in   |                                           |
-
-### 创建 tuple
-
-以圆括号创建，元素之间以逗号分隔。如下：
-
-```py
-t1 = () # 创建空的 tuple
-t2 = (50, ) # 创建一个元素的 tuple，必须包含括号
-t2 = (11, 22, 33)
-t3 = tuple([1, 2, 3, 4, 5, ]) # tuple from array
-t4 = tuple("abc")  # tuple from string
-t5 = 1, 2, 3 # 可以不带括号
-```
-
-Tuple 可以和List 相互转换，`tuple()` 函数将 list 转换为 tuple, `list()` 函数将 tuple 转换为 list.
-
-max, min, len, sum 可以在 tuples 中使用。
-
-### 装箱和拆箱
-
-装箱：使用多个变量，创建 Tuple.
-
-拆箱：使用Tuple，给多个变量赋值，如
-
-```py
-v = ('a', 2, True)
-(x, y, z) = v
-a, b, c, = v # 也可以不带括号
-```
-
-基于该原理，可以很容易的值互换：
-
-```py
-a, b = b, a
-```
-
-如果有个变量带 * 号，则多余的值全部给该变量。
-
-### 作为 dict 的 key
-
-由于 tuple 是 hashable，所以可以将 tuple 作为 dict 的键。
-
-```py
-a_dict[key_a, key_b] = number
-
-for key_a, key_b in a_dict:
-  …
-```
-
-a_dict.items() 返回值为 tuple 集合，每个 tuple 包含 dict 的键值对。
 
 ## Set
 
@@ -289,3 +220,115 @@ for key in a_dict:
 | type(a_dict)        | 获得类型信息                                                                                                                              |
 | cmp(a_dict, b_dict) | 对比两个字典的键和值                                                                                                                      |
 | str(a_dict)         | 字符串                                                                                                                                    |
+
+## 解压
+
+装箱：使用多个变量，创建 Tuple、List 等序列对象.
+
+拆箱：使用序列给多个变量赋值。
+
+任何序列（或可迭代对象）可以通过一个简单的赋值语句解压并赋值给多个变量，只要**变量数量和序列元素的数量相同**。如果变量个数和元素个数不匹配，抛出异常。
+
+例如
+
+```py
+v = ('a', 2, True)
+(x, y, z) = v
+a, b, c, = v # 也可以不带括号
+```
+
+基于该原理，可以很容易的值互换：
+
+```py
+a, b = b, a
+```
+
+如果有个变量带 `*` 号，则多余的值全部给该变量。
+
+### 字符串解压
+
+这种解压方式可以用在任意可迭代对象上。例如字符串：
+
+```py
+s = 'hello'
+a, b, c, d, e = s
+assert a == 'h'
+assert b == 'e'
+assert c == 'l'
+assert d == 'l'
+assert e == 'o'
+```
+
+### 部分解压
+
+有时候你只需要部分数据，Python 没有提供这种语法，但是可以用占位符，丢掉这些变量即可。比如使用 `_` 或 `ign`。
+
+这里使用 `_` 占位，要保证该占位符没有用作其它变量名。
+
+```py
+>>> data = [ 'ACME', 50, 91.1, (2012, 12, 21) ]
+>>> _, shares, price, _ = data
+>>> shares
+50
+>>> price
+91.1
+```
+
+### 解压多个元素
+
+如果可迭代对象的元素个数超过变量数，抛出 `ValueError`，但是你确实不需要这么多数据怎么办?
+
+可以用 Python 星号表达式解决这个问题。比如，你在学习一门课程，在学期末的时候， 你想统计下家庭作业的平均成绩，但是排除掉第一个和最后一个分数。如果只有四个分数，你可能就直接去简单的手动赋值， 但如果有 24 个呢？这时候星号表达式就派上用场了：
+
+```py
+def drop_first_last(grades):
+    first, *middle, last = grades
+    return avg(middle)
+```
+
+另外一种情况，假设你现在有一些用户的记录列表，每条记录包含一个名字、邮件，接着就是不确定数量的电话号码。 你可以像下面这样分解这些记录：
+
+```py
+>>> record = ('Dave', 'dave@example.com', '773-555-1212', '847-555-1212')
+>>> name, email, *phone_numbers = record
+>>> name
+'Dave'
+>>> email
+'dave@example.com'
+>>> phone_numbers
+['773-555-1212', '847-555-1212']
+```
+
+值得注意的是上面解压出的 `phone_numbers` 变量永远都是列表类型，不管解压的电话号码数量是多少（包括 0 个）。 所以，任何使用到 phone_numbers 变量的代码就不需要做多余的类型检查去确认它是否是列表类型了。
+
+星号表达式也能用在列表的开始部分。比如，你有一个公司前 8 个月销售数据的序列， 但是你想看下最近一个月数据和前面 7 个月的平均值的对比。你可以这样做：
+
+```py
+*trailing_qtrs, current_qtr = sales_record
+trailing_avg = sum(trailing_qtrs) / len(trailing_qtrs)
+return avg_comparison(trailing_avg, current_qtr)
+```
+
+星号解压语法在字符串操作的时候也会很有用，比如字符串的分割。
+
+```py
+>>> line = 'nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false'
+>>> uname, *fields, homedir, sh = line.split(':')
+>>> uname
+'nobody'
+>>> homedir
+'/var/empty'
+>>> sh
+'/usr/bin/false'
+```
+
+在很多函数式语言中，星号解压语法跟列表处理有许多相似之处。比如，如果你有一个列表， 你可以很容易的将它分割成前后两部分：
+
+```py
+>>> items = [1, 10, 7, 4, 5, 9]
+>>> head, *tail = items
+>>> head
+1
+>>> tail
+[10, 7, 4, 5, 9]
+```

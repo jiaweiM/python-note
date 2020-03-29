@@ -46,3 +46,21 @@ def test_sort_values():
 
     print(df)
     print(df1)
+
+
+def test_map():
+    def sub_str(file_name):
+        id = file_name.rfind(".")
+        if id > 0:
+            return file_name[: id]
+        else:
+            return file_name
+
+    df = pd.DataFrame(
+        {
+            'col1': ['File', "File.b", "File.c.d"],
+            'col2': [2, 1, 9]
+        }
+    )
+    df.loc[:, 'File'] = df.loc[:, 'col1'].map(sub_str)
+    print(df.loc[:, 'File'])

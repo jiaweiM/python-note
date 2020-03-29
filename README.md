@@ -46,6 +46,7 @@
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)
 - [IO](basic/io.md)
+- [类和对象](basic/class.md)
 - [异常处理](basic/exception.md)
 
 ## 集成模块
@@ -242,6 +243,10 @@ CherryPy, Flask
 - [Scientific Python Lectures](https://github.com/jrjohansson/scientific-python-lectures)
 
 ### 书籍
+
+- [Python Cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/)
+
+[书中源码](https://github.com/dabeaz/python-cookbook)
 
 #### Intermediate Python
 
