@@ -2,7 +2,7 @@
 
 - [Python Study Notes](#python-study-notes)
   - [Python 基础](#python-%e5%9f%ba%e7%a1%80)
-  - [集成模块](#%e9%9b%86%e6%88%90%e6%a8%a1%e5%9d%97)
+  - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
   - [第三方库](#%e7%ac%ac%e4%b8%89%e6%96%b9%e5%ba%93)
   - [Unit Test](#unit-test)
   - [Tools](#tools)
@@ -29,8 +29,6 @@
     - [Python 教程](#python-%e6%95%99%e7%a8%8b)
   - [Data Analysis](#data-analysis)
     - [书籍](#%e4%b9%a6%e7%b1%8d)
-      - [Intermediate Python](#intermediate-python)
-    - [Fluent Python](#fluent-python)
 
 ***
 
@@ -49,10 +47,11 @@
 - [类和对象](basic/class.md)
 - [异常处理](basic/exception.md)
 
-## 集成模块
+## 工具包
 
 - [pathlib](modules/pathlib.md)
 - [itertool](api/itertool.md)
+- [heapq](api/heapq.md)
 - [Numpy](numpy\contents.md)
 - [pandas](pandas\intro.md)
 
@@ -75,13 +74,13 @@
 
 “TensorFlow 是一个使用数据流图进行数值计算的开源软件库。图形节点表示数学运算，而图形边缘表示在它们之间流动的多维数据阵列（张量）。这种灵活的体系结构使用户可以将计算部署到桌面、服务器或移动设备中的一个或多个 CPU/GPU，而无需重写代码。 ”
 
-GitHub 地址： https://github.com/tensorflow/tensorflow
+[GitHub 地址](https://github.com/tensorflow/tensorflow)
 
 ## scikit-learn
 
 scikit-learn 是一个基于 NumPy，SciPy 和 matplotlib 的机器学习 Python 模块。它为数据挖掘和数据分析提供了简单而有效的工具。SKLearn 所有人都可用，并可在各种环境中重复使用。
 
-GitHub 地址： https://github.com/scikit-learn/scikit-learn
+[GitHub 地址](https://github.com/scikit-learn/scikit-learn)
 
 ## PyTorch
 
@@ -92,19 +91,19 @@ PyTorch 是一个 Python 包，提供两个高级功能：
 
 你可以重复使用自己喜欢的 Python 软件包，如 NumPy，SciPy 和 Cython，以便在需要时扩展 PyTorch。”
 
-GitHub 地址： https://github.com/pytorch/pytorch
+[GitHub 地址](https://github.com/pytorch/pytorch)
 
 ## Matplotlib
 
 Matplotlib 是一个 Python 2D 绘图库，可以生成各种出版品质的硬拷贝格式和跨平台交互式环境数据。Matplotlib 可用于 Python 脚本，Python 和 IPython shell（例如 MATLAB 或 Mathematica），Web 应用程序服务器和各种图形用户界面工具包。
 
-GitHub 地址： https://github.com/matplotlib/matplotlib
+[GitHub 地址](https://github.com/matplotlib/matplotlib)
 
 ## Keras
 
 Keras 是一个高级神经网络 API，用 Python 编写，能够在 TensorFlow，CNTK 或 Theano 之上运行。它旨在实现快速实验，能够以最小的延迟把想法变成结果，这是进行研究的关键。
 
-GitHub 地址： https://github.com/keras-team/keras
+[GitHub 地址](https://github.com/keras-team/keras)
 
 ## [NumPy](numpy\01_content.md)
 
@@ -112,55 +111,55 @@ NumPy 是使用 Python 进行科学计算所需的基础包。它提供了强大
 
 其提供的多维数组比 Python 的嵌套 list 要快许多。
 
-GitHub 地址： https://github.com/numpy/numpy
+[GitHub 地址](https://github.com/numpy/numpy)
 
 ## SciPy
 
 SciPy（发音为”Sigh Pie“）是数学、科学和工程方向的开源软件，包含统计、优化、集成、线性代数、傅立叶变换、信号和图像处理、ODE 求解器等模块。相对 NumPy 扩展了许多功能。
 
-GitHub 地址： https://github.com/scipy/scipy
+[GitHub 地址](https://github.com/scipy/scipy)
 
 ## Apache MXNet
 
 Apache MXNet（孵化）是一个深度学习框架，旨在提高效率和灵活性，让你可以混合符号和命令式编程，以最大限度地提高效率和生产力。 MXNet 的核心是一个动态依赖调度程序，可以动态地自动并行化符号和命令操作。
 
-GitHub 地址： https://github.com/apache/incubator-mxnet
+[GitHub 地址](https://github.com/apache/incubator-mxnet)
 
 ## Theano
 
 Theano 是一个 Python 库，让你可以有效地定义、优化和评估涉及多维数组的数学表达式。它可以使用 GPU 并实现有效的符号区分。
 
-GitHub 地址：https://github.com/Theano/Theano
+[GitHub 地址](https://github.com/Theano/Theano)
 
 ## Bokeh
 
 Bokeh 是一个用于 Python 的交互式可视化库，可以在现代 Web 浏览器中实现美观且有意义的数据视觉呈现。使用 Bokeh，你可以快速轻松地创建交互式图表、仪表板和数据应用程序。
 
-GitHub 地址： https://github.com/bokeh/bokeh
+[GitHub 地址](https://github.com/bokeh/bokeh)
 
 ## XGBoost
 
 XGBoost 是一个优化的分布式梯度增强库，旨在变得高效、强大、灵活和便携。它在 Gradient Boosting 框架下实现机器学习算法。XGBoost 提供了梯度提升决策树（也称为 GBDT，GBM），可以快速准确地解决许多数据科学问题，可以在主要的分布式环境（Hadoop，SGE，MPI）上运行相同的代码，并可以解决数十亿个示例之外的问题。
 
-GitHub 地址：https://github.com/dmlc/xgboost
+[GitHub 地](https://github.com/dmlc/xgboost)
 
 ## Gensim
 
 Gensim 是一个用于主题建模、文档索引和大型语料库相似性检索的 Python 库，目标受众是自然语言处理（NLP）和信息检索（IR）社区。
 
-GitHub 地址： https://github.com/RaRe-Technologies/gensim
+[GitHub 地址](https://github.com/RaRe-Technologies/gensim)
 
 ## Scrapy
 
 Scrapy 是一种快速的高级 Web 爬行和 Web 抓取框架，用于抓取网站并从其页面中提取结构化数据。它可用于从数据挖掘到监控和自动化测试的各种用途。
 
-GitHub 地址： https://github.com/scrapy/scrapy
+[GitHub 地址](https://github.com/scrapy/scrapy)
 
 ## Caffe
 
 Caffe 是一个以表达、速度和模块化为基础的深度学习框架，由伯克利人工智能研究（BAIR）/ 伯克利视觉与学习中心（BVLC）和社区贡献者开发。
 
-GitHub 地址： https://github.com/BVLC/caffe
+[GitHub 地址](https://github.com/BVLC/caffe)
 
 ## Django
 
@@ -180,6 +179,8 @@ CherryPy, Flask
 ## pygame
 
 2D 游戏开发。
+
+***
 
 ## 参考
 
@@ -204,8 +205,9 @@ CherryPy, Flask
 
 ### Python 教程
 
+- [Pythontic.com](https://pythontic.com/)
 - [The Python Tutorial 官方教程](https://docs.python.org/3/tutorial/index.html)
-- [Learn Python the hard way](https://learnpythonthehardway.org/book/)    
+- [Learn Python the hard way](https://learnpythonthehardway.org/book/)
 强烈推荐的入门教程，用一个个实例进行教学。
 - [Python Wiki](https://wiki.python.org/moin/BeginnersGuide/Programmers)
 - [x] [PyCharm使用简易教程](https://www.guru99.com/creating-your-first-python-program.html)
@@ -222,15 +224,15 @@ CherryPy, Flask
 - [Zet Code](https://thepythonguru.com/)
 - [W3C Python 教程](https://www.w3schools.com/python/)
 
-- https://pythonprogramming.net/  
+- [Python Programming](https://pythonprogramming.net/)
+
 包含诸多Python 数据分析教程。
 
-- https://www.python-course.eu/python3_course.php
-
+- [Python Course](https://www.python-course.eu/python3_course.php)
 - [A Byte of Python](https://python.swaroopch.com/)
-
 - [Programiz Python 实例教程](https://www.programiz.com/python-programming)  
-  包含丰富的实例，推荐。
+
+包含丰富的实例，推荐。
 
 - [x] [Dive Into Python 3](https://diveinto.org/python3/table-of-contents.html)
 
@@ -248,21 +250,15 @@ CherryPy, Flask
 
 [书中源码](https://github.com/dabeaz/python-cookbook)
 
-#### Intermediate Python
+- [Intermediate Python](http://book.pythontips.com/en/latest/)
 
-翻译：《Python 进阶》  
-英文版地址：http://book.pythontips.com/en/latest/  
-翻译本地址： https://eastlakeside.gitbooks.io/interpy-zh/content/
+对应中文版：[《Python 进阶》](https://eastlakeside.gitbooks.io/interpy-zh/content/)  
 
-### Fluent Python
+- [Fluent Python](https://github.com/fluentpython)
 
 《流畅的Python》
 
-[GitHub 地址](https://github.com/fluentpython)
-
 这本书在某些方面可能过于简洁，但对于中级到高级开发人员来说，Fluent Python可能是绝对最好的编程书籍。一个开发者一旦你掌握了基础知识，就开始迷茫了，而Fluent Python用了将近800页的内容，来为你指明方向。
-
-**优点和缺点**
 
 这本书中的每一个主题都非常紧凑，而且非常详细，包括代码示例和解释。这对于能够理解的人来说简直如获至宝，对于不理解的人来说就是灾难了
 
@@ -273,8 +269,8 @@ CherryPy, Flask
 - 读者可以了解到几乎所有的高级Python主题
 
 缺点：
+
 - 叙述方式不是我读过的书中最清晰的
 - 不同小节之间衔接不够自然
 
 - [利用Python进行数据分析](https://seancheney.gitbook.io/python-for-data-analysis-2nd/di-01-zhang-zhun-bei-gong-zuo)
-

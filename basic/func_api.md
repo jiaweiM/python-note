@@ -9,7 +9,10 @@
     - [abs](#abs)
     - [all](#all)
     - [any](#any)
+    - [enumerate](#enumerate)
     - [range](#range)
+    - [sorted](#sorted)
+    - [reversed](#reversed)
     - [zip](#zip)
       - [unzipping](#unzipping)
     - [type()](#type)
@@ -139,6 +142,20 @@ def any(iterable):
   return False
 ```
 
+### enumerate
+
+`enumerate()` 方法给 iterable 对象添加了一个计数器。语法：
+
+`enumerate(iterable, start=0)`
+
+- `iterable`，支持迭代的任意对象
+- `start`，其实计数值，默认0
+
+返回 `enumerate` 对象，可以使用 `list()` 和 `tuple()` 等转换为其它序列对象。
+
+
+
+
 ### range
 
 `range(stop)`
@@ -153,6 +170,66 @@ range 类型表示 immutable 数字序列，一般用在 for 循环中指定循�
 - 如果 step 为 0，抛出 `ValueError`
 
 [使用实例](../src/python_test/range_test.py)
+
+### sorted
+
+`sorted(iterable, *, key=None, reverse=False)`
+
+返回 `iterable` 排序后的列表。
+
+可选参数 `key` 指定从元素中提取用于比对的信息，例如 `key=str.lower`，默认为 `None`，即直接比对元素。
+
+参数 `reverse` 如果设置为 `True`，反向排序。
+
+该内置的 `sorted()` 函数保证稳定。排序算法稳定的意思是，不改变相等元素原来的顺序。
+
+```py
+py_list = ['e', 'a', 'u', 'o', 'i']
+sorted_list = sorted(py_list)
+assert sorted_list == ['a', 'e', 'i', 'o', 'u']
+```
+
+### reversed
+
+`reversed()`函数返回序列的**反向迭代器**。
+
+`reversed(seq)`
+
+序列是支持序列协议：`__len__()` 和 `__getitem__()` 方法。例如 `tuple`, `string`, `list`, `range` 等。
+
+也可以对实现 `__reverse__()` 方法的对象使用 `reversed(seq)`。
+
+例如，用于字符串：
+
+```py
+seq = 'Python'
+a = list(reversed(seq))
+assert a == ['n', 'o', 'h', 't', 'y', 'P']
+```
+
+用于 tuple:
+
+```py
+seq_tuple = ('P', 'y', 't', 'h', 'o', 'n')
+a = list(reversed(seq_tuple))
+assert a == ['n', 'o', 'h', 't', 'y', 'P']
+```
+
+用于实现 `__reverse__()` 的对象：
+
+```py
+class Vowerls:
+    vowels = ['a', 'e', 'i', 'o', 'u']
+
+    def __reversed__(self):
+        return reversed(self.vowels)
+
+
+def test_object():
+    v = Vowerls()
+    a = list(reversed(v))
+    assert a == ['u', 'o', 'i', 'e', 'a']
+```
 
 ### zip
 

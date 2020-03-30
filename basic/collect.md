@@ -27,6 +27,7 @@
 Python 内置集合类型包括：list, dict, set, tuple.
 
 - [Tuple](collect_tuple.md)
+- [deque](collect_deque.md)
 
 ## List
 
