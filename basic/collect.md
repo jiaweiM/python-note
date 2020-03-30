@@ -2,10 +2,6 @@
 
 - [Python Collection](#python-collection)
   - [简介](#%e7%ae%80%e4%bb%8b)
-  - [List](#list)
-    - [创建 List](#%e5%88%9b%e5%bb%ba-list)
-    - [操作和函数](#%e6%93%8d%e4%bd%9c%e5%92%8c%e5%87%bd%e6%95%b0)
-    - [List Comprehension](#list-comprehension)
   - [Set](#set)
     - [创建 set](#%e5%88%9b%e5%bb%ba-set)
     - [set 操作](#set-%e6%93%8d%e4%bd%9c)
@@ -26,84 +22,9 @@
 
 Python 内置集合类型包括：list, dict, set, tuple.
 
+- [list](collect_list.md)
 - [Tuple](collect_tuple.md)
 - [deque](collect_deque.md)
-
-## List
-
-List 为序列类型，可方便的执行添加、删除操作。List 为mutable 类型。
-
-### 创建 List
-
-创建类型相同的List
-
-```py
-l = [1, 2, 3, 4]
-```
-
-创建包含多种类型的List
-
-```py
-l2 = ["a string", 12]
-```
-
-其他创建list的方法
-
-```py
-list1 = list() # empty list
-list2 = list([22, 31, 61])
-list3 = list(["a", "b", "c"])
-list5 = list("python") # Create a list with characters p, y, t, h, o, n
-```
-
-### 操作和函数
-
-| 函数                              | 说明                                                                                                         |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| list[-1]                          | 获得倒数第一个元素                                                                                           |
-| a_list[1:3]                       | 子列表 [1:3)                                                                                                 |
-| a_list[1:-1]                      | 子列表1 到末尾                                                                                               |
-| a_list[:3]                        | [0, 3)                                                                                                       |
-| a_list[3:]                        | [3, -1)                                                                                                      |
-| a_list[:]                         | 全部， 复制列表                                                                                              |
-| s1 + s2                           | Concatenates two sequences s1 ans s2                                                                         |
-| `s * n`, `n * s`                  | n copies of sequence s concatenated                                                                          |
-| a_list = a_list + [2.0, 3]        | + 号连接两个列表创建一个新的列表                                                                             |
-| count(x: object): int             | Returns the number of times element x appears in the list                                                    |
-| x in s                            | true if element x is in sequence s.                                                                          |
-| x not in s                        | if element x is not in sequence s                                                                            |
-| index(x: object): int             | Returns the index of the first occurrence of element x in the list                                           |
-| append(x: object): None           | 添加 x 到列表末尾，返回 None                                                                                 |
-| extend(l: list): None             | Appends all the elements in l to the list and returns None                                                   |
-| insert(index: int, x:object):None | Inserts an element x at a given index. Note that the first element in the list has index 0 and retunrs None. |
-| del a_list[1]                     | 删除 a_list 的第二个元素                                                                                     |
-| remove(x:object):None             | Removes the first occurrence of element x from the list and returns None                                     |
-| list.pop()                        | 删除并返回最后一个元素                                                                                       |
-| list.pop(index)                   | 删除并返回指定位置的元素                                                                                     |
-| list[index]=element               | 设定指定位置元素的                                                                                           |
-| list[start:end]=b_list            | 设置list中start 到 end 的元素                                                                                |
-| reverse():None                    | Reverse the list and returns None                                                                            |
-| sort(): None                      | Sorts the elements in the list in ascending order and returns None.                                          |
-| len(s)                            | Length of sequence s, i.e. the number of elements in s                                                       |
-| min(s)                            | Smallest element in sequence s                                                                               |
-| max(s)                            | Largest element in sequence s                                                                                |
-| sum(s)                            | Sum of all numbers in sequence s                                                                             |
-| for loop                          | Traverses elements from left to right in a for loop                                                          |
-| all()                             | 列表所有项为 True                                                                                            |
-| any()                             | 列表任意项为 True                                                                                            |
-| enumerate                         | 同时返回元素的位置和值                                                                                       |
-| list[::-1]                        | 列表倒序                                                                                                     |
-
-### List Comprehension
-
-以一种简洁的方式创建List，在方括号中包含创建元素的表达式。例：
-
-```py
-list1 = [ x for x in range(10)]  # list in range [0, 9]
-list2 = [ x +1 for x in range(10)] # list in range [1, 10]
-list3 = [x for x in range(10) if x %2 == 0] # [0, 2, 4, 6, 8]
-list4 = [x*2 for x in range(10) if x % 2 == 0]  # [0, 4, 8, 12, 16]
-```
 
 ## Set
 
