@@ -13,7 +13,6 @@
     - [`RandomState.randn(d0, d1,...,dn)`](#randomstaterandnd0-d1dn)
     - [`RandomState.rand(d0,d1,...,dn)`](#randomstaterandd0d1dn)
     - [`Generator.integer`](#generatorinteger)
-    - [``](#)
 
 ## 快速入门
 
@@ -287,5 +286,3 @@ Out:
 ### `Generator.integer`
 
 `integers(low[, high, size, dtype, endpoint])`
-
-### ``

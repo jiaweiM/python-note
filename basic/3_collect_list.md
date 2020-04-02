@@ -3,9 +3,11 @@
 - [List](#list)
   - [简介](#%e7%ae%80%e4%bb%8b)
   - [创建 List](#%e5%88%9b%e5%bb%ba-list)
+    - [多维 list](#%e5%a4%9a%e7%bb%b4-list)
   - [函数](#%e5%87%bd%e6%95%b0)
   - [列表推导](#%e5%88%97%e8%a1%a8%e6%8e%a8%e5%af%bc)
   - [内嵌列表推导](#%e5%86%85%e5%b5%8c%e5%88%97%e8%a1%a8%e6%8e%a8%e5%af%bc)
+  - [del](#del)
   - [List as Stack](#list-as-stack)
   - [List as Queue](#list-as-queue)
 
@@ -37,6 +39,50 @@ list2 = list([22, 31, 61])
 list3 = list(["a", "b", "c"])
 list5 = list("python") # Create a list with characters p, y, t, h, o, n
 ```
+
+### 多维 list
+
+你可能会尝试使用如下方式创建多维数组：
+
+```py
+>>> A = [[None] * 2] * 3
+```
+
+输出出来，貌似是对的：
+
+```py
+>>> A
+[[None, None], [None, None], [None, None]]
+```
+
+但是当你赋值时，就发现不对劲了：
+
+```py
+>>> A[0][0] = 5
+>>> A
+[[5, None], [5, None], [5, None]]
+```
+
+在一个地方赋值，该值出现在多个地方。
+
+其原因是使用 `*` 重复 list 并没有创建副本，而只是创建对当前对象的引用。`*3` 只是创建原 list 的三个引用。所以修改一个，其它两个也会随之改变。
+
+创建多维 list 的推荐方式是依次创建一维和二维 list:
+
+```py
+A = [None] * 3
+for i in range(3):
+    A[i] = [None] * 2
+```
+
+也可以使用列表推断：
+
+```py
+w, h = 2, 3
+A = [[None] * w for i in range(h)]
+```
+
+当然也能使用扩展包，比如著名的 NumPy。
 
 ## 函数
 
@@ -193,6 +239,33 @@ SyntaxError: invalid syntax
 >>> list(zip(*matrix))
 [(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]
 ```
+
+## del
+
+list 的方法只能通过值删除元素。而使用 `del` 语句，可以通过索引删除元素。
+
+`del` 可删除列表切片，也可以清空整个列表。例如：
+
+```py
+>>> a = [-1, 1, 66.25, 333, 333, 1234.5]
+>>> del a[0]
+>>> a
+[1, 66.25, 333, 333, 1234.5]
+>>> del a[2:4]
+>>> a
+[1, 66.25, 1234.5]
+>>> del a[:]
+>>> a
+[]
+```
+
+`del` 甚至可以用来删除变量：
+
+```py
+>>> del a
+```
+
+在后面引用 `a` 会抛出错误。
 
 ## List as Stack
 

@@ -2,7 +2,6 @@
 
 - [heapq](#heapq)
   - [简介](#%e7%ae%80%e4%bb%8b)
-  - [优先队列](#%e4%bc%98%e5%85%88%e9%98%9f%e5%88%97)
   - [堆](#%e5%a0%86)
   - [函数](#%e5%87%bd%e6%95%b0)
     - [heappush](#heappush)
@@ -12,6 +11,8 @@
     - [heapreplace](#heapreplace)
     - [nlargest](#nlargest)
     - [nsmallest](#nsmallest)
+  - [实例](#%e5%ae%9e%e4%be%8b)
+  - [优先队列](#%e4%bc%98%e5%85%88%e9%98%9f%e5%88%97)
   - [获得集合中最大或最小的 N 个元素](#%e8%8e%b7%e5%be%97%e9%9b%86%e5%90%88%e4%b8%ad%e6%9c%80%e5%a4%a7%e6%88%96%e6%9c%80%e5%b0%8f%e7%9a%84-n-%e4%b8%aa%e5%85%83%e7%b4%a0)
 
 ***
@@ -24,11 +25,7 @@ heapq 模块使用常规的 Python list 创建 heap。它支持 O(log n)时间�
 
 heap 数据结构有个特征，它总是弹出最小的元素（最小堆）。不管多少压入或弹出操作，它总是保持其结构的完整性。
 
-## 优先队列
 
-优先队列（Priority Queue）是一种高级数据结构（ADT），优先级高的元素比优先级低的元素先从队列中出来。大多数编程语言（如 Python）使用 Binary heap 实现它。
-
-heapq 提供了最小堆的实现。
 
 ## 堆
 
@@ -157,6 +154,94 @@ assert top2_nums == [6, 5]
 ints = [3, 5, 6, 2, 1]
 low3 = hq.nsmallest(3, ints)
 assert low3 == [1, 2, 3]
+```
+
+## 实例
+
+通过将所有值推入 heap，然后依次弹出最小值，实现堆排序算法：
+
+```py
+def heapsort(iterable):
+    h = []
+    for value in iterable:
+        hq.heappush(h, value)
+    return [hq.heappop(h) for i in range(len(h))]
+
+
+def test_sort():
+    l = heapsort(([1, 3, 5, 7, 9, 2, 4, 6, 8, 0]))
+    assert l == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+该算法类似于 `sorted(iterable)`，但是不稳定。
+
+Heap 元素可以是 tuple，极大方便了为元素添加对比值：
+
+```py
+>>> h = []
+>>> heappush(h, (5, 'write code'))
+>>> heappush(h, (7, 'release product'))
+>>> heappush(h, (1, 'write spec'))
+>>> heappush(h, (3, 'create tests'))
+>>> heappop(h)
+(1, 'write spec')
+```
+
+## 优先队列
+
+优先队列（Priority Queue）是一种高级数据结构（ADT），优先级高的元素比优先级低的元素先从队列中出来。大多数编程语言（如 Python）使用 Binary heap 实现它。
+
+heapq 提供了最小堆的实现。
+
+优先队列是 heap 的常见应用之一，其实现具有如下难点：
+
+- 排序稳定性：如何保证具有相同优先级的元素按照原顺序返回
+- 如果两个 tuple 优先级相等，又提供默认顺序，则对比为中止
+- 如果任务的优先级改变，如何将其移到新的位置？
+- 如何删除已添加的元素？
+
+对第一个稳定，可以添加包含3个元素 tuple，包括优先级、计数和任务。计数是为了保证相同优先级的元素，可以按照它们添加的顺序返回。因为不会有两个任务具有相同计数，所以tuple 比较永远不会比较到任务。例如：
+
+```py
+import heapq
+
+class PriorityQueue:
+    def __init__(self):
+        self._queue = []
+        self._index = 0
+
+    def push(self, item, priority):
+        heapq.heappush(self._queue, (-priority, self._index, item))
+        self._index += 1
+
+    def pop(self):
+        return heapq.heappop(self._queue)[-1]
+```
+
+队列 `_queue` 保证第一个元素拥有最高优先级。队列中的 `(-priority, index, item)` 元素，优先级为负数是使得元素按照优先级从高到低排序，`index` 变量的作用是保证同等优先级元素按照它们插入的顺序排序，即保证排序稳定性。
+
+使用：
+
+```py
+>>> class Item:
+...     def __init__(self, name):
+...         self.name = name
+...     def __repr__(self):
+...         return 'Item({!r})'.format(self.name)
+...
+>>> q = PriorityQueue()
+>>> q.push(Item('foo'), 1)
+>>> q.push(Item('bar'), 5)
+>>> q.push(Item('spam'), 4)
+>>> q.push(Item('grok'), 1)
+>>> q.pop()
+Item('bar')
+>>> q.pop()
+Item('spam')
+>>> q.pop()
+Item('foo')
+>>> q.pop()
+Item('grok')
 ```
 
 ## 获得集合中最大或最小的 N 个元素
