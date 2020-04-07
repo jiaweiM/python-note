@@ -4,19 +4,20 @@
   - [基本函数](#%e5%9f%ba%e6%9c%ac%e5%87%bd%e6%95%b0)
   - [字符串函数](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0)
   - [数学函数](#%e6%95%b0%e5%ad%a6%e5%87%bd%e6%95%b0)
-  - [math 模块](#math-%e6%a8%a1%e5%9d%97)
-  - [函数](#%e5%87%bd%e6%95%b0)
-    - [abs](#abs)
-    - [all](#all)
-    - [any](#any)
-    - [enumerate](#enumerate)
-    - [range](#range)
-    - [sorted](#sorted)
-    - [reversed](#reversed)
-    - [zip](#zip)
-      - [unzipping](#unzipping)
-    - [type()](#type)
-    - [isinstance](#isinstance)
+  - [abs](#abs)
+  - [all](#all)
+  - [any](#any)
+  - [ascii](#ascii)
+  - [enumerate](#enumerate)
+  - [pow](#pow)
+  - [range](#range)
+  - [round](#round)
+  - [sorted](#sorted)
+  - [reversed](#reversed)
+  - [zip](#zip)
+    - [unzipping](#unzipping)
+  - [type()](#type)
+  - [isinstance](#isinstance)
 
 ## 基本函数
 
@@ -89,24 +90,13 @@
 | max(x1, x2, …, xn)       | Return largest value among supplied arguments     |
 | min(x1, x2, …, xn)       | Returns smallest value among supplied arguments   |
 
-## math 模块
+## abs
 
-| 方法     | 说明                                                 |
-| -------- | ---------------------------------------------------- |
-| ceil(x)  | Rounds the number up and returns its nearest integer |
-| floor(x) | Rounds the down up and returns its nearest integer   |
-| sqrt(x)  | Returns the square root of the number                |
-| sin(x)   | Returns sin of x where x is in radian                |
-| cos(x)   | Returns cosine of x where x is in radian             |
-| tan(x)   | Returns tangent of x where x is in radian            |
+[`abs(x)`](../src/python_test/builtin_func/abs_test.py)
 
-## 函数
+计算绝对值。
 
-### [abs](../src/python_test/abs_test.py)
-
-`abs(x)`
-
-计算绝对值。`x` 可以为整数或浮点数。对复数返回模。
+`x` 可以为整数或浮点数。对复数返回模。
 
 - 整数
 - 浮点数
@@ -114,9 +104,9 @@
 
 如果 `x` 定义了 `__abs__()` 函数，`abs(x)` 返回 `x.__abs__()`.
 
-### [all](../src/python_test/all_test.py)
+## all
 
-`all(iterable)`
+[`all(iterable)`](../src/python_test/builtin_func/all_test.py)
 
 如果 `iterable` 的所有元素为 true，返回 `True`。等价于：
 
@@ -128,9 +118,9 @@ def all(iterable):
   return True
 ```
 
-### [any](../src/python_test/any_test.py)
+## any
 
-`any(iterable)`
+[`any(iterable)`](../src/python_test/builtin_func/any_test.py)
 
 `iterable` 的任意对象为 true，返回 `True`。如果 iterable 为空，返回 `False`。等价于：
 
@@ -142,7 +132,13 @@ def any(iterable):
   return False
 ```
 
-### enumerate
+## ascii
+
+[`ascii(object)`](../src/python_test/builtin_func/ascii_test.py)
+
+功能和 `repr()` 类似，返回对象可打印形式的字符串表示，但是对 `repr()` 返回字符串中的非 ASCII 字符，使用 `\x`, `\u` 或 `\U` 进行转义。和 Python 2 中 `repr()` 返回的字符串类似。
+
+## enumerate
 
 `enumerate()` 方法给 iterable 对象添加了一个计数器。语法：
 
@@ -153,10 +149,21 @@ def any(iterable):
 
 返回 `enumerate` 对象，可以使用 `list()` 和 `tuple()` 等转换为其它序列对象。
 
+## pow
 
+[`pow(base, exp[, mod])`](../src/python_test/builtin_func/pow_test.py)
 
+返回 `base` 的 `exp` 指数；如果指定 `mod`，则对指数结果相对 `mod` 取模，效率比 `pow(base, exp) % mod` 高。
 
-### range
+两个参数的形式 `pow(base, exp)` 等价于 `base ** exp`。
+
+参数必须为数字类型。对混合参数类型，规则和二进制算数运算规则相同。对 `int` 操作数，如果第二个参数为 `int`，结果为 `int` 类型；如果第二个参数为负数，所有参数转换为 `float`，返回浮点数类型。例如：`10**2=100`, `10*-2=0.01`。
+
+- 指定 `mod`
+
+`mod` 必须为非零整数。如果 `exp` 为负，则
+
+## range
 
 `range(stop)`
 
@@ -171,7 +178,22 @@ range 类型表示 immutable 数字序列，一般用在 for 循环中指定循�
 
 [使用实例](../src/python_test/range_test.py)
 
-### sorted
+## round
+
+`round(number[, ndigits])`
+
+舍入到小数点后 `ndigits` 位精度。
+
+- 如果未提供 `ndigits`，或者为 `None`，返回最近的整数
+- 对支持 `round()` 的内置类型，四舍五入到最接近的值；如果两边的值相等，选择偶数，例如 `round(0.5)` 和 `round(-0.5)` 为 0，`round(1.5)` 为 2.
+- `ndigits` 为整数类型
+- 如果未提供 `ndigits` 或为 `None`，则返回整数；否则返回类型和 `number` 相同。
+
+如果 `number` 为常规 Python 类型，`round` 调用 `number.__round__。
+
+> `round()` 对浮点数的舍入行为有时候可能出乎意料：例如 `round(2.675, 2)` 结果为 `2.67` 而不是 `2.68`，这是因为浮点数无法完全表示小数位数。
+
+## sorted
 
 `sorted(iterable, *, key=None, reverse=False)`
 
@@ -189,7 +211,7 @@ sorted_list = sorted(py_list)
 assert sorted_list == ['a', 'e', 'i', 'o', 'u']
 ```
 
-### reversed
+## reversed
 
 `reversed()`函数返回序列的**反向迭代器**。
 
@@ -231,7 +253,7 @@ def test_object():
     assert a == ['u', 'o', 'i', 'e', 'a']
 ```
 
-### zip
+## zip
 
 `zip(*iterables)`
 
@@ -318,7 +340,7 @@ assert l[2] == (2, 2)
 
 而 Python 3 中，`zip()` 返回的是 iterator。使用 iterator 的好处是在需要时才生成数据，内存占用更少。
 
-#### unzipping
+### unzipping
 
 有 `zip()` 函数，为什么没有 `unzip()` 函数。因为`zip` 和 `*` 结合就实现了 unzip 功能。
 
@@ -331,7 +353,7 @@ assert numbers == (1, 2, 3, 4)
 assert letters == ('a', 'b', 'c', 'd')
 ```
 
-### type()
+## type()
 
 `type()` 函数有两种形式：
 
@@ -340,7 +362,7 @@ type(object) # return type of the given object
 type(name, bases, dict) # return a new type object
 ```
 
-### isinstance
+## isinstance
 
 `isinstance()` 检查对象是否为指定类型的实例。语法：
 

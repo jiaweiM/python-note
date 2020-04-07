@@ -22,6 +22,11 @@ def test_create():
     my_dict = dict([(1, 'apple'), (2, 'ball')])
 
 
+def test_len():
+    d = {1: 'apple', 2: 'ball'}
+    assert len(d) == 2
+
+
 def test_clear():
     """
     The clear() method removes all items from the dictionary
@@ -163,11 +168,11 @@ def test_pop():
 
 
 def test_values():
-    """
-    returns a view object that displays a list of all the values in the dictionary.
-    """
     sales = {'apple': 2, 'orange': 3, 'grapes': 4}
     assert set(sales.values()) == {2, 3, 4}
+    assert list(sales.values()) == [2, 3, 4]
+    sales['apple'] = 5
+    assert list(sales.values()) == [5, 3, 4]
 
 
 def test_update():
@@ -241,8 +246,11 @@ def test_setdefault():
     assert home == 2
 
 
+def test_order():
+    d = {"one": 1, "two": 2, "three": 3, "four": 4}
+    keys = list(d)
+    assert keys == ['one', 'two', 'three', 'four']
+
+
 def test_mul_values():
-    d={
-        'a':[1, 2, 3],
-        'b': [4,5]
-    }
+    d = {"one": 1, "two": 2, "three": 3, "four": 4}

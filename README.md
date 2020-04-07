@@ -39,7 +39,7 @@
 - [数据类型](basic/types.md)
 - [string](basic/string.md)
 - [函数](basic/function.md)
-  - [函数总结](basic/func_api.md)
+  - [Python 内置函数](basic/func_api.md)
 - [集合](basic/collect.md)
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)

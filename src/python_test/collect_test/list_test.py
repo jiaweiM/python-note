@@ -492,7 +492,3 @@ def test_stack():
     assert stack.pop() == 7
     assert stack.pop() == 6
     assert stack.pop() == 5
-
-
-def test_comprehension():
-    
