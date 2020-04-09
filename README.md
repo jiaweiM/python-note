@@ -26,9 +26,9 @@
   - [pygame](#pygame)
   - [参考](#%e5%8f%82%e8%80%83)
     - [代码练习](#%e4%bb%a3%e7%a0%81%e7%bb%83%e4%b9%a0)
-    - [Python 教程](#python-%e6%95%99%e7%a8%8b)
+  - [Python 教程](#python-%e6%95%99%e7%a8%8b)
   - [Data Analysis](#data-analysis)
-    - [书籍](#%e4%b9%a6%e7%b1%8d)
+  - [书籍](#%e4%b9%a6%e7%b1%8d)
 
 ***
 
@@ -37,13 +37,21 @@
 - [Python 简介](basic/0_intro.md)
 - [语法](basic/1_syntax.md)
 - [数据类型](basic/types.md)
+- [运算符](basic/operator.md)
+- [表达式](basic/8_expression.md)
 - [string](basic/string.md)
 - [函数](basic/function.md)
   - [Python 内置函数](basic/func_api.md)
 - [集合](basic/collect.md)
+  - [list](basic/3_collect_list.md)
+  - [tuple](basic/4_collect_tuple.md)
+  - [set](basic/5_collect_set.md)
+  - [dict](basic/6_collect_dict.md)
+  - [deque](basic/7_collect_deque.md)
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)
 - [IO](basic/io.md)
+  - [pathlib](io/1_pathlib.md)
 - [类和对象](basic/class.md)
 - [异常处理](basic/exception.md)
 
@@ -203,25 +211,32 @@ CherryPy, Flask
 [Python Exercies, Practice, Solution](https://www.w3resource.com/python-exercises/)  
 包含丰富的练习题。
 
-### Python 教程
+## Python 教程
 
 - [Pythontic.com](https://pythontic.com/)
 - [The Python Tutorial 官方教程](https://docs.python.org/3/tutorial/index.html)
 - [Learn Python the hard way](https://learnpythonthehardway.org/book/)
+
 强烈推荐的入门教程，用一个个实例进行教学。
+
 - [Python Wiki](https://wiki.python.org/moin/BeginnersGuide/Programmers)
 - [x] [PyCharm使用简易教程](https://www.guru99.com/creating-your-first-python-program.html)
 
 - [Teaching materials for the probabilistic graphical modesl and deep learning classes at Stanford](https://github.com/kuleshov/cs228-material)
 
 - [Solo Learn](https://www.sololearn.com/Course/Python/)  
+
 一步一步根据习题进行教学，很不错的入门教程。
 
 - [Learn Python](https://www.learnpython.org/)
 
+简易入门，内容不全。
+
 - [The Python Guru](https://thepythonguru.com/)  
+
 比较简洁。
-- [Zet Code](https://thepythonguru.com/)
+
+- [Zet Code](http://zetcode.com/lang/python/)
 - [W3C Python 教程](https://www.w3schools.com/python/)
 
 - [Python Programming](https://pythonprogramming.net/)
@@ -244,11 +259,13 @@ CherryPy, Flask
 
 - [Scientific Python Lectures](https://github.com/jrjohansson/scientific-python-lectures)
 
-### 书籍
+## 书籍
 
 - [Python Cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/)
 
 [书中源码](https://github.com/dabeaz/python-cookbook)
+
+强烈推荐，不过需要一定基础。
 
 - [Intermediate Python](http://book.pythontips.com/en/latest/)
 

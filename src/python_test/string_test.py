@@ -1,4 +1,5 @@
 import pytest
+import datetime
 
 
 def test_concanate():
@@ -185,17 +186,16 @@ def test_join():
     assert b == 'H:e:l:l:o'
 
 
-# -*- coding: utf-8 -*-
-
-"""
-print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
-objects, 待输出的对象
-sep, 值之前的分隔符，默认为空格
-end, 所有值输出后，默认添加的内容，默认为换行
-file, 默认输出位置
-
-input("") 命令行输入
-"""
+def test_format_simple():
+    # default
+    assert "Hello {}, your balance is {}.".format("Adam", 230.2346) == "Hello Adam, your balance is 230.2346."
+    # positional arguments
+    assert "Hello {0}, your balance is {1}.".format("Adam", 230.2346) == "Hello Adam, your balance is 230.2346."
+    # keyword arguments
+    assert "Hello {name}, your balance is {blc}.".format(name="Adam", blc=230.2346) \
+           == "Hello Adam, your balance is 230.2346."
+    assert "Hello {0}, your balance is {blc}.".format("Adam", blc=230.2346) \
+           == "Hello Adam, your balance is 230.2346."
 
 
 def test_string_format():
@@ -217,6 +217,96 @@ def test_string_format_keyword():
         greeting='Goodmorning', name='John'))
 
 
+def test_format_string():
+    # 字符串左对齐
+    assert "{:5}".format("cat") == "cat  "
+    # 字符串右对齐
+    assert "{:>5}".format("cat") == "  cat"
+    # 字符串中间对齐
+    assert "{:^5}".format("cat") == " cat "
+    # 字符串中间对齐，不足以 * 补齐
+    assert "{:*^5}".format("cat") == "*cat*"
+
+
+def test_format_trunc_string():
+    # 截断，保留3个字符
+    assert "{:.3}".format("caterpillar") == "cat"
+    # 截断，保留3个字符，并 padding
+    assert "{:5.3}".format("caterpillar") == "cat  "
+    # 截断，保留3个字符，padding 且中心对齐
+    assert "{:^5.3}".format("caterpillar") == " cat "
+
+
+def test_number():
+    # integer
+    assert "The number is: {:d}".format(123) == "The number is: 123"
+    # float
+    assert "The float number is:{:f}".format(123.4567898) == "The float number is:123.456790"
+    # octal
+    assert "bin: {0:b}, oct: {0:o}, hex: {0:x}".format(12) == "bin: 1100, oct: 14, hex: c"
+
+
+def test_format_number():
+    # 指定最小宽度
+    assert "{:5d}".format(12) == "   12"
+    # 数值超过最小宽度时，忽略宽度
+    assert "{:2d}".format(1234) == "1234"
+    # 浮点数
+    assert "{:8.3f}".format(12.2346) == "  12.235"
+    # 整数，宽度不足以0补充
+    assert "{:05d}".format(12) == "00012"
+    # 浮点数，宽度不足以0补充
+    assert "{:08.3f}".format(12.2346) == "0012.235"
+
+
+def test_format_number_sign():
+    # 显示 +
+    assert "{:+f} {:+f}".format(12.23, -12.23) == "+12.230000 -12.230000"
+    # 显示 -
+    assert "{:-f} {:-f}".format(12.23, -12.23) == "12.230000 -12.230000"
+    # 对 + 显示空格
+    assert "{: f} {: f}".format(12.23, -12.23) == " 12.230000 -12.230000"
+
+
+def test_format_alignment():
+    # 默认右对齐
+    assert "{:5d}".format(12) == "   12"
+    # 中心对齐
+    assert "{:^10.3f}".format(12.2346) == "  12.235  "
+    # 整数左对齐，不足填充0
+    assert "{:<05d}".format(12) == "12000"
+    # 浮点数带符号
+    assert "{:=8.3f}".format(-12.2346) == "- 12.235"
+
+
+def test_format_class():
+    class Person:
+        age = 23
+        name = "Adam"
+
+    assert "{p.name}'s age is: {p.age}".format(p=Person()) == "Adam's age is: 23"
+
+
+def test_format_dict():
+    person = {'age': 23, 'name': 'Adam'}
+    assert "{p[name]}'s age is: {p[age]}".format(p=person) == "Adam's age is: 23"
+    assert "{name}'s age is: {age}".format(**person) == "Adam's age is: 23"
+
+
+def test_format_dynamic():
+    # 动态字符串格式化
+    string = "{:{fill}{align}{width}}"
+    # 格式化代码以参数传入
+    assert string.format("cat", fill='*', align='^', width=5) == '*cat*'
+    # 动态 float 格式化
+    num = "{:{align}{width}.{precision}f}"
+    assert num.format(123.236, align='<', width=8, precision=2) == "123.24  "
+
+
+def test_format_datetime():
+    date = datetime.datetime.now()
+
+
 def test_string_format_printf():
     x = 12.3456789
     print('The value of x is %3.2f' % x)
@@ -227,3 +317,17 @@ def test_find():
     x = "Hello World"
     index = x.find('or')
     assert index == 7
+
+
+def all_occurrences(lst, elem):
+    res = []
+    for ind in range(len(lst)):
+        if lst[ind] == elem:
+            res.append(ind)
+    return res
+
+
+def test_all_occurrences():
+    l = [1, 3, 5, 7, 9, 1, 2, 3]
+    ls1 = all_occurrences(l, 1)
+    assert ls1 == [0, 5]

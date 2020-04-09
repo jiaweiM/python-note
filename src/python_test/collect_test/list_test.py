@@ -20,8 +20,7 @@ def test_slice():
     '''
     通过 [start:end] 切片 list
     '''
-    nums = list(
-        range(5))  # range is a built-in function that creates a list of integers
+    nums = list(range(5))  # range is a built-in function that creates a list of integers
     assert nums == [0, 1, 2, 3, 4]
     assert nums[2:4] == [2, 3]  # Get a slice from index 2 to 4
     assert nums[2:] == [2, 3, 4]

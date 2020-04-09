@@ -7,7 +7,7 @@
   - [位运算符](#%e4%bd%8d%e8%bf%90%e7%ae%97%e7%ac%a6)
   - [赋值运算符](#%e8%b5%8b%e5%80%bc%e8%bf%90%e7%ae%97%e7%ac%a6)
   - [识别操作符（Identity operators）](#%e8%af%86%e5%88%ab%e6%93%8d%e4%bd%9c%e7%ac%a6identity-operators)
-  - [成员操作符（Membership operators）](#%e6%88%90%e5%91%98%e6%93%8d%e4%bd%9c%e7%ac%a6membership-operators)
+  - [成员操作符](#%e6%88%90%e5%91%98%e6%93%8d%e4%bd%9c%e7%ac%a6)
   - [运算符优先级](#%e8%bf%90%e7%ae%97%e7%ac%a6%e4%bc%98%e5%85%88%e7%ba%a7)
 
 ***
@@ -88,9 +88,9 @@
 | is     | True if the operands are identical (refer to the same object)            |
 | is not | True if the operands are not identical (do not refer to the same object) |
 
-## 成员操作符（Membership operators）
+## 成员操作符
 
-`in` 和 `not in` 为成员操作符。用于检测一个变量或值是否在一个序列中(string, list, tuple, set and dictionary).
+`in` 和 `not in` 为成员操作符（Membership operators）。用于检测一个变量或值是否在一个序列中(string, list, tuple, set and dictionary).
 
 在 dict 中，只能检查 key,不能检测 value.
 

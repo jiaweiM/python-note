@@ -7,6 +7,7 @@
   - [Exception 类型处理](#exception-%e7%b1%bb%e5%9e%8b%e5%a4%84%e7%90%86)
   - [标准异常列表](#%e6%a0%87%e5%87%86%e5%bc%82%e5%b8%b8%e5%88%97%e8%a1%a8)
   - [Assertion](#assertion)
+  - [References](#references)
 
 ## 简介
 
@@ -153,3 +154,7 @@ assert 可以带参数，在抛出异常时输出：
 tmp = -10
 assert (tmp >= 0), "Colder than absolute zero!"
 ```
+
+## References
+
+- [Python tutorial](https://docs.python.org/3/tutorial/errors.html)
