@@ -46,6 +46,7 @@
   - [dict](basic/6_collect_dict.md)
   - [deque](basic/7_collect_deque.md)
   - [defaultdict](api/collections_defaultdict.md)
+  - [OrderedDict](api/collections_ordereddict.md)
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)
 - [IO](basic/io.md)
