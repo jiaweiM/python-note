@@ -233,7 +233,9 @@ popitem() 适用于对字典进行消耗性的迭代。如果字典为空，调�
 
 `update([other])`
 
-使用来自 `other` 的键/值对更新字典，覆盖原有的键。 返回 `None`。
+使用来自 `other` 的键/值对更新字典，覆盖原有的键。
+
+返回 `None`。
 
 `update()` 接受另一个字典对象，或者包含键/值对（长度为2的元组或其它可迭代对象）的可迭代对象。 如果给出了关键字参数，则会以其所指定的键/值对更新字典: `d.update(red=1, blue=2)`。
 
@@ -284,3 +286,5 @@ e = {
 选择使用列表还是集合取决于实际需求。如果想保持元素的插入顺序，就使用列表，如果要去掉重复元素，就使用集合。
 
 也可以使用 `collections` 的 `defaultdict` 构造这样的词典。
+
+`defaultdict` 使用更方便，具体参考 [collections.defaultdict](../api/collections_defaultdict.md)。

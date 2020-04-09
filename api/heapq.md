@@ -12,8 +12,9 @@
     - [nlargest](#nlargest)
     - [nsmallest](#nsmallest)
   - [实例](#%e5%ae%9e%e4%be%8b)
-  - [优先队列](#%e4%bc%98%e5%85%88%e9%98%9f%e5%88%97)
-  - [获得集合中最大或最小的 N 个元素](#%e8%8e%b7%e5%be%97%e9%9b%86%e5%90%88%e4%b8%ad%e6%9c%80%e5%a4%a7%e6%88%96%e6%9c%80%e5%b0%8f%e7%9a%84-n-%e4%b8%aa%e5%85%83%e7%b4%a0)
+    - [堆排序](#%e5%a0%86%e6%8e%92%e5%ba%8f)
+    - [优先队列](#%e4%bc%98%e5%85%88%e9%98%9f%e5%88%97)
+    - [获得集合中最大或最小的 N 个元素](#%e8%8e%b7%e5%be%97%e9%9b%86%e5%90%88%e4%b8%ad%e6%9c%80%e5%a4%a7%e6%88%96%e6%9c%80%e5%b0%8f%e7%9a%84-n-%e4%b8%aa%e5%85%83%e7%b4%a0)
 
 ***
 
@@ -24,8 +25,6 @@ heapq 模块使用 bineary heap 数据结构实现了堆队列算法（优先队
 heapq 模块使用常规的 Python list 创建 heap。它支持 O(log n)时间内添加和删除最小的元素。是优先队列实现的很好选择。
 
 heap 数据结构有个特征，它总是弹出最小的元素（最小堆）。不管多少压入或弹出操作，它总是保持其结构的完整性。
-
-
 
 ## 堆
 
@@ -158,6 +157,8 @@ assert low3 == [1, 2, 3]
 
 ## 实例
 
+### 堆排序
+
 通过将所有值推入 heap，然后依次弹出最小值，实现堆排序算法：
 
 ```py
@@ -187,7 +188,7 @@ Heap 元素可以是 tuple，极大方便了为元素添加对比值：
 (1, 'write spec')
 ```
 
-## 优先队列
+### 优先队列
 
 优先队列（Priority Queue）是一种高级数据结构（ADT），优先级高的元素比优先级低的元素先从队列中出来。大多数编程语言（如 Python）使用 Binary heap 实现它。
 
@@ -218,7 +219,7 @@ class PriorityQueue:
         return heapq.heappop(self._queue)[-1]
 ```
 
-队列 `_queue` 保证第一个元素拥有最高优先级。队列中的 `(-priority, index, item)` 元素，优先级为负数是使得元素按照优先级从高到低排序，`index` 变量的作用是保证同等优先级元素按照它们插入的顺序排序，即保证排序稳定性。
+队列 `_queue` 保证第一个元素拥有最高优先级。队列中的 `(-priority, index, item)` 元素，优先级为负数使得元素按照优先级从高到低排序，`index` 变量的作用是保证同等优先级元素按照它们插入的顺序排序，即保证排序稳定性。
 
 使用：
 
@@ -244,7 +245,46 @@ Item('foo')
 Item('grok')
 ```
 
-## 获得集合中最大或最小的 N 个元素
+- index 功能解释
+
+如果 `Item` 不支持排序，对比会出错：
+
+```py
+>>> a = Item('foo')
+>>> b = Item('bar')
+>>> a < b
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+TypeError: unorderable types: Item() < Item()
+```
+
+如果不使用 index，仅使用元祖 `(priority, item)`，两个元素优先级不同可以比较。如果两个元素优先级相同，就会出现和上门一样的错误：
+
+```py
+>>> a = (1, Item('foo'))
+>>> b = (5, Item('bar'))
+>>> a < b
+True
+>>> c = (1, Item('grok'))
+>>> a < c
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+TypeError: unorderable types: Item() < Item()
+```
+
+引入 `index` 组成三元组 `(priority, index, item)`，就能很好的避免上面的错误，因为不可能有两个元素有相同的 `index`。这样就永远不会直接比较 `Item`：
+
+```py
+>>> a = (1, 0, Item('foo'))
+>>> b = (5, 1, Item('bar'))
+>>> c = (1, 2, Item('grok'))
+>>> a < b
+True
+>>> a < c
+True
+```
+
+### 获得集合中最大或最小的 N 个元素
 
 实现该功能的方法有多种，但是使用 heapq 最直观，也最快。
 
@@ -266,6 +306,6 @@ portfolio = [
     {'name': 'YHOO', 'shares': 45, 'price': 16.35},
     {'name': 'ACME', 'shares': 75, 'price': 115.65}
 ]
-cheap = heapq.nsmallest(3, portfolio, key=lambda s: s['price'])
+cheap = heapq.nsmallest(3, portfolio, key=lambda s: s['price']) # key 指定用 price 对比
 expensive = heapq.nlargest(3, portfolio, key=lambda s: s['price'])
 ```

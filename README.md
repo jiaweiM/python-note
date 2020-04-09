@@ -1,17 +1,14 @@
 # Python Study Notes
 
 - [Python Study Notes](#python-study-notes)
-  - [Python 基础](#python-%e5%9f%ba%e7%a1%80)
+  - [Python 学习笔记](#python-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0)
   - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
-  - [第三方库](#%e7%ac%ac%e4%b8%89%e6%96%b9%e5%ba%93)
   - [Unit Test](#unit-test)
   - [Tools](#tools)
   - [TensorFlow](#tensorflow)
   - [scikit-learn](#scikit-learn)
   - [PyTorch](#pytorch)
-  - [Matplotlib](#matplotlib)
   - [Keras](#keras)
-  - [NumPy](#numpy)
   - [SciPy](#scipy)
   - [Apache MXNet](#apache-mxnet)
   - [Theano](#theano)
@@ -32,7 +29,7 @@
 
 ***
 
-## Python 基础
+## Python 学习笔记
 
 - [Python 简介](basic/0_intro.md)
 - [语法](basic/1_syntax.md)
@@ -48,6 +45,7 @@
   - [set](basic/5_collect_set.md)
   - [dict](basic/6_collect_dict.md)
   - [deque](basic/7_collect_deque.md)
+  - [defaultdict](api/collections_defaultdict.md)
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)
 - [IO](basic/io.md)
@@ -60,11 +58,7 @@
 - [pathlib](modules/pathlib.md)
 - [itertool](api/itertool.md)
 - [heapq](api/heapq.md)
-- [Numpy](numpy\contents.md)
-- [pandas](pandas\intro.md)
-
-## 第三方库
-
+- [Numpy](numpy/0_numpy_toc.md)
 - [pandas](pandas/0_pandas_toc.md)
 
 ## Unit Test
@@ -101,25 +95,11 @@ PyTorch 是一个 Python 包，提供两个高级功能：
 
 [GitHub 地址](https://github.com/pytorch/pytorch)
 
-## Matplotlib
-
-Matplotlib 是一个 Python 2D 绘图库，可以生成各种出版品质的硬拷贝格式和跨平台交互式环境数据。Matplotlib 可用于 Python 脚本，Python 和 IPython shell（例如 MATLAB 或 Mathematica），Web 应用程序服务器和各种图形用户界面工具包。
-
-[GitHub 地址](https://github.com/matplotlib/matplotlib)
-
 ## Keras
 
 Keras 是一个高级神经网络 API，用 Python 编写，能够在 TensorFlow，CNTK 或 Theano 之上运行。它旨在实现快速实验，能够以最小的延迟把想法变成结果，这是进行研究的关键。
 
 [GitHub 地址](https://github.com/keras-team/keras)
-
-## [NumPy](numpy\01_content.md)
-
-NumPy 是使用 Python 进行科学计算所需的基础包。它提供了强大的 N 维数组对象，复杂的（广播）功能，集成 C / C ++ 和 Fortran 代码的工具以及有用的线性代数，傅里叶变换和随机数功能。
-
-其提供的多维数组比 Python 的嵌套 list 要快许多。
-
-[GitHub 地址](https://github.com/numpy/numpy)
 
 ## SciPy
 

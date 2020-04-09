@@ -26,3 +26,11 @@ def test_int():
     for k in s:
         d[k] += 1
     list(d).sort()
+
+
+def test_lambda():
+    def constant_factory(value):
+        return lambda: value
+
+    d = defaultdict(constant_factory('<DAO>'))
+    assert d['a'] == "<DAO>"
