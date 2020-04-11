@@ -1,7 +1,3 @@
-# list 有 sort() 方法，效果和 sorted() 类似，差别是，不返回值，而是排序原始 list
-# 元音字母排序
-
-
 def test_list():
     # vowels list
     py_list = ['e', 'a', 'u', 'o', 'i']
@@ -52,3 +48,18 @@ def test_custom():
     sorted_list = sorted(random, key=take_second)
 
     assert sorted_list == [(4, 1), (2, 2), (1, 3), (3, 4)]
+
+
+def test_custom_key():
+    class User:
+        def __init__(self, user_id):
+            self.user_id = user_id
+
+        def __repr__(self):
+            return 'User({})'.format(self.user_id)
+
+    users = [User(3), User(1), User(9)]
+    sorted_users = sorted(users, key=lambda u: u.user_id)
+    assert sorted_users[0].user_id == 1
+    assert sorted_users[1].user_id == 3
+    assert sorted_users[2].user_id == 9

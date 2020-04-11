@@ -7,6 +7,9 @@
   - [数学运算符](#%e6%95%b0%e5%ad%a6%e8%bf%90%e7%ae%97%e7%ac%a6)
   - [查找方法](#%e6%9f%a5%e6%89%be%e6%96%b9%e6%b3%95)
     - [attrgetter](#attrgetter)
+      - [查询单个属性](#%e6%9f%a5%e8%af%a2%e5%8d%95%e4%b8%aa%e5%b1%9e%e6%80%a7)
+      - [查询多个属性](#%e6%9f%a5%e8%af%a2%e5%a4%9a%e4%b8%aa%e5%b1%9e%e6%80%a7)
+      - [带点号查询](#%e5%b8%a6%e7%82%b9%e5%8f%b7%e6%9f%a5%e8%af%a2)
     - [itemgetter](#itemgetter)
       - [实例](#%e5%ae%9e%e4%be%8b)
       - [根据某个关键字排序字典](#%e6%a0%b9%e6%8d%ae%e6%9f%90%e4%b8%aa%e5%85%b3%e9%94%ae%e5%ad%97%e6%8e%92%e5%ba%8f%e5%ad%97%e5%85%b8)
@@ -66,7 +69,49 @@
 
 `operator.attrgetter(*attrs)`
 
-返回从其操作符中提取 `attr` 的 `callable` 对象。如果需要多个属性，返回 tuple 类型。属性名称可以包含点号。
+返回一个 `callable` 对象，该对象从其操作数中提取 `attr`。如果查询多个属性，返回 tuple 类型。属性名称可以包含点号。
+
+等价于：
+
+```py
+def attrgetter(*items):
+    if any(not isinstance(item, str) for item in items):
+        raise TypeError('attribute name must be a string')
+    if len(items) == 1:
+        attr = items[0]
+        def g(obj):
+            return resolve_attr(obj, attr)
+    else:
+        def g(obj):
+            return tuple(resolve_attr(obj, attr) for attr in items)
+    return g
+
+def resolve_attr(obj, attr):
+    for name in attr.split("."):
+        obj = getattr(obj, name)
+    return obj
+```
+
+#### 查询单个属性
+
+设置 `f = attrgetter('name')`，则 `f(b)` 返回 `b.name`。例如：
+
+```py
+class User:
+    def __init__(self, name):
+        self.name = name
+
+get_name = attrgetter('name')
+assert get_name(User('swan')) == 'swan'
+```
+
+#### 查询多个属性
+
+设置 `f = attrgetter('name', 'date')`，调用 `f(b)` 返回 `(b.name, b.date)`
+
+#### 带点号查询
+
+设置 `f = attrgetter('name.first', 'name.last')`后，调用 `f(b)` 返回 `(b.name.first, b.name.last)`
 
 ### itemgetter
 

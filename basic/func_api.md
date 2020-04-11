@@ -16,6 +16,7 @@
   - [range](#range)
   - [round](#round)
   - [sorted](#sorted)
+    - [非原生比较对象排序](#%e9%9d%9e%e5%8e%9f%e7%94%9f%e6%af%94%e8%be%83%e5%af%b9%e8%b1%a1%e6%8e%92%e5%ba%8f)
   - [reversed](#reversed)
   - [zip](#zip)
     - [无参数](#%e6%97%a0%e5%8f%82%e6%95%b0)
@@ -260,6 +261,39 @@ py_list = ['e', 'a', 'u', 'o', 'i']
 sorted_list = sorted(py_list)
 assert sorted_list == ['a', 'e', 'i', 'o', 'u']
 ```
+
+> list 也有 `sort()` 方法，效果和 `sorted()` 类似，差别是，不返回值，list 是原位排序。
+
+### 非原生比较对象排序
+
+对不支持原生比较对象的排序，可以将 `callable` 对象传递给 `key` 参数。`callable` 对象对每个传入的元素返回一个值，`sorted()` 函数根据该值排序元素。
+
+假设你需要对 `User` 实例排序，如下：
+
+```py
+class User:
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+    def __repr__(self):
+        return 'User({})'.format(self.user_id)
+
+users = [User(3), User(1), User(9)]
+sorted_users = sorted(users, key=lambda u: u.user_id)
+assert sorted_users[0].user_id == 1
+assert sorted_users[1].user_id == 3
+assert sorted_users[2].user_id == 9
+```
+
+还可以使用 `operator.attrgetter()` 代替 lambda 函数：
+
+```py
+>>> from operator import attrgetter
+>>> sorted(users, key=attrgetter('user_id'))
+[User(3), User(23), User(99)]
+```
+
+而且 `operator.attrgetter()` 通常会快一点，并且还能同时允许多个字段进行比较。
 
 ## reversed
 
