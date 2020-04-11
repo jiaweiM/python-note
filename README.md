@@ -3,6 +3,7 @@
 - [Python Study Notes](#python-study-notes)
   - [Python 学习笔记](#python-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0)
   - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
+    - [函数编程](#%e5%87%bd%e6%95%b0%e7%bc%96%e7%a8%8b)
   - [Unit Test](#unit-test)
   - [Tools](#tools)
   - [TensorFlow](#tensorflow)
@@ -57,11 +58,14 @@
 ## 工具包
 
 - [pathlib](modules/pathlib.md)
-- [itertool](api/itertool.md)
-- [operator](api/module_operator.md)
 - [heapq](api/heapq.md)
 - [Numpy](numpy/0_numpy_toc.md)
 - [pandas](pandas/0_pandas_toc.md)
+
+### 函数编程
+
+- [itertool](api/itertool.md)
+- [operator](api/module_operator.md)
 
 ## Unit Test
 
