@@ -9,10 +9,15 @@
     - [s * n](#s--n)
     - [切片](#%e5%88%87%e7%89%87)
     - [s.index](#sindex)
+  - [slice](#slice)
+    - [indices](#indices)
+    - [命名切片](#%e5%91%bd%e5%90%8d%e5%88%87%e7%89%87)
   - [解压](#%e8%a7%a3%e5%8e%8b)
     - [字符串解压](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%a7%a3%e5%8e%8b)
     - [部分解压](#%e9%83%a8%e5%88%86%e8%a7%a3%e5%8e%8b)
     - [解压可迭代对象](#%e8%a7%a3%e5%8e%8b%e5%8f%af%e8%bf%ad%e4%bb%a3%e5%af%b9%e8%b1%a1)
+  - [应用](#%e5%ba%94%e7%94%a8)
+    - [删除序列相同元素并保持顺序](#%e5%88%a0%e9%99%a4%e5%ba%8f%e5%88%97%e7%9b%b8%e5%90%8c%e5%85%83%e7%b4%a0%e5%b9%b6%e4%bf%9d%e6%8c%81%e9%a1%ba%e5%ba%8f)
 
 ***
 
@@ -140,6 +145,83 @@ True
 如果 `s` 没有找到 `x`，抛出 `ValueError`。
 
 使用 `i`, `j` 参数可以只检索部分序列，但并非所有序列实现支持该参数。使用 `i`, `j` 大致等效于 `s[i:j].index(x)`，但是不复制任何数据，索引也是相对于原序列的位置。
+
+## slice
+
+`class slice(stop)`
+
+`class slice(start, stop[, step])`
+
+返回 `range(start, stop, step)` 对应索引的切片对象。
+
+切片对象（slice）包含三个只读属性 `start`, `stop` 和 `step`。`start` 和 `step` 默认为 `None`。
+
+```py
+>>> a = slice(5, 50, 2)
+>>> a.start
+5
+>>> a.stop
+50
+>>> a.step
+2
+```
+
+默认值：
+
+```py
+a = slice(3)
+assert a.start is None
+assert a.step is None
+assert a.stop == 3
+```
+
+**所有使用切片的地方都可以使用切片对象**。例如：
+
+```py
+>>> items = [0, 1, 2, 3, 4, 5, 6]
+>>> a = slice(2, 4)
+>>> items[2:4]
+[2, 3]
+>>> items[a]
+[2, 3]
+>>> items[a] = [10,11]
+>>> items
+[0, 1, 10, 11, 4, 5, 6]
+>>> del items[a]
+>>> items
+[0, 1, 4, 5, 6]
+```
+
+### indices
+
+调用切片的 `indices(size)` 方法可以将它映射到一个已知大小的序列上。这个方法返回一个三元组 `(start, stop, step)`，所有的值都会被调整以适合序列边界。这样就不会出现 `IndexError`。例如：
+
+```py
+s = 'HelloWorld'
+a = slice(5, 50, 2)
+b = a.indices(len(s))
+assert b == (5, 10, 2)
+```
+
+### 命名切片
+
+如果你的程序中包含大量无法直视的硬编码切片，此时可以考虑命名切片。例如，从一个记录（文件或其它类似格式）中的某些固定位置提取字段：
+
+```py
+######    0123456789012345678901234567890123456789012345678901234567890'
+record = '....................100 .......513.25 ..........'
+cost = int(record[20:23]) * float(record[31:37])
+```
+
+此时可以采用命名切片：
+
+```py
+SHARES = slice(20, 23)
+PRICE = slice(31, 37)
+cost = int(record[SHARES]) * float(record[PRICE])
+```
+
+这样避免了使用大量难以理解的硬编码下标，代码更加清晰。
 
 ## 解压
 
@@ -318,3 +400,69 @@ for tag, *args in records:
 ```
 
 不过递归不是 Python 擅长的，此处仅用于演示。
+
+## 应用
+
+### 删除序列相同元素并保持顺序
+
+删除重复元素，可以简单的构造集合，例如：
+
+```py
+>>> a
+[1, 5, 2, 1, 9, 1, 5, 10]
+>>> set(a)
+{1, 2, 10, 5, 9}
+```
+
+但是这种方法不能维护元素的顺序，生成的结果中元素的位置被打乱。下面的方法可以维护元素顺序。
+
+- 如果序列上的值都是 `hashable` 类型，那么可以使用集合或生成器来解决该问题。比如：
+
+```py
+def dedupe(items):
+    seen = set()
+    for item in items:
+        if item not in seen:
+            yield item
+            seen.add(item)
+```
+
+下面是使用该函数的例子：
+
+```py
+>>> a = [1, 5, 2, 1, 9, 1, 5, 10]
+>>> list(dedupe(a))
+[1, 5, 2, 9, 10]
+```
+
+如果序列元祖不是 `hashable`，比如 `dict` 类型，需要稍微修改上述代码：
+
+```py
+def dedupe(items, key=None):
+    seen = set()
+    for item in items:
+        val = item if key is None else key(item)
+        if val not in seen:
+            yield item
+            seen.add(val)
+```
+
+这里的 key 参数指定一个函数，将序列元素转换为 `hashable` 类型。例如：
+
+```py
+>>> a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
+>>> list(dedupe(a, key=lambda d: (d['x'],d['y'])))
+[{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
+>>> list(dedupe(a, key=lambda d: d['x']))
+[{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
+```
+
+上例中使用了生成器函数，使得函数更加通用，不仅仅局限于列表。设置可以用来读取文件、删除重复行：
+
+```py
+with open(somefile,'r') as f:
+for line in dedupe(f):
+    ...
+```
+
+上述的 key 函数参数模仿了 `sorted()`, `min()` 和 `max()` 等内置函数的功能。

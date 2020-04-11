@@ -28,6 +28,8 @@ for key in d:
     print(key, d[key])
 ```
 
+> 现在内置的 dict 行为和 `OrderedDict` 一致
+
 ### popitem
 
 `popitem(last=True)`

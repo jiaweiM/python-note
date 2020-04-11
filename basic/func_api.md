@@ -10,6 +10,7 @@
   - [ascii](#ascii)
   - [enumerate](#enumerate)
   - [int](#int)
+  - [min](#min)
   - [pow](#pow)
   - [print](#print)
   - [range](#range)
@@ -17,6 +18,12 @@
   - [sorted](#sorted)
   - [reversed](#reversed)
   - [zip](#zip)
+    - [无参数](#%e6%97%a0%e5%8f%82%e6%95%b0)
+    - [一个参数](#%e4%b8%80%e4%b8%aa%e5%8f%82%e6%95%b0)
+    - [多个参数](#%e5%a4%9a%e4%b8%aa%e5%8f%82%e6%95%b0)
+    - [set 参数](#set-%e5%8f%82%e6%95%b0)
+    - [参数长度不等](#%e5%8f%82%e6%95%b0%e9%95%bf%e5%ba%a6%e4%b8%8d%e7%ad%89)
+    - [zip in Python 2](#zip-in-python-2)
     - [unzipping](#unzipping)
   - [type()](#type)
     - [type(object)](#typeobject)
@@ -168,6 +175,26 @@ def any(iterable):
 
 如果 x 不是数字，或者提供了 `base` 参数，则 `x` 必须为 string, `bytes` 或 `bytearray`
 
+## min
+
+`min(iterable, *[, key, default])`
+
+`min(arg1, arg2, *args[, key])`
+
+返回 `iterable` 或多个参数中的最小项。
+
+- 如果只提供了一个位置参数，则必须为 `iterable` 类型。返回其最小项。
+- 如果提供了多个位置参数，则返回最小的位置参数。
+
+有两个可选的关键字参数。
+
+- `key` 用于指定排序函数，和 `list.sort()` 函数使用的参数类似
+- `default` 指定 `iterable` 为空时返回的对象。
+
+如果不提供 `default` 且 `iterable` 为空，抛出 `ValueError`。
+
+如果出现多个相同的最小值，返回第一次出现的值。
+
 ## pow
 
 [`pow(base, exp[, mod])`](../src/python_test/builtin_func/pow_test.py)
@@ -282,7 +309,9 @@ def test_object():
 
 将多个 iterable 对象聚合在一起构成一个迭代器。
 
-返回 tuple 迭代器，可以传入任意数目的 iterable 对象：
+返回 tuple 迭代器。
+
+可以传入任意数目的 iterable 对象：
 
 - 第 i 个 tuple 包含所有iterable对象的第 i 个元素。当最短的iterable对象耗尽，迭代器停止。
 - 无参数，返回空 iterator。
@@ -291,7 +320,32 @@ def test_object():
 
 对 lists, tuples, strings 等可迭代对象，迭代的顺序保持不变。
 
-- 多个参数
+### 无参数
+
+无参数，返回空 iterator
+
+```py
+zipped = zip()
+l = list(zipped)
+assert l == []
+```
+
+`zip()` 只迭代到最短对象的长度，如果不希望截断，可以使用 `itertools.zip_longest()`。
+
+### 一个参数
+
+一个参数，返回的 iterator 的 tuple 长度为1.
+
+```py
+a = [1, 2, 3]
+zipped = zip(a)
+l = list(zipped)
+assert l[0] == (1,)
+assert l[1] == (2,)
+assert l[2] == (3,)
+```
+
+### 多个参数
 
 ```py
 numbers = [1, 2, 3]
@@ -303,7 +357,7 @@ assert zips[1] == (2, 'b')
 assert zips[2] == (3, 'c')
 ```
 
-- set 参数
+### set 参数
 
 对 set 顺序无法保证
 
@@ -320,32 +374,7 @@ Out:
 [(1, 'c'), (2, 'a'), (3, 'b')]
 ```
 
-- 无参数
-
-无参数，返回空 iterator
-
-```py
-zipped = zip()
-l = list(zipped)
-assert l == []
-```
-
-`zip()` 只迭代到最短对象的长度，如果不希望截断，可以使用 `itertools.zip_longest()`。
-
-- 一个参数
-
-一个参数，返回的 iterator 的 tuple 长度为1.
-
-```py
-a = [1, 2, 3]
-zipped = zip(a)
-l = list(zipped)
-assert l[0] == (1,)
-assert l[1] == (2,)
-assert l[2] == (3,)
-```
-
-- 参数长度不等
+### 参数长度不等
 
 如果参数长度不等，`zip()` 返回元素的个数和最短的iterable长度相同。哪些较长 iterable 参数余下元素忽略。例如：
 
@@ -357,7 +386,7 @@ assert l[1] == (1, 1)
 assert l[2] == (2, 2)
 ```
 
-- zip in Python 2
+### zip in Python 2
 
 在 Python 2中，`zip()` 返回 tuple `list`。`list` 长度和输入最短的 iterable 对象相同。如果无输入参数，返回空 `list`。
 

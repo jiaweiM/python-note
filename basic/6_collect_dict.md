@@ -25,7 +25,10 @@
     - [update](#update)
     - [values](#values)
   - [视图](#%e8%a7%86%e5%9b%be)
-  - [映射多个值](#%e6%98%a0%e5%b0%84%e5%a4%9a%e4%b8%aa%e5%80%bc)
+  - [应用](#%e5%ba%94%e7%94%a8)
+    - [映射多个值](#%e6%98%a0%e5%b0%84%e5%a4%9a%e4%b8%aa%e5%80%bc)
+    - [运算](#%e8%bf%90%e7%ae%97)
+    - [字典集合操作](#%e5%ad%97%e5%85%b8%e9%9b%86%e5%90%88%e6%93%8d%e4%bd%9c)
 
 ***
 
@@ -268,7 +271,9 @@ False
 
 len(dictview)，返回字典中的条目。
 
-## 映射多个值
+## 应用
+
+### 映射多个值
 
 字典一个键映射一个值，如果要映射多个值，就需要将多个值放到另外的容器，比如列表或者set中。例如：
 
@@ -288,3 +293,133 @@ e = {
 也可以使用 `collections` 的 `defaultdict` 构造这样的词典。
 
 `defaultdict` 使用更方便，具体参考 [collections.defaultdict](../api/collections_defaultdict.md)。
+
+### 运算
+
+比如要计算字典值的最小值、最大值、排序等。
+
+考虑下面的股票名和价格映射字典：
+
+```py
+prices = {
+    'ACME': 45.23,
+    'AAPL': 612.78,
+    'IBM': 205.55,
+    'HPQ': 37.20,
+    'FB': 10.75
+}
+```
+
+- 如果对字典执行数学运算，它仅仅作用于键，而不是值，例如：
+
+```py
+min(prices) # Returns 'AAPL'
+max(prices) # Returns 'IBM'
+```
+
+这个结果并不是我们想要的，因为我们想在字典的值集合上执行这些计算。
+
+- 我们可以使用 `values()` 方法解决这个问题：
+
+```py
+min(prices.values()) # Returns 10.75
+max(prices.values()) # Returns 612.78
+```
+
+但是这种方式不知道对应的键的信息。
+
+我们可以在 `min()` 和 `max()` 函数中提供 `key` 参数来获取最大值或最小值对应的键的信息。比如：
+
+```py
+min(prices, key=lambda k: prices[k]) # Returns 'FB'
+max(prices, key=lambda k: prices[k]) # Returns 'AAPL'
+```
+
+如果想要得到最小值，需要再执行一次查找操作：
+
+```py
+min_value = prices[min(prices, key=lambda k: prices[k])]
+```
+
+- 最简洁的方式是使用 `zip()` 函数
+
+先用 `zip()` 将键和值反转过来。比如，下面查找最小和最大股票价格及其名称：
+
+```py
+min_price = min(zip(prices.values(), prices.keys()))
+# min_price is (10.75, 'FB')
+max_price = max(zip(prices.values(), prices.keys()))
+# max_price is (612.78, 'AAPL')
+```
+
+在比较元祖时，值会先进行比较，然后才是键。这样就能通过一条简单的语句实现字典上求极值和排序操作。
+
+类似的，可以使用 `zip()` 和 `sorted()` 函数排列字典数据：
+
+```py
+prices_sorted = sorted(zip(prices.values(), prices.keys()))
+# prices_sorted is [(10.75, 'FB'), (37.2, 'HPQ'),
+#                   (45.23, 'ACME'), (205.55, 'IBM'),
+#                   (612.78, 'AAPL')]
+```
+
+执行这些计算的时候需要注意，`zip()` 函数创建的是一个只能访问一次的迭代器。比如，下面的代码会出错：
+
+```py
+prices_and_names = zip(prices.values(), prices.keys())
+print(min(prices_and_names)) # OK
+print(max(prices_and_names)) # ValueError: max() arg is an empty sequence
+```
+
+另外需要注意的是，如果最大值或最小值有重复，结果会根据键的排序返回：
+
+```py
+>>> prices = { 'AAA' : 45.23, 'ZZZ': 45.23 }
+>>> min(zip(prices.values(), prices.keys()))
+(45.23, 'AAA')
+>>> max(zip(prices.values(), prices.keys()))
+(45.23, 'ZZZ')
+```
+
+### 字典集合操作
+
+字典的 `keys()` 返回键视图对象。键视图支持集合操作，包括并、交、差集等运算。
+
+字典的 `items()` 返回包含（键，值）对元素视图对象。这个对象同样支持集合操作。
+
+字典的 `values()` 返回虽然也是视图对象，但是不支持集合操作。
+
+考虑下面两个字典：
+
+```py
+a = {
+    'x' : 1,
+    'y' : 2,
+    'z' : 3
+}
+
+b = {
+    'w' : 10,
+    'x' : 11,
+    'y' : 2
+}
+```
+
+通过 `keys()` 或者 `items()` 方法返回结果执行集合操作。比如：
+
+```py
+# keys 交集
+a.keys() & b.keys() # { 'x', 'y' }
+# keys 差集
+a.keys() - b.keys() # { 'z' }
+# (key, value) 交集
+a.items() & b.items() # { ('y', 2) }
+```
+
+这些结果可用来修改或过滤字典。比如，移除指定键：
+
+```py
+# Make a new dictionary with certain keys removed
+c = {key:a[key] for key in a.keys() - {'z', 'w'}}
+# c is {'x': 1, 'y': 2}
+```

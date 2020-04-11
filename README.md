@@ -58,6 +58,7 @@
 
 - [pathlib](modules/pathlib.md)
 - [itertool](api/itertool.md)
+- [operator](api/operator.md)
 - [heapq](api/heapq.md)
 - [Numpy](numpy/0_numpy_toc.md)
 - [pandas](pandas/0_pandas_toc.md)
