@@ -54,3 +54,4 @@ def test_count_words():
 def test_add():
     c = Counter('abbb') + Counter('bcc')
     assert c == Counter({'b': 4, 'c': 2, 'a': 1})
+
