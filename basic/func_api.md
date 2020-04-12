@@ -9,6 +9,7 @@
   - [any](#any)
   - [ascii](#ascii)
   - [enumerate](#enumerate)
+  - [filter](#filter)
   - [int](#int)
   - [min](#min)
   - [pow](#pow)
@@ -160,6 +161,14 @@ def any(iterable):
 - `start`，其实计数值，默认0
 
 返回 `enumerate` 对象，可以使用 `list()` 和 `tuple()` 等转换为其它序列对象。
+
+## filter
+
+`filter(function, iterable)`
+
+返回一个迭代器，迭代所有 `function` 函数计算结果为 true 的 `iterable` 元素。
+
+如果 `function` 为 `None`，则为 `identity` 函数。
 
 ## int
 

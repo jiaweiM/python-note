@@ -28,6 +28,7 @@
   - [Data Analysis](#data-analysis)
   - [书籍](#%e4%b9%a6%e7%b1%8d)
 
+2020-04-12, 16:39
 ***
 
 ## Python 学习笔记
@@ -40,6 +41,8 @@
 - [string](basic/string.md)
 - [函数](basic/function.md)
   - [Python 内置函数](basic/func_api.md)
+- [模块](basic/module.md)
+- [包](basic/package.md)
 - [集合](basic/collect.md)
   - [list](basic/3_collect_list.md)
   - [tuple](basic/4_collect_tuple.md)
@@ -199,6 +202,7 @@ CherryPy, Flask
 
 ## Python 教程
 
+- [Python 入门指南](http://www.pythondoc.com/pythontutorial3/#)
 - [Pythontic.com](https://pythontic.com/)
 - [The Python Tutorial 官方教程](https://docs.python.org/3/tutorial/index.html)
 - [Learn Python the hard way](https://learnpythonthehardway.org/book/)
