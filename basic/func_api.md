@@ -10,6 +10,7 @@
   - [ascii](#ascii)
   - [enumerate](#enumerate)
   - [filter](#filter)
+  - [format](#format)
   - [int](#int)
   - [min](#min)
   - [pow](#pow)
@@ -31,6 +32,9 @@
     - [type(object)](#typeobject)
     - [type(name, bases, dict)](#typename-bases-dict)
   - [isinstance](#isinstance)
+
+2020-04-12, 17:41
+***
 
 ## 基本函数
 
@@ -169,6 +173,18 @@ def any(iterable):
 返回一个迭代器，迭代所有 `function` 函数计算结果为 true 的 `iterable` 元素。
 
 如果 `function` 为 `None`，则为 `identity` 函数。
+
+## format
+
+`format(value[, format_spec])`
+
+根据 `format_spec` 将 `value` 转换为格式化表示形式。
+
+`format_spec` 的解析依赖于 `value` 的类型。
+
+`format_spec` 默认为空字符串，结果等效于 `str(value)`。
+
+调用 `format(value, format_spec)` 被转换为 `type(value.__format__(value, format_spec))`，在搜索 `value` 的 `__format__()` 方法时，直接跳过了实例字典。
 
 ## int
 
