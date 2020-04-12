@@ -9,11 +9,15 @@
     - [查看已安装包](#%e6%9f%a5%e7%9c%8b%e5%b7%b2%e5%ae%89%e8%a3%85%e5%8c%85)
     - [更新包](#%e6%9b%b4%e6%96%b0%e5%8c%85)
     - [卸载包](#%e5%8d%b8%e8%bd%bd%e5%8c%85)
+    - [options](#options)
+      - [`--user`](#user)
   - [pip 镜像](#pip-%e9%95%9c%e5%83%8f)
     - [临时使用镜像](#%e4%b8%b4%e6%97%b6%e4%bd%bf%e7%94%a8%e9%95%9c%e5%83%8f)
     - [设置默认镜像](#%e8%ae%be%e7%bd%ae%e9%bb%98%e8%ae%a4%e9%95%9c%e5%83%8f)
-  - [创建虚拟环境](#%e5%88%9b%e5%bb%ba%e8%99%9a%e6%8b%9f%e7%8e%af%e5%a2%83)
   - [参考](#%e5%8f%82%e8%80%83)
+
+2020-04-13, 05:42
+***
 
 ## 简介
 
@@ -86,6 +90,34 @@ pip uninstall packagename
 
 在更新时，pip会自动卸载旧版本，安装新版本。
 
+### options
+
+#### `--user`
+
+安装到 Python 用户安装目录。在 Windows 上通常为 `~/.local/` 或者 `%APPDATA%Python`。
+
+通常包会被安装到系统的 site-packages 目录，路径类似 “/usr/local/lib/python3.3/site-packages”。 不过，这样做需要有管理员权限并且使用sudo命令。 就算你有这样的权限去执行命令，使用sudo去安装一个新的，可能没有被验证过的包有时候也不安全。
+
+安装包到用户目录中通常是一个有效的方案，它允许你创建一个自定义安装。
+
+比如你想要安装一个第三方包，但是没有权限将它安装到系统Python库中去；或者，你想要安装一个供自己使用的包，而不是系统上面所有用户。
+
+Python有一个用户安装目录，通常类似 `~/.local/lib/python3.3/site-packages`。 要强制在这个目录中安装包，可使用安装选项“–user”。例如：
+
+```console
+python3 setup.py install --user
+```
+
+或者：
+
+```console
+pip install --user packagename
+```
+
+在 sys.path 中用户的 “site-packages” 目录位于系统的 “site-packages” 目录之前。 因此，你安装在里面的包就比系统已安装的包优先级高 （尽管并不总是这样，要取决于第三方包管理器，比如distribute或pip）。
+
+另外，你还可以创建一个虚拟环境。
+
 ## pip 镜像
 
 国内的一些镜像：
@@ -117,28 +149,6 @@ pip install pip -U
 ```cmd
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
-
-## 创建虚拟环境
-
-`venv` (Python 3) 和 `virtualenv` (Python 2) 用于创建虚拟环境，从而可以为不同项目安装不同的工具包。
-
-在进行 Python 应用开发时，最好使用虚拟环境。
-
-在项目目录，运行 `venv`，对 Python 2，替换为 `virtualenv`.
-
-在 macOS 和 Linux:
-
-```cmd
-python3 -m venv env
-```
-
-在 Windows:
-
-```cmd
-py -m venv env
-```
-
-第二个参数是虚拟环境的位置。 venv 会在 `env` 目录创建一个虚拟的 Python 环境。
 
 ## 参考
 

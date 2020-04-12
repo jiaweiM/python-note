@@ -4,6 +4,7 @@
   - [Python 学习笔记](#python-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0)
   - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
     - [函数编程](#%e5%87%bd%e6%95%b0%e7%bc%96%e7%a8%8b)
+    - [打包和分发](#%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91)
   - [Unit Test](#unit-test)
   - [Tools](#tools)
   - [TensorFlow](#tensorflow)
@@ -27,6 +28,8 @@
   - [Python 教程](#python-%e6%95%99%e7%a8%8b)
   - [Data Analysis](#data-analysis)
   - [书籍](#%e4%b9%a6%e7%b1%8d)
+
+2020-04-13, 06:02，打包和分发相关工具。
 
 2020-04-12, 16:39
 ***
@@ -56,6 +59,7 @@
 - [IO](basic/io.md)
   - [pathlib](io/1_pathlib.md)
 - [类和对象](basic/class.md)
+  - [继承](basic/class_inherit.md)
 - [异常处理](basic/exception.md)
 - [Property](basic/property.md)
 
@@ -70,6 +74,12 @@
 
 - [itertool](api/itertool.md)
 - [operator](api/module_operator.md)
+
+### 打包和分发
+
+帮助分发和安装 Python 包。
+
+- [venv](tools/venv.md)，创建虚拟环境
 
 ## Unit Test
 

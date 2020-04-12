@@ -10,7 +10,6 @@
     - [双下划线](#%e5%8f%8c%e4%b8%8b%e5%88%92%e7%ba%bf)
     - [使用建议](#%e4%bd%bf%e7%94%a8%e5%bb%ba%e8%ae%ae)
   - [运算符重载](#%e8%bf%90%e7%ae%97%e7%ac%a6%e9%87%8d%e8%bd%bd)
-  - [继承](#%e7%bb%a7%e6%89%bf)
   - [Magic Method](#magic-method)
   - [类方法（class method）](#%e7%b1%bb%e6%96%b9%e6%b3%95class-method)
   - [静态方法（Static Method）](#%e9%9d%99%e6%80%81%e6%96%b9%e6%b3%95static-method)
@@ -41,7 +40,7 @@ Python 中的 OOP 概念专注于创建可重用代码，此概念也称为 DRY 
 
 在 Python 中，OOP 概念支持如下原则：
 
-- 继承（Inheritance），从已有类继承属性和方法
+- 继承（Inheritance）
 - 封装（Encapsulation），隐藏类中的私有信息，不让其他对象访问
 - 多态（Polymorphism），行为的多种实现方法
 
@@ -234,63 +233,6 @@ lambda_ = 2.0 # Trailing _ to avoid clash with lambda keyword
 | str           | `__str__(self)`             |
 
 如果没有实现 `__ne__`重载，则返回 `__eq__`的相反值。
-
-## 继承
-
-继承是一种使用已有类的信息创建新类的方法，新创建的类称为子类，原有类称为父类。
-
-例如：
-
-```py
-# parent class
-class Bird:
-
-    def __init__(self):
-        print("Bird is ready")
-
-    def whoisThis(self):
-        print("Bird")
-
-    def swim(self):
-        print("Swim faster")
-
-# child class
-class Penguin(Bird):
-
-    def __init__(self):
-        # call super() function
-        super().__init__()
-        print("Penguin is ready")
-
-    def whoisThis(self):
-        print("Penguin")
-
-    def run(self):
-        print("Run faster")
-
-peggy = Penguin()
-peggy.whoisThis()
-peggy.swim()
-peggy.run()
-```
-
-Out:
-
-```console
-Bird is ready
-Penguin is ready
-Penguin
-Swim faster
-Run faster
-```
-
-在上例中，创建了两个类 `Bird` (父类)和 `Penguin` (子类)。
-
-- 子类继承了父类的函数 `swim()`
-- 修改父类函数 `whoisThis()`
-- 添加了新函数 `run()`
-
-另外，在 `__init__()` 方法中调用了 `super()`，执行父类中的初始化工作。
 
 ## Magic Method
 
