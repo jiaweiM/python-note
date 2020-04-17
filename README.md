@@ -45,6 +45,7 @@
 - [函数](basic/function.md)
   - [Python 内置函数](basic/func_api.md)
 - [模块](basic/module.md)
+  - [`__main__`](basic/main.md)
 - [包](basic/package.md)
 - [集合](basic/collect.md)
   - [list](basic/3_collect_list.md)
@@ -62,6 +63,7 @@
   - [继承](basic/class_inherit.md)
 - [异常处理](basic/exception.md)
 - [Property](basic/property.md)
+- [Python 命令](basic/commands.md)
 
 ## 工具包
 
