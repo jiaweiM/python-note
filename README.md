@@ -69,7 +69,9 @@
 ### Python 打包和分发
 
 - [构建和分发](tools/distribute.md)
+- [打包Python项目](tools/packaging.md)
 - [wheel](tools/wheel.md)
+- [setuptools](tools/setuptools.md)
 
 ## 工具包
 
