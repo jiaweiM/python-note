@@ -2,6 +2,7 @@
 
 - [Python Study Notes](#python-study-notes)
   - [Python 学习笔记](#python-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0)
+    - [Python 打包和分发](#python-%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91)
   - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
     - [函数编程](#%e5%87%bd%e6%95%b0%e7%bc%96%e7%a8%8b)
     - [打包和分发](#%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91)
@@ -64,6 +65,11 @@
 - [异常处理](basic/exception.md)
 - [Property](basic/property.md)
 - [Python 命令](basic/commands.md)
+
+### Python 打包和分发
+
+- [构建和分发](tools/distribute.md)
+- [wheel](tools/wheel.md)
 
 ## 工具包
 

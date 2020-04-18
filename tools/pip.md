@@ -102,7 +102,7 @@ pip uninstall packagename
 
 比如你想要安装一个第三方包，但是没有权限将它安装到系统Python库中去；或者，你想要安装一个供自己使用的包，而不是系统上面所有用户。
 
-Python有一个用户安装目录，通常类似 `~/.local/lib/python3.3/site-packages`。 要强制在这个目录中安装包，可使用安装选项“–user”。例如：
+Python有一个用户安装目录，通常类似 `~/.local/lib/python3.3/site-packages`。要强制在这个目录中安装包，可使用安装选项“-–user”。例如：
 
 ```console
 python3 setup.py install --user
