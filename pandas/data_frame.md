@@ -41,7 +41,6 @@
 | size  | 元素个数                        |
 | shape | 返回表示 DataFrame 维数的 tuple |
 
-
 ### size
 
 返回对象中元素个数。对 `Series` 返回行数，对 `DataFrame`，返回行数乘以列数。

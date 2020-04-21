@@ -1,6 +1,6 @@
 # Pandas
 
-## 教程
+## 学习笔记
 
 - [简介](1_intro.md)
 - [数据结构](data.md)
@@ -8,6 +8,7 @@
   - [DataFrame](data_frame.md)
 - [数据的索引和选择](index_select.md)
   - [按位置选择](select_position.md)
+  - [按标签选择](select_label.md)
   - [where](select_where.md)
   - [Index 对象](index_object.md)
   - [set/reset index](index_set.md)
@@ -18,6 +19,11 @@
   - [CSV](5_io_csv.md)
   - [Excel](io_excel.md)
 - [单元测试工具](testing.md)
+
+### Getting started
+
+- [描述统计](descriptive_stat.md)
+- [Iteration](iteration.md)
 
 ## 参考
 

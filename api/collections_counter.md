@@ -11,6 +11,9 @@
   - [应用](#%e5%ba%94%e7%94%a8)
     - [序列中出现次数最多的元素](#%e5%ba%8f%e5%88%97%e4%b8%ad%e5%87%ba%e7%8e%b0%e6%ac%a1%e6%95%b0%e6%9c%80%e5%a4%9a%e7%9a%84%e5%85%83%e7%b4%a0)
 
+2020-04-21, 14:26
+***
+
 ## 简介
 
 `class collections.Counter([iterble-or-mapping])`

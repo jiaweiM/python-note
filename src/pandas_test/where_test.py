@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+
 def test_series():
     s = pd.Series(range(5))
     s1 = s.where(s > 0)

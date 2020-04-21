@@ -6,7 +6,6 @@
   - [索引基础](#%e7%b4%a2%e5%bc%95%e5%9f%ba%e7%a1%80)
     - [额外说明](#%e9%a2%9d%e5%a4%96%e8%af%b4%e6%98%8e)
   - [按属性访问](#%e6%8c%89%e5%b1%9e%e6%80%a7%e8%ae%bf%e9%97%ae)
-  - [按标签选择（.loc）](#%e6%8c%89%e6%a0%87%e7%ad%be%e9%80%89%e6%8b%a9loc)
   - [Boolean indexing](#boolean-indexing)
     - [布尔：或](#%e5%b8%83%e5%b0%94%e6%88%96)
     - [布尔：非](#%e5%b8%83%e5%b0%94%e9%9d%9e)
@@ -17,7 +16,6 @@
 ***
 
 ## 简介
-
 
 pandas 对象的轴标签（axis labeling）信息有许多用途：
 
@@ -146,8 +144,6 @@ Out:
 
 ![BA](images/2020-03-13-15-13-09.png)
 
-
-
 ## 按属性访问
 
 访问 `Series` 的 index，或 `DataFrame` 的 column可以直接采用属性方式。
@@ -212,26 +208,6 @@ dfa
 Out:
 
 ![dataframe](images/2020-03-13-19-48-00.png)
-
-## 按标签选择（.loc）
-
-`.loc` 是主要的访问方法，有效输入有：
-
-- 单个标签，如 `5` 或 `'a'`（此处 `5` 按照标签解析，而非索引）
-- 标签数组或列表，如 `['a', 'b', 'c']`
-- slice labels `'a':'f'`（首位均包含）
-- boolean 数组
-- `callable`
-
-例如，对 `Series`:
-
-- `s1.loc['c':]`, 选择 `Series` 'c' 及其后所有数据
-- `s1.loc['b']`, 选择 label 为 'b' 数据
-- `s1.loc['c':] = 0` 设置 'c' 及其后所有数据为 0
-
-对 `DataFrame`:
-
-- `df1.loc[['a', 'b', 'd'], :]`, 选择 'a', 'b', 'd' 行，所有列
 
 ## Boolean indexing
 
