@@ -10,6 +10,7 @@
   - [按位置选择](select_position.md)
   - [按标签选择](select_label.md)
   - [where](select_where.md)
+  - [query](select_query.md)
   - [Index 对象](index_object.md)
   - [set/reset index](index_set.md)
   - [返回视图还是副本](index_view_copy.md)

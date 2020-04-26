@@ -50,7 +50,6 @@ max, min, len, sum 可以在 tuples 中使用。
 ## 访问值
 
 
-
 ## 作为 dict 的 key
 
 由于 tuple 是 hashable，所以可以将 tuple 作为 dict 的键。

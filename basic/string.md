@@ -8,6 +8,7 @@
   - [字符串操作](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%93%8d%e4%bd%9c)
     - [切片](#%e5%88%87%e7%89%87)
     - [包含](#%e5%8c%85%e5%90%ab)
+    - [rfind](#rfind)
     - [index](#index)
     - [find](#find)
   - [format](#format)
@@ -19,6 +20,9 @@
     - [class 格式化](#class-%e6%a0%bc%e5%bc%8f%e5%8c%96)
     - [动态参数](#%e5%8a%a8%e6%80%81%e5%8f%82%e6%95%b0)
     - [日期格式化](#%e6%97%a5%e6%9c%9f%e6%a0%bc%e5%bc%8f%e5%8c%96)
+
+2020-04-22, 11:36
+***
 
 ## 简介
 
@@ -94,6 +98,12 @@ def test_in():
     assert 'at' in 'battle'
     assert 'file' not in 'windows'
 ```
+
+### rfind
+
+`str.rfind(sub[, start[, end]])`
+
+`sub` 出现的最高索引。`start` 和 `end` 用于指定检索范围。如果没找到，返回 -1。
 
 ### index
 

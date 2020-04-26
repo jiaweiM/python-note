@@ -13,7 +13,7 @@
 - 对 `Series`，按照数组进行迭代，迭代生成对应的值
 - 对 `DataFrame`，迭代类似于 dict，对 keys 进行迭代。
 
-简而言之，使用 `for i in object` 迭代方式：
+简而言之，使用 `for i in object` 迭代方式，生成的值为：
 
 - `Series`: values
 - `DataFrame`: column labels
@@ -34,10 +34,12 @@ col2
 
 要迭代 `DataFrame` 的行，使用如下方式：
 
-- `iterrows()`：以 `(index, Series)` 方式迭代 DataFrame 的行。将行转换为 `Series`，可能会转换 dtypes。
-- `itertuples()`：以命名 tuple 的方式迭代 DataFrame 的行。比 `iterrows()` 要快许多，是迭代 DataFrame 值的推荐方式。
+- `iterrows()`：以 `(index, Series)` 方式迭代 DataFrame 的行。将行转换为 `Series`，会转换 dtypes，且影响性能。
+- `itertuples()`：以命名 tuple 的方式迭代 DataFrame 的行。比 `iterrows()` 快许多，是迭代 DataFrame 值的推荐方式。
 
-迭代 pandas 对象一般**很慢**。大多数情况可以避免使用行：
+迭代 pandas 对象一般**很慢**。而且大多数情况可以使用以下方式避免迭代 rows：
 
-- 向量化方案：许多操作可以使用内置的方法或 NumPy 函数。
-- 如果是函数，无法一次应用于所有 DataFrame/Series，可以使用 `apply()`
+- 向量化方案：许多操作可以使用内置的方法或 NumPy 函数实现。
+- 如果是函数，无法一次应用于所有 DataFrame/Series，可以使用 `apply()` 函数
+- 如果确实需要迭代，可以考虑使用 cython 或 numba。
+
