@@ -4,6 +4,7 @@
   - [简介](#%e7%ae%80%e4%bb%8b)
   - [方法总结](#%e6%96%b9%e6%b3%95%e6%80%bb%e7%bb%93)
   - [Value counts](#value-counts)
+  - [离散化和量化](#%e7%a6%bb%e6%95%a3%e5%8c%96%e5%92%8c%e9%87%8f%e5%8c%96)
 
 2020-04-22, 11:16
 ***
@@ -209,4 +210,12 @@ Out[125]:
 0  1.0  -9
 1  NaN  10
 2  NaN  13
+```
+
+## 离散化和量化
+
+连续值可以通过 `cut()`(bins based on values)和 `qcut()` (bins based on sample quantiles)离散化：
+
+```
+
 ```

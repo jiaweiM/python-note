@@ -9,6 +9,7 @@
 - [数据的索引和选择](index_select.md)
   - [按位置选择](select_position.md)
   - [按标签选择](select_label.md)
+  - [boolean 索引](index_boolean.md)
   - [where](select_where.md)
   - [query](select_query.md)
   - [Index 对象](index_object.md)
