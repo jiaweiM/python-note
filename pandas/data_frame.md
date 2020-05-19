@@ -18,6 +18,13 @@
     - [DataFrame.sort_values](#dataframesortvalues)
     - [DataFrame.sort_index](#dataframesortindex)
     - [DataFrame.pivot_table](#dataframepivottable)
+  - [Indexing, iteration](#indexing-iteration)
+    - [xs](#xs)
+  - [Reindexing / selection / label](#reindexing--selection--label)
+    - [set_index](#setindex)
+
+2020-05-19, 12:26
+***
 
 ## 简介
 
@@ -374,3 +381,42 @@ Out:
 ### DataFrame.pivot_table
 
 `DataFrame.pivot_table(self, values=None, index=None)`
+
+## Indexing, iteration
+
+### xs
+
+
+
+## Reindexing / selection / label
+
+### set_index
+
+```py
+DataFrame.set_index(self, keys, drop=True, append=False, inplace=False, verify_integrity=False)
+```
+
+将现有的 columns 设置为 index.
+
+将一个或多个 columns 或 arrays (相同长度)设置为 index (row labels)。新添加的 index 可以替换或扩展原有 index。
+
+1. keys
+
+支持类型：
+
+- 单个 column key
+- 和 `DataFrame` 等长的array
+- 任意数目的 column keys 和 array 的组合 list。
+
+这个 array 可以是 `Series`, `Index`, `np.ndarray` 以及 `Iterator`。
+
+2. drop
+
+bool, default True。
+
+删除用作索引的列。
+
+3. append
+
+bool, default False。
+
