@@ -1,16 +1,16 @@
 # Pandas Excel
 
 - [Pandas Excel](#pandas-excel)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [读取 Excel](#%e8%af%bb%e5%8f%96-excel)
-    - [读取单个 Sheet](#%e8%af%bb%e5%8f%96%e5%8d%95%e4%b8%aa-sheet)
-    - [读取多个 Sheet](#%e8%af%bb%e5%8f%96%e5%a4%9a%e4%b8%aa-sheet)
-    - [指定读取的表格](#%e6%8c%87%e5%ae%9a%e8%af%bb%e5%8f%96%e7%9a%84%e8%a1%a8%e6%a0%bc)
-    - [读取 `MultiIndex`](#%e8%af%bb%e5%8f%96-multiindex)
-    - [解析指定列](#%e8%a7%a3%e6%9e%90%e6%8c%87%e5%ae%9a%e5%88%97)
-    - [解析日期](#%e8%a7%a3%e6%9e%90%e6%97%a5%e6%9c%9f)
+  - [简介](#简介)
+  - [读 Excel](#读-excel)
+    - [读取单个 Sheet](#读取单个-sheet)
+    - [读取多个 Sheet](#读取多个-sheet)
+    - [指定读取的表格](#指定读取的表格)
+    - [读取 `MultiIndex`](#读取-multiindex)
+    - [解析指定列](#解析指定列)
+    - [解析日期](#解析日期)
     - [Cell converters](#cell-converters)
-    - [指定 dtype](#%e6%8c%87%e5%ae%9a-dtype)
+    - [指定 dtype](#指定-dtype)
 
 2020-04-20, 20:54
 ***
@@ -25,9 +25,7 @@
 
 `to_excel()` 方法用于将 `DataFrame` 保存为 Excel。
 
-## 读取 Excel
-
-***
+## 读 Excel
 
 ### 读取单个 Sheet
 
@@ -36,6 +34,8 @@
 ```py
 pd.read_excel('path_to_file.xls', sheet_name='Sheet1')
 ```
+
+如果未指定 `sheet_name`，其默认为 0，即第一个 sheet。
 
 ### 读取多个 Sheet
 
@@ -56,6 +56,8 @@ with pd.ExcelFile('path_to_file.xls') as xls:
     df2 = pd.read_excel(xls, 'Sheet2')
 ```
 
+`ExcelFile` 的 `sheet_names` 属性获得文件的所有 sheet 名称。
+
 使用 `ExcelFile` 可以使用不同参数解析 sheets:
 
 ```py
@@ -66,6 +68,8 @@ with pd.ExcelFile('path_to_file.xls') as xls:
                                    na_values=['NA'])
     data['Sheet2'] = pd.read_excel(xls, 'Sheet2', index_col=1)
 ```
+
+`index_col` 用于指定用于行索引的列。如果没有这类列，可以用 `None`。
 
 如果使用相同的参数读取所有 sheets，则可以直接将所有 sheet 的名称传递给 `read_excel` 方法，不会降低性能。
 

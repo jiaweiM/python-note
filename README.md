@@ -1,11 +1,11 @@
 # Python Study Notes
 
 - [Python Study Notes](#python-study-notes)
-  - [Python 学习笔记](#python-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0)
-    - [Python 打包和分发](#python-%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91)
-  - [工具包](#%e5%b7%a5%e5%85%b7%e5%8c%85)
-    - [函数编程](#%e5%87%bd%e6%95%b0%e7%bc%96%e7%a8%8b)
-    - [打包和分发](#%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91)
+  - [Python 学习笔记](#python-学习笔记)
+    - [Python 打包和分发](#python-打包和分发)
+  - [工具包](#工具包)
+    - [函数编程](#函数编程)
+    - [打包和分发](#打包和分发)
   - [Unit Test](#unit-test)
   - [Tools](#tools)
   - [TensorFlow](#tensorflow)
@@ -24,11 +24,11 @@
   - [BeautifulSoup](#beautifulsoup)
   - [Panda3D](#panda3d)
   - [pygame](#pygame)
-  - [参考](#%e5%8f%82%e8%80%83)
-    - [代码练习](#%e4%bb%a3%e7%a0%81%e7%bb%83%e4%b9%a0)
-  - [Python 教程](#python-%e6%95%99%e7%a8%8b)
+  - [参考](#参考)
+    - [代码练习](#代码练习)
+  - [Python 教程](#python-教程)
   - [Data Analysis](#data-analysis)
-  - [书籍](#%e4%b9%a6%e7%b1%8d)
+  - [书籍](#书籍)
 
 2020-04-13, 06:02，打包和分发相关工具。
 

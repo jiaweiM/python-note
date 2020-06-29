@@ -1,27 +1,27 @@
 # DataFrame
 
 - [DataFrame](#dataframe)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [属性](#%e5%b1%9e%e6%80%a7)
+  - [简介](#简介)
+  - [属性](#属性)
     - [size](#size)
     - [shape](#shape)
-  - [创建 `DataFrame`](#%e5%88%9b%e5%bb%ba-dataframe)
+  - [创建 `DataFrame`](#创建-dataframe)
     - [`Series` dict](#series-dict)
-      - [为 dict 提供 index](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index)
-      - [为 dict 提供 index 和 columns](#%e4%b8%ba-dict-%e6%8f%90%e4%be%9b-index-%e5%92%8c-columns)
-    - [通过 `ndarray` 或 list 的 `dict` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e6%88%96-list-%e7%9a%84-dict-%e5%88%9b%e5%bb%ba)
-    - [创建时提供 index](#%e5%88%9b%e5%bb%ba%e6%97%b6%e6%8f%90%e4%be%9b-index)
-    - [通过 `ndarray` 创建](#%e9%80%9a%e8%bf%87-ndarray-%e5%88%9b%e5%bb%ba)
-  - [DataFrame 操作](#dataframe-%e6%93%8d%e4%bd%9c)
-  - [添加 column](#%e6%b7%bb%e5%8a%a0-column)
-    - [索引](#%e7%b4%a2%e5%bc%95)
-    - [DataFrame.sort_values](#dataframesortvalues)
-    - [DataFrame.sort_index](#dataframesortindex)
-    - [DataFrame.pivot_table](#dataframepivottable)
+      - [为 dict 提供 index](#为-dict-提供-index)
+      - [为 dict 提供 index 和 columns](#为-dict-提供-index-和-columns)
+    - [通过 `ndarray` 或 list 的 `dict` 创建](#通过-ndarray-或-list-的-dict-创建)
+    - [创建时提供 index](#创建时提供-index)
+    - [通过 `ndarray` 创建](#通过-ndarray-创建)
+  - [DataFrame 操作](#dataframe-操作)
+  - [添加 column](#添加-column)
+    - [索引](#索引)
+    - [DataFrame.sort_values](#dataframesort_values)
+    - [DataFrame.sort_index](#dataframesort_index)
+    - [DataFrame.pivot_table](#dataframepivot_table)
   - [Indexing, iteration](#indexing-iteration)
     - [xs](#xs)
   - [Reindexing / selection / label](#reindexing--selection--label)
-    - [set_index](#setindex)
+    - [set_index](#set_index)
 
 2020-05-19, 12:26
 ***
@@ -48,6 +48,7 @@
 | index | DataFrame 的索引（行标签）      |
 | size  | 元素个数                        |
 | shape | 返回表示 DataFrame 维数的 tuple |
+|columns|columns labels|
 
 ### size
 
@@ -385,7 +386,6 @@ Out:
 ## Indexing, iteration
 
 ### xs
-
 
 
 ## Reindexing / selection / label

@@ -1,16 +1,21 @@
 # Index object
 
 - [Index object](#index-object)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [设置 metadata](#%e8%ae%be%e7%bd%ae-metadata)
-  - [集合操作](#%e9%9b%86%e5%90%88%e6%93%8d%e4%bd%9c)
-  - [缺失值](#%e7%bc%ba%e5%a4%b1%e5%80%bc)
+  - [简介](#简介)
+  - [设置 metadata](#设置-metadata)
+  - [集合操作](#集合操作)
+  - [缺失值](#缺失值)
+
+2020-06-08, 16:10
+*** *
 
 ## 简介
 
 pandas `Index` 及其子类可以看做实现了 *ordered multiset* 的集合，允许重复值。但它并不是真的集合，将 `Index` 转换为 `set` 会抛出错误。
 
-`Index` 还提供了查找、数据对齐和重建索引的功能。创建 `Index` 的最简单方式是将 `list` 或其它序列传递给 `Index` 构造函数：
+`Index` 提供了查找、数据对齐和重建索引的功能。
+
+创建 `Index` 的最简单方式是将 `list` 或其它序列传递给 `Index` 构造函数：
 
 ```py
 index = pd.Index(['e', 'd', 'a', 'b'])
@@ -53,18 +58,22 @@ rows
 Name: A, dtype: float64
 ```
 
+可以看到，`columns` 和 `index` 都是 `Index` 对象，对表格的行和列分别进行索引。
+
 ## 设置 metadata
 
-Indexes 是 immutable的，但是其 metadata 可以修改、设置，如 `name`（`MultiIndex` 的 `levels` 和 `codes`）。
+Indexes 是 immutable的，但是其 metadata 可以修改，如 `name`（`MultiIndex` 的 `levels` 和 `codes`）。
 
-可以使用 `rename`, `set_names`, `set_levels` 和 `set_codes` 方法设置这些属性。默认返回copy，设置 `inplace=True` 可以原位修改。
+可以使用 `rename`, `set_names`, `set_levels` 和 `set_codes` 方法设置这些属性。默认返回copy，设置 `inplace=True` 则原位修改。
 
 ```py
 ind = pd.Index([1, 2, 3])
 ind2 = ind.rename("apple")
 assert ind2.name == 'apple'
+
 ind.set_names(['apple'], inplace=True)
 assert ind.name == 'apple'
+
 ind.name = 'bob'
 assert ind.name == 'bob'
 ```

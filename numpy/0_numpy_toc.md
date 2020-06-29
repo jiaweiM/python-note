@@ -2,6 +2,7 @@
 
 ## Study Notes
 
+- [快速入门](quickstart.md)
 - [简介](02_intro.md)
 - [创建数组](03_create.md)
 - [数据类型](04_dtype.md)

@@ -316,8 +316,6 @@ drive 和 root 的合并：
 
 ### PurePath.parents
 
-
-
 ### Path.glob
 
 `Path.glob(pattern)`

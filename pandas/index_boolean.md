@@ -1,15 +1,15 @@
 # Boolean indexing
 
 - [Boolean indexing](#boolean-indexing)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [Series boolean 向量索引](#series-boolean-%e5%90%91%e9%87%8f%e7%b4%a2%e5%bc%95)
-    - [布尔：或](#%e5%b8%83%e5%b0%94%e6%88%96)
-    - [布尔：非](#%e5%b8%83%e5%b0%94%e9%9d%9e)
-  - [使用布尔向量选择行](#%e4%bd%bf%e7%94%a8%e5%b8%83%e5%b0%94%e5%90%91%e9%87%8f%e9%80%89%e6%8b%a9%e8%a1%8c)
-  - [List 推导和 map](#list-%e6%8e%a8%e5%af%bc%e5%92%8c-map)
-    - [map 方法](#map-%e6%96%b9%e6%b3%95)
-    - [List 推导](#list-%e6%8e%a8%e5%af%bc)
-    - [组合使用](#%e7%bb%84%e5%90%88%e4%bd%bf%e7%94%a8)
+  - [简介](#简介)
+  - [Series boolean 向量索引](#series-boolean-向量索引)
+    - [布尔：或](#布尔或)
+    - [布尔：非](#布尔非)
+  - [使用布尔向量选择行](#使用布尔向量选择行)
+  - [List 推导和 map](#list-推导和-map)
+    - [map 方法](#map-方法)
+    - [List 推导](#list-推导)
+    - [组合使用](#组合使用)
 
 2020-04-30, 12:54
 *** *
