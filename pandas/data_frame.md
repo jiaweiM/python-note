@@ -35,11 +35,11 @@
 
 如下所示：
 
-![](images/2019-08-28-15-19-03.png)
+![dataframe](images/2019-08-28-15-19-03.png)
 
 如果将 Dates 设置为 index:
 
-![](images/2019-08-28-15-19-25.png)
+![index](images/2019-08-28-15-19-25.png)
 
 ## 属性
 
@@ -193,6 +193,7 @@ df = pd.DataFrame(d, index=['a', 'b', 'c', 'd'])
 | **3** | 6   | 9   | 12  |
 
 指定每行的数据
+
 ```py
 df = pd.DataFrame(
         [[4, 7, 10],
@@ -201,7 +202,9 @@ df = pd.DataFrame(
         index=[1, 2, 3],
         columns=['a', 'b', 'c'])
 ```
+
 包含多种索引
+
 ```py
 df = pd.DataFrame(
         {"a" : [4 ,5, 6],
@@ -235,8 +238,6 @@ print(df)
 ## DataFrame 操作
 
 ## 添加 column
-
-
 
 ### 索引
 

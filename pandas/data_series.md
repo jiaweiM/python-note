@@ -1,25 +1,26 @@
 # Series
 
 - [Series](#series)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [Series 属性](#series-%e5%b1%9e%e6%80%a7)
-  - [`Series`操作](#series%e6%93%8d%e4%bd%9c)
+  - [简介](#简介)
+  - [Series 属性](#series-属性)
+  - [`Series`操作](#series操作)
     - [apply](#apply)
-  - [创建 `Series`](#%e5%88%9b%e5%bb%ba-series)
-    - [通过ndarray创建](#%e9%80%9a%e8%bf%87ndarray%e5%88%9b%e5%bb%ba)
-    - [创建 Series 时指定 index](#%e5%88%9b%e5%bb%ba-series-%e6%97%b6%e6%8c%87%e5%ae%9a-index)
-    - [为 Series 数据和 index 指定名称](#%e4%b8%ba-series-%e6%95%b0%e6%8d%ae%e5%92%8c-index-%e6%8c%87%e5%ae%9a%e5%90%8d%e7%a7%b0)
-    - [通过 dict 创建](#%e9%80%9a%e8%bf%87-dict-%e5%88%9b%e5%bb%ba)
-    - [`Series` 和 `ndarray` 类似](#series-%e5%92%8c-ndarray-%e7%b1%bb%e4%bc%bc)
-  - [索引、选择](#%e7%b4%a2%e5%bc%95%e9%80%89%e6%8b%a9)
+  - [创建 `Series`](#创建-series)
+    - [通过ndarray创建](#通过ndarray创建)
+    - [创建 Series 时指定 index](#创建-series-时指定-index)
+    - [为 Series 数据和 index 指定名称](#为-series-数据和-index-指定名称)
+    - [通过 dict 创建](#通过-dict-创建)
+    - [`Series` 和 `ndarray` 类似](#series-和-ndarray-类似)
+  - [索引、选择](#索引选择)
     - [reindex](#reindex)
-    - [reset_index](#resetindex)
-  - [描述统计](#%e6%8f%8f%e8%bf%b0%e7%bb%9f%e8%ae%a1)
-    - [Series.value_counts](#seriesvaluecounts)
+    - [reset_index](#reset_index)
+  - [描述统计](#描述统计)
+    - [Series.value_counts](#seriesvalue_counts)
   - [Accerrors](#accerrors)
-    - [字符串处理（str）](#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%a4%84%e7%90%86str)
-  - [参考](#%e5%8f%82%e8%80%83)
+    - [字符串处理（str）](#字符串处理str)
+  - [参考](#参考)
     - [map](#map)
+    - [Series.equals](#seriesequals)
 
 2020-04-21, 14:34
 ***
@@ -182,7 +183,7 @@ dtype: int64
 
 所以，此时可以将 `Series` 看做 index -> values 的 `dict`:
 
-![](images/2019-08-28-14-40-34.png)
+![series](images/2019-08-28-14-40-34.png)
 
 - 查看 `s1` 的类型：
 
@@ -243,13 +244,16 @@ s2=pd.Series(data1,index=index1)
 
 `s2` 结构：
 
-![](images/2019-08-28-15-10-27.png)
+![index](images/2019-08-28-15-10-27.png)
 
 - 查看 index
+
 ```py
 s2.index
 ```
+
 输出：
+
 ```py
 Index(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], dtype='object')
 ```
@@ -260,12 +264,16 @@ Index(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], dtype='object')
 s2.name="DailyTemperatures"
 s2.index.name="weekday"
 ```
+
 In:
-```
+
+```py
 s2
 ```
+
 Out:
-```
+
+```py
 weekday
 Mon    33
 Tue    19
@@ -282,11 +290,14 @@ Name: Daily Temperatures, dtype: int64
 通过 `dict` 创建，如果未指定 `index`, 则 `dict` 的 `key` 自动转换为 index；如果指定了 `index`，则以index 作为键值从 dict 取值创建 Series，如果 dict 中没有对应的键值，则以 NaN 作为结果。
 
 - 通过 dict 创建 Series
+
 ```py
 dict1={'Mon':33,'Tue':19,'Wed':15,'Thu':89,'Fri':11,'Sat':-5,'Sun':9}
 s4=pd.Series(dict1)
 ```
+
 对应的 Series:
+
 ```
 Fri    11
 Mon    33
@@ -535,11 +546,32 @@ pandas 在不同访问器下提供特定于 dtype 的方法。它们在 Series �
 
 ### 字符串处理（str）
 
-
-
 ## 参考
 
 ### map
 
 根据输入映射 `Series` 值。
 
+### Series.equals
+
+```r
+Series.equals(other)
+```
+
+测试两个对象是否包含相同的元素。
+
+- 对比两个 `Series` 或 `DataFrames` 是否具有相同的 shape 和元素。
+- 相同位置的 `NaN` 认为相等。
+- column 标题不需要是相同类型，但是相同 column 的元素值必须为相同 dtype。
+
+```py
+df = pd.DataFrame({1: [10], 2: [20]})
+df_equal = pd.DataFrame({1: [10], 2: [20]})
+assert df.equals(df_equal)
+
+different_col_type = pd.DataFrame({1.0: [10], 2.0: [20]})
+assert df.equals(different_col_type)
+
+different_data_type = pd.DataFrame({1: [10.0], 2: [20.0]})
+assert not df.equals(different_data_type)
+```

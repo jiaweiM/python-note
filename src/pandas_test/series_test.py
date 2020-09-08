@@ -3,6 +3,18 @@ import pandas as pd
 import pandas.testing as ptest
 
 
+def test_equals():
+    df = pd.DataFrame({1: [10], 2: [20]})
+    df_equal = pd.DataFrame({1: [10], 2: [20]})
+    assert df.equals(df_equal)
+
+    different_col_type = pd.DataFrame({1.0: [10], 2.0: [20]})
+    assert df.equals(different_col_type)
+
+    different_data_type = pd.DataFrame({1: [10.0], 2: [20.0]})
+    assert not df.equals(different_data_type)
+
+
 def test_create():
     s = pd.Series([1, 3, 5, np.nan, 6, 8])
     assert s.size == 6
@@ -79,4 +91,3 @@ def test_apply_keyword():
 def test_apply_numpy_func():
     s = pd.Series([20, 21, 12])
     s1 = s.apply(np.log)
-

@@ -2,9 +2,9 @@
 
 - [Boolean indexing](#boolean-indexing)
   - [简介](#简介)
-  - [Series boolean 向量索引](#series-boolean-向量索引)
-    - [布尔：或](#布尔或)
-    - [布尔：非](#布尔非)
+  - [Series 布尔向量索引](#series-布尔向量索引)
+    - [或](#或)
+    - [非](#非)
   - [使用布尔向量选择行](#使用布尔向量选择行)
   - [List 推导和 map](#list-推导和-map)
     - [map 方法](#map-方法)
@@ -16,64 +16,43 @@
 
 ## 简介
 
-布尔向量用于过滤数据。操作符有:
+布尔向量可用于过滤数据。
 
-- `|`, `or`
-- `&`, `and`
-- `~`, `not`
+| 操作符 | 对应关键字 |
+| ------ | ---------- |
+| `|`    | or         |
+| `&`    | and        |
+| `~`    | not        |
 
-这些操作必须用括号进行分组，因为默认情况下，`df['A'] > 2 & df['B'] < 3` 会按照 `df['A'] > (2 & df['B']) < 3`，而并非预想的 `(df['A > 2) & (df['B'] < 3)`。
+这些操作需要用括号进行分组，因为默认情况下，`df['A'] > 2 & df['B'] < 3` 会按照 `df['A'] > (2 & df['B']) < 3`，而并非 `(df['A > 2) & (df['B'] < 3)`。
 
-## Series boolean 向量索引
+## Series 布尔向量索引
 
 使用布尔向量索引 `Series` 和 `ndarray` 完全相同
 
 ```py
 s = pd.Series(range(-3, 4))
 s1 = s[s > 0]
-s1
+
+np.testing.assert_array_equal(s1.values, np.array([1, 2, 3]))
 ```
 
-out:
-
-```cmd
-4    1
-5    2
-6    3
-dtype: int64
-```
-
-### 布尔：或
+### 或
 
 ```py
-s[(s < -1) | (s > 0.5)]
+s = pd.Series(range(-3, 4))
+
+s2 = s[(s < -1) | (s > 0.5)]
+np.testing.assert_array_equal(s2.values, np.array([-3, -2, 1, 2, 3]))
 ```
 
-Out:
-
-```cmd
-0   -3
-1   -2
-4    1
-5    2
-6    3
-dtype: int64
-```
-
-### 布尔：非
+### 非
 
 ```py
-s[~(s < 0)]
-```
+s = pd.Series(range(-3, 4))
 
-Out:
-
-```cmd
-3    0
-4    1
-5    2
-6    3
-dtype: int64
+s3 = s[~(s < 0)]
+np.testing.assert_array_equal(s3.values, np.array([0, 1, 2, 3]))
 ```
 
 ## 使用布尔向量选择行
@@ -81,19 +60,9 @@ dtype: int64
 可以使用和 `DataFrame` 索引等长（即和 DataFrame 行数相同）的布尔向量选择 rows，例如，使用 DataFrame 的某一列构建的布尔向量：
 
 ```py
-import pandas as pd
-
-df = pd.DataFrame({'A': [1, 2, 3],
-                   'B': [7, 8, 9]})
-print(df[df.A > 1])
-```
-
-Out:
-
-```cmd
-   A  B
-1  2  8
-2  3  9
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [7, 8, 9]})
+df1 = df[df['A'] > 1]
+np.array_equal(df1.values, pd.DataFrame({"A": [2, 3], "B": [8, 9]}).values)
 ```
 
 ## List 推导和 map
@@ -103,28 +72,15 @@ Out:
 ### map 方法
 
 ```py
-import pandas as pd
-import numpy as np
-
 df = pd.DataFrame({'a': ['one', 'one', 'two', 'three', 'two', 'one', 'six'],
-                   'b': ['x', 'y', 'y', 'x', 'y', 'x', 'x'],
-                   'c': np.random.randn(7)})
-```
-
-现在只想要其中的 'two' 和 'three'：
-
-```py
-criterion = df['a'].map(lambda x: x.startswith('t'))
-df[criterion]
-```
-
-Out:
-
-```cmd
-       a  b         c
-2    two  y -1.103758
-3  three  x  0.201518
-4    two  y -1.033607
+                     'b': ['x', 'y', 'y', 'x', 'y', 'x', 'x'],
+                     'c': [1, 2, 3, 4, 5, 6, 7]})
+criterion = df['a'].map(lambda x: x.startswith('t')) # 只保留 a 中以 't' 开头的行
+df1 = df[criterion]
+assert_frame_equal(df1.reset_index(drop=True),
+                     pd.DataFrame({'a': ['two', 'three', 'two'],
+                                   'b': ['y', 'x', 'y'],
+                                   'c': [3, 4, 5]}))
 ```
 
 ### List 推导

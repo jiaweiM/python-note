@@ -1,8 +1,8 @@
 # Python IO
 
 - [Python IO](#python-io)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [函数](#%e5%87%bd%e6%95%b0)
+  - [简介](#简介)
+  - [函数](#函数)
     - [os.walk](#oswalk)
 
 ## 简介

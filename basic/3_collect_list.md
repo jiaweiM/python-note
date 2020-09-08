@@ -1,12 +1,12 @@
 # List
 
 - [List](#list)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [创建 List](#%e5%88%9b%e5%bb%ba-list)
-    - [多维 list](#%e5%a4%9a%e7%bb%b4-list)
-  - [函数](#%e5%87%bd%e6%95%b0)
-  - [列表推导](#%e5%88%97%e8%a1%a8%e6%8e%a8%e5%af%bc)
-  - [内嵌列表推导](#%e5%86%85%e5%b5%8c%e5%88%97%e8%a1%a8%e6%8e%a8%e5%af%bc)
+  - [简介](#简介)
+  - [创建 List](#创建-list)
+    - [多维 list](#多维-list)
+  - [函数](#函数)
+  - [列表推导](#列表推导)
+  - [内嵌列表推导](#内嵌列表推导)
   - [del](#del)
   - [List as Stack](#list-as-stack)
   - [List as Queue](#list-as-queue)
