@@ -1,5 +1,8 @@
 # Decoratoe
 
+- [Decoratoe](#decoratoe)
+  - [简介](#简介)
+
 ## 简介
 
 Decorator 用于给已有的代码添加额外的功能。

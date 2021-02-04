@@ -1,10 +1,11 @@
 # Closure
 
 - [Closure](#closure)
-- [简介](#%e7%ae%80%e4%bb%8b)
-- [定义闭包函数（Closure Function）](#%e5%ae%9a%e4%b9%89%e9%97%ad%e5%8c%85%e5%87%bd%e6%95%b0closure-function)
+- [简介](#简介)
+- [定义闭包函数（Closure Function）](#定义闭包函数closure-function)
 
 # 简介
+
 在说明闭包（closure）前，先解释一下嵌套函数和非本地变量。
 
 函数内部定义的函数成为嵌套函数（nested function），嵌套函数可以访问其外部函数内的变量。

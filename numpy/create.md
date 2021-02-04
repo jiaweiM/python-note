@@ -1,8 +1,11 @@
-- [简介](#%e7%ae%80%e4%bb%8b)
-- [将 Python 对象转换为 NumPy 数组](#%e5%b0%86-python-%e5%af%b9%e8%b1%a1%e8%bd%ac%e6%8d%a2%e4%b8%ba-numpy-%e6%95%b0%e7%bb%84)
-- [NumPy 创建方法](#numpy-%e5%88%9b%e5%bb%ba%e6%96%b9%e6%b3%95)
+# 创建数组
+
+- [创建数组](#创建数组)
+- [简介](#简介)
+- [将 Python 对象转换为 NumPy 数组](#将-python-对象转换为-numpy-数组)
+- [NumPy 创建方法](#numpy-创建方法)
   - [`empty`](#empty)
-  - [`empty_like`](#emptylike)
+  - [`empty_like`](#empty_like)
   - [`array`](#array)
 
 # [简介](https://numpy.org/doc/1.17/user/basics.creation.html#arrays-creation)

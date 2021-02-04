@@ -1,6 +1,6 @@
 - [Jupyter](#jupyter)
-  - [Jupyter 单元格](#jupyter-%e5%8d%95%e5%85%83%e6%a0%bc)
-  - [Python 交互窗口](#python-%e4%ba%a4%e4%ba%92%e7%aa%97%e5%8f%a3)
+  - [Jupyter 单元格](#jupyter-单元格)
+  - [Python 交互窗口](#python-交互窗口)
 
 # Jupyter
 

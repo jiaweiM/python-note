@@ -1,4 +1,4 @@
 import numpy as np
 
-rng = np.random.default_rng()
-rng.uniform()
+randMat = np.mat(np.random.rand(4, 4))
+print(randMat.I)

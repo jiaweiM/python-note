@@ -1,27 +1,30 @@
 # pathlib
 
 - [pathlib](#pathlib)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [基本使用](#%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8)
-    - [列出所有子目录](#%e5%88%97%e5%87%ba%e6%89%80%e6%9c%89%e5%ad%90%e7%9b%ae%e5%bd%95)
-    - [列出所有源文件](#%e5%88%97%e5%87%ba%e6%89%80%e6%9c%89%e6%ba%90%e6%96%87%e4%bb%b6)
+  - [简介](#简介)
+  - [基本使用](#基本使用)
+    - [列出所有子目录](#列出所有子目录)
+    - [列出所有源文件](#列出所有源文件)
   - [Pure paths](#pure-paths)
-    - [实现类](#%e5%ae%9e%e7%8e%b0%e7%b1%bb)
+    - [实现类](#实现类)
       - [PurePath](#purepath)
       - [PurePosixPath](#pureposixpath)
       - [PureWindowsPath](#purewindowspath)
-    - [性质](#%e6%80%a7%e8%b4%a8)
+    - [性质](#性质)
     - [Operators](#operators)
-    - [访问](#%e8%ae%bf%e9%97%ae)
+    - [访问](#访问)
   - [Concrete paths](#concrete-paths)
-  - [os 中对应工具](#os-%e4%b8%ad%e5%af%b9%e5%ba%94%e5%b7%a5%e5%85%b7)
-  - [方法和属性](#%e6%96%b9%e6%b3%95%e5%92%8c%e5%b1%9e%e6%80%a7)
+  - [os 中对应工具](#os-中对应工具)
+  - [方法和属性](#方法和属性)
     - [PurePath.drive](#purepathdrive)
     - [PurePath.root](#purepathroot)
     - [PurePath.anchor](#purepathanchor)
     - [PurePath.parents](#purepathparents)
     - [Path.glob](#pathglob)
     - [Path.iterdir](#pathiterdir)
+
+2021-01-31, 22:19
+***
 
 ## 简介
 

@@ -34,3 +34,9 @@ def test_lambda():
 
     d = defaultdict(constant_factory('<DAO>'))
     assert d['a'] == "<DAO>"
+
+
+def test_lambda2():
+    dd_pair = defaultdict(lambda: [0, 0])
+    dd_pair[2][1] = 1
+    assert dd_pair[2] == [0, 1]

@@ -1,15 +1,15 @@
 # collections.Counter
 
 - [collections.Counter](#collectionscounter)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-    - [`__add__`](#add)
-  - [额外方法](#%e9%a2%9d%e5%a4%96%e6%96%b9%e6%b3%95)
+  - [简介](#简介)
+    - [`__add__`](#__add__)
+  - [额外方法](#额外方法)
     - [elements()](#elements)
-    - [most_common](#mostcommon)
+    - [most_common](#most_common)
     - [subtract](#subtract)
-  - [差异方法](#%e5%b7%ae%e5%bc%82%e6%96%b9%e6%b3%95)
-  - [应用](#%e5%ba%94%e7%94%a8)
-    - [序列中出现次数最多的元素](#%e5%ba%8f%e5%88%97%e4%b8%ad%e5%87%ba%e7%8e%b0%e6%ac%a1%e6%95%b0%e6%9c%80%e5%a4%9a%e7%9a%84%e5%85%83%e7%b4%a0)
+  - [差异方法](#差异方法)
+  - [应用](#应用)
+    - [序列中出现次数最多的元素](#序列中出现次数最多的元素)
 
 2020-04-21, 14:26
 ***

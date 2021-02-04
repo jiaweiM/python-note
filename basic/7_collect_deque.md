@@ -1,15 +1,15 @@
 # deque
 
 - [deque](#deque)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [创建 deque](#%e5%88%9b%e5%bb%ba-deque)
-    - [创建空 deque](#%e5%88%9b%e5%bb%ba%e7%a9%ba-deque)
-    - [从 iterable 对象创建](#%e4%bb%8e-iterable-%e5%af%b9%e8%b1%a1%e5%88%9b%e5%bb%ba)
-    - [固定长度](#%e5%9b%ba%e5%ae%9a%e9%95%bf%e5%ba%a6)
-  - [方法](#%e6%96%b9%e6%b3%95)
+  - [简介](#简介)
+  - [创建 deque](#创建-deque)
+    - [创建空 deque](#创建空-deque)
+    - [从 iterable 对象创建](#从-iterable-对象创建)
+    - [固定长度](#固定长度)
+  - [方法](#方法)
     - [append](#append)
-  - [应用](#%e5%ba%94%e7%94%a8)
-    - [保留最后 N 个元素](#%e4%bf%9d%e7%95%99%e6%9c%80%e5%90%8e-n-%e4%b8%aa%e5%85%83%e7%b4%a0)
+  - [应用](#应用)
+    - [保留最后 N 个元素](#保留最后-n-个元素)
 
 ***
 

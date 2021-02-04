@@ -1,13 +1,13 @@
 # defaultdict
 
 - [defaultdict](#defaultdict)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-    - [`__missing__(key)`](#missingkey)
-    - [`default_factory`](#defaultfactory)
-  - [list as default_factory](#list-as-defaultfactory)
-  - [int as default_factory](#int-as-defaultfactory)
-  - [lambda as default_factory](#lambda-as-defaultfactory)
-  - [set as default_factory](#set-as-defaultfactory)
+  - [简介](#简介)
+    - [`__missing__(key)`](#__missing__key)
+    - [`default_factory`](#default_factory)
+  - [list as default_factory](#list-as-default_factory)
+  - [int as default_factory](#int-as-default_factory)
+  - [lambda as default_factory](#lambda-as-default_factory)
+  - [set as default_factory](#set-as-default_factory)
 
 ***
 
@@ -15,7 +15,7 @@
 
 [`collections.defaultdict([default_factory[,...]])`](https://docs.python.org/3/library/collections.html#collections.defaultdict)
 
-`defaultdict` 是内置 `dict` 的子类，覆盖了 `__missing__(key)` 方法，添加了一个可写入的实例变量，余下功能和 `dict` 完全一样。
+`defaultdict` 是内置 `dict` 的子类，覆盖了 `__missing__(key)` 方法，添加了一个可写入的实例变量，余下功能和 `dict` 完全一样。即 `defaultdict` 提供了设置默认值的方法。
 
 第一个参数为 `default_factory` 属性值，默认为 `None`；余下参数和 `dict` 一样。
 
@@ -77,7 +77,7 @@ assert list(d) == ['yellow', 'blue', 'red']
 [('i', 4), ('m', 1), ('p', 2), ('s', 4)]
 ```
 
-首次碰到某个字符串，由于 dict 中没有该值，由 `default_factory` 调用 `int()` 提供默认值。`+=` 操作实现了所有计数。
+首次碰到某个字符串，由于 dict 中没有该值，由 `default_factory` 调用 `int()` 提供默认值，即默认0。`+=` 操作实现了所有计数。
 
 ## lambda as default_factory
 

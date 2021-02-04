@@ -1,3 +1,20 @@
+"""
+sorted 返回一个新的 list
+"""
+
+
+def test_int_list():
+    x = [4, 1, 2, 3]
+    y = sorted(x)
+    assert y == [1, 2, 3, 4]
+    assert x == [4, 1, 2, 3]
+
+
+def test_reverse():
+    x = sorted([-4, 1, -2, 3], key=abs, reverse=True)  # sort the list by absolute value from largest to smallest
+    assert x == [-4, 3, -2, 1]
+
+
 def test_list():
     # vowels list
     py_list = ['e', 'a', 'u', 'o', 'i']

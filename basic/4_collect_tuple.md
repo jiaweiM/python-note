@@ -1,10 +1,10 @@
 # Tuple
 
 - [Tuple](#tuple)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [创建 tuple](#%e5%88%9b%e5%bb%ba-tuple)
-  - [访问值](#%e8%ae%bf%e9%97%ae%e5%80%bc)
-  - [作为 dict 的 key](#%e4%bd%9c%e4%b8%ba-dict-%e7%9a%84-key)
+  - [简介](#简介)
+  - [创建 tuple](#创建-tuple)
+  - [访问值](#访问值)
+  - [作为 dict 的 key](#作为-dict-的-key)
 
 2020-04-21, 11:32
 ***

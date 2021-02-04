@@ -1,10 +1,10 @@
 # Inheritance
 
 - [Inheritance](#inheritance)
-  - [简介](#%e7%ae%80%e4%bb%8b)
+  - [简介](#简介)
   - [super](#super)
-  - [继承解析](#%e7%bb%a7%e6%89%bf%e8%a7%a3%e6%9e%90)
-  - [扩展 property](#%e6%89%a9%e5%b1%95-property)
+  - [继承解析](#继承解析)
+  - [扩展 property](#扩展-property)
 
 2020-04-12, 21:36
 ***

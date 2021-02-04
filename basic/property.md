@@ -1,12 +1,12 @@
 # Property
 
 - [Property](#property)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [getter 和 setter](#getter-%e5%92%8c-setter)
-    - [设置方法](#%e8%ae%be%e7%bd%ae%e6%96%b9%e6%b3%95)
-    - [用已有方法定义 property](#%e7%94%a8%e5%b7%b2%e6%9c%89%e6%96%b9%e6%b3%95%e5%ae%9a%e4%b9%89-property)
-    - [annotation 定义](#annotation-%e5%ae%9a%e4%b9%89)
-  - [使用建议](#%e4%bd%bf%e7%94%a8%e5%bb%ba%e8%ae%ae)
+  - [简介](#简介)
+  - [getter 和 setter](#getter-和-setter)
+    - [设置方法](#设置方法)
+    - [用已有方法定义 property](#用已有方法定义-property)
+    - [annotation 定义](#annotation-定义)
+  - [使用建议](#使用建议)
 
 2020-04-12, 20:19
 ***

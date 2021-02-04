@@ -1,6 +1,14 @@
 import pytest
 
 
+def lazy_range(n):
+    """a lazy version of range"""
+    i = 0
+    while i < n:
+        yield i
+        i += 1
+
+
 def my_gen():
     n = 1
     yield n

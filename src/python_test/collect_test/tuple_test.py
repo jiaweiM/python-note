@@ -1,6 +1,24 @@
 import pytest
 
 
+def test_modify():
+    a_list = [1, 2]
+    a_tuple = (1, 2)
+    b_tuple = 3, 4
+    a_list[1] = 3
+    try:
+        a_tuple[1] = 3
+    except TypeError:
+        print("cannot modify a tuple")
+
+
+def test_swap():
+    x, y = 1, 2
+    x, y, = y, x
+    assert x == 2
+    assert y == 1
+
+
 def test_unpacking():
     a, b, *c, d = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     assert a == 1
@@ -30,7 +48,6 @@ def test_unpack_long():
     records = [('foo', 1, 2),
                ('bar', 'hello'),
                ('foo', 3, 4), ]
-    
 
 
 def test_ctr():

@@ -112,6 +112,12 @@ def test_get():
     assert person.get('salary', 0.0) == 0.0
 
 
+def test_in():
+    grades = {"Joel": 80, "Tim": 95}  # dictionary literal
+    assert "Joel" in grades
+    assert "Kate" not in grades
+
+
 def test_items():
     """
      returns a view object that displays a list of dictionary's (key, value) tuple pairs.
@@ -134,6 +140,16 @@ def test_keys():
 
     empty_dict = {}
     assert set(empty_dict.keys()) == set()
+
+
+def test_keyerror():
+    grades = {"Joel": 80, "Tim": 95}
+    joels_grade = grades["Joel"]
+    assert joels_grade == 80
+    try:
+        kates_grade = grades["Kate"]
+    except KeyError:
+        print("no grade for Kate!")
 
 
 def test_popitem():

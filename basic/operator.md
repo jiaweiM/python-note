@@ -1,14 +1,14 @@
 # Python Operators
 
 - [Python Operators](#python-operators)
-  - [数学运算符](#%e6%95%b0%e5%ad%a6%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [比较运算符](#%e6%af%94%e8%be%83%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [逻辑运算符](#%e9%80%bb%e8%be%91%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [位运算符](#%e4%bd%8d%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [赋值运算符](#%e8%b5%8b%e5%80%bc%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [识别操作符（Identity operators）](#%e8%af%86%e5%88%ab%e6%93%8d%e4%bd%9c%e7%ac%a6identity-operators)
-  - [成员操作符](#%e6%88%90%e5%91%98%e6%93%8d%e4%bd%9c%e7%ac%a6)
-  - [运算符优先级](#%e8%bf%90%e7%ae%97%e7%ac%a6%e4%bc%98%e5%85%88%e7%ba%a7)
+  - [数学运算符](#数学运算符)
+  - [比较运算符](#比较运算符)
+  - [逻辑运算符](#逻辑运算符)
+  - [位运算符](#位运算符)
+  - [赋值运算符](#赋值运算符)
+  - [识别操作符（Identity operators）](#识别操作符identity-operators)
+  - [成员操作符](#成员操作符)
+  - [运算符优先级](#运算符优先级)
 
 ***
 

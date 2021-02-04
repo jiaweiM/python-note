@@ -1,27 +1,25 @@
 # venv
 
 - [venv](#venv)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [创建虚拟环境](#%e5%88%9b%e5%bb%ba%e8%99%9a%e6%8b%9f%e7%8e%af%e5%a2%83)
+  - [简介](#简介)
+  - [创建虚拟环境](#创建虚拟环境)
 
 2020-04-13, 05:58
 ***
 
 ## 简介
 
-`venv` 模块支持使用自定义的 `site` 目录创建轻量型的虚拟焊接。
+`venv` 模块支持使用自定义的 `site` 目录创建轻量型的虚拟环境。
 
-每个虚拟环境有子集的 Python （和创建该环境的 Python 版本一致），并且在其 site 目录拥有独立的 Python 工具包。
+每个虚拟环境包含 Python （和创建该环境的 Python 版本一致），并且在其 site 目录包含独立的 Python 工具包。在进行 Python 应用开发时，最好使用虚拟环境。创建虚拟环境是为了安装和管理第三方包。
 
-`venv` (Python >=3.6) `pyvenv` (Python 3.3, 3.4)和 `virtualenv` (Python 2) 用于创建虚拟环境，从而可以为不同项目安装不同的工具包。
-
-在进行 Python 应用开发时，最好使用虚拟环境。创建虚拟环境是为了安装和管理第三方包。
+`venv` (Python >=3.6)、`pyvenv` (Python 3.3, 3.4)和 `virtualenv` (Python 2) 用于创建虚拟环境，从而可以为不同项目安装不同的工具包。
 
 ## 创建虚拟环境
 
 在项目目录，运行 `venv`，对 Python 2，替换为 `virtualenv`.
 
-`python3 -m venv /path/to/new/virtual/environment`
+例如 `python3 -m venv /path/to/new/virtual/environment`
 
 - 运行该命令创建目标目录，并将 `pyvenv.cfg` 文件放入其中，该文件包含的 `home` key 指向运行该命令的目录。
 - 目标目录通常为 `.venv`。

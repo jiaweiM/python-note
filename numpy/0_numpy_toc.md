@@ -4,10 +4,11 @@
 
 - [快速入门](quickstart.md)
 - [简介](02_intro.md)
-- [创建数组](03_create.md)
+- [创建数组](create.md)
 - [数据类型](04_dtype.md)
 - [随机数](random.md)
 - [方法总结]
+- [QA](numpy_qas.md)
 
 ## References
 

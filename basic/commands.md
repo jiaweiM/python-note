@@ -3,7 +3,7 @@
 - [Commands](#commands)
   - [CMD](#cmd)
   - [Interface options](#interface-options)
-    - [-m](#m)
+    - [-m](#-m)
   - [Generic options](#generic-options)
   - [Miscellaneous options](#miscellaneous-options)
   - [References](#references)

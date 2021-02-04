@@ -63,3 +63,11 @@ def test_dict():
     # '0' is True
     s = {'0': 'True'}
     assert all(s)
+
+
+def test_bool():
+    assert all([True, 1, {3}])
+    assert not all([True, 1, {}])
+    assert any([True, 1, {}])
+    assert all([])
+    assert not any([])

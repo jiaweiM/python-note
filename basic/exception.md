@@ -1,11 +1,11 @@
 # Python 异常处理
 
-- [Python 异常处理](#python-%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [异常处理](#%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86)
-  - [抛出异常](#%e6%8a%9b%e5%87%ba%e5%bc%82%e5%b8%b8)
-  - [Exception 类型处理](#exception-%e7%b1%bb%e5%9e%8b%e5%a4%84%e7%90%86)
-  - [标准异常列表](#%e6%a0%87%e5%87%86%e5%bc%82%e5%b8%b8%e5%88%97%e8%a1%a8)
+- [Python 异常处理](#python-异常处理)
+  - [简介](#简介)
+  - [异常处理](#异常处理)
+  - [抛出异常](#抛出异常)
+  - [Exception 类型处理](#exception-类型处理)
+  - [标准异常列表](#标准异常列表)
   - [Assertion](#assertion)
   - [References](#references)
 

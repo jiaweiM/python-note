@@ -1,17 +1,17 @@
 # Python Function
 
 - [Python Function](#python-function)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-    - [创建函数](#%e5%88%9b%e5%bb%ba%e5%87%bd%e6%95%b0)
-    - [函数返回值](#%e5%87%bd%e6%95%b0%e8%bf%94%e5%9b%9e%e5%80%bc)
-    - [关于局部和全局变量](#%e5%85%b3%e4%ba%8e%e5%b1%80%e9%83%a8%e5%92%8c%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f)
-  - [参数](#%e5%8f%82%e6%95%b0)
-    - [关键字参数](#%e5%85%b3%e9%94%ae%e5%ad%97%e5%8f%82%e6%95%b0)
-    - [默认参数](#%e9%bb%98%e8%ae%a4%e5%8f%82%e6%95%b0)
-    - [可变参数 *args](#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0-args)
+  - [简介](#简介)
+    - [创建函数](#创建函数)
+    - [函数返回值](#函数返回值)
+    - [关于局部和全局变量](#关于局部和全局变量)
+  - [参数](#参数)
+    - [关键字参数](#关键字参数)
+    - [默认参数](#默认参数)
+    - [可变参数 *args](#可变参数-args)
     - [**kwargs](#kwargs)
   - [Unpacking Argument Lists](#unpacking-argument-lists)
-  - [Lambda 函数](#lambda-%e5%87%bd%e6%95%b0)
+  - [Lambda 函数](#lambda-函数)
 
 ***
 
