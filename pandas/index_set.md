@@ -1,10 +1,10 @@
 # Set/reset index
 
 - [Set/reset index](#setreset-index)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [设置 index](#%e8%ae%be%e7%bd%ae-index)
+  - [简介](#简介)
+  - [设置 index](#设置-index)
   - [Reset the index](#reset-the-index)
-  - [添加临时索引](#%e6%b7%bb%e5%8a%a0%e4%b8%b4%e6%97%b6%e7%b4%a2%e5%bc%95)
+  - [添加临时索引](#添加临时索引)
 
 ***
 

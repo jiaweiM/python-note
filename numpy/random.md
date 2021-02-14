@@ -4,11 +4,9 @@
   - [快速入门](#快速入门)
   - [简介](#简介)
   - [Random Generator](#random-generator)
-    - [Access BitGenerator](#access-bitgenerator)
-    - [Simple random date](#simple-random-date)
-    - [Permutations](#permutations)
     - [Distribution](#distribution)
       - [Generator.standard_normal](#generatorstandard_normal)
+  - [随机排列](#随机排列)
   - [方法总结](#方法总结)
     - [`RandomState.randn(d0, d1,...,dn)`](#randomstaterandnd0-d1dn)
     - [`RandomState.rand(d0,d1,...,dn)`](#randomstaterandd0d1dn)
@@ -126,12 +124,6 @@ rg.random()
 
 ## Random Generator
 
-### Access BitGenerator
-
-### Simple random date
-
-### Permutations
-
 ### Distribution
 
 #### Generator.standard_normal
@@ -234,6 +226,78 @@ print(s)
 array([[-4.49401501,  4.00950034, -1.81814867,  7.29718677],   # random
        [ 0.39924804,  4.68456316,  4.99394529,  4.84057254]])  # random
 ```
+
+## 随机排列
+
+```py
+random.Generator.permutation(x, axis=0)
+```
+
+随机排列一个序列，或者返回一个排列过的范围。
+
+- x: int or array_like
+
+如果 x 为整数，则随机排列 `np.arange(x)`。如果 x 是数组，则复制数组，并随机排列数组元素。
+
+- axis: int, optional
+
+随机排列的轴，默认为 0.
+
+
+例1，生成指定范围内数值的随机排序：
+
+```py
+rng = np.random.default_rng()
+a1 = rng.permutation(10)
+print(a1)
+# [5 8 6 2 7 1 0 3 9 4]
+```
+
+例2，对数组随机排序：
+
+```py
+a2 = rng.permutation([1, 4, 9, 12, 15])
+print(a2)
+# [ 1 15  4  9 12]
+```
+
+例 3，多维数组随机排序：
+
+```py
+rng = np.random.default_rng()
+arr = np.arange(9).reshape((3, 3))
+print(arr)
+# [[0 1 2]
+#  [3 4 5]
+#  [6 7 8]]
+
+a3 = rng.permutation(arr)
+print(a3)
+# [[6 7 8]
+#  [0 1 2]
+#  [3 4 5]]
+```
+
+`axis`默认为 0，所以这里只对第 1 维进行了随机排序。
+
+例 4，多维数组指定随机排序轴：
+
+```py
+rng = np.random.default_rng()
+arr = np.arange(9).reshape((3, 3))
+print(arr)
+# [[0 1 2]
+#  [3 4 5]
+#  [6 7 8]]
+
+a3 = rng.permutation(arr, axis=1)
+print(a3)
+# [[1 2 0]
+#  [4 5 3]
+#  [7 8 6]]
+```
+
+解释：这里指定 `axis=1`，所以对第二维进行随机排序，第1维保持不变。
 
 ## 方法总结
 
