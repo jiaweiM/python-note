@@ -1,14 +1,17 @@
 # Linting
 
 - [Linting](#linting)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [启用 linter](#%e5%90%af%e7%94%a8-linter)
-  - [禁用 linting](#%e7%a6%81%e7%94%a8-linting)
-  - [运行 linting](#%e8%bf%90%e8%a1%8c-linting)
-  - [linting 设置](#linting-%e8%ae%be%e7%bd%ae)
-    - [通用设置](#%e9%80%9a%e7%94%a8%e8%ae%be%e7%bd%ae)
-    - [特定 linter 配置](#%e7%89%b9%e5%ae%9a-linter-%e9%85%8d%e7%bd%ae)
+  - [简介](#简介)
+  - [启用 linter](#启用-linter)
+  - [禁用 linting](#禁用-linting)
+  - [运行 linting](#运行-linting)
+  - [linting 设置](#linting-设置)
+    - [通用设置](#通用设置)
+    - [特定 linter 配置](#特定-linter-配置)
   - [Pylint](#pylint)
+
+2021-02-20, 11:43
+***
 
 ## 简介
 

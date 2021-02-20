@@ -1,16 +1,17 @@
 # Packaging Python Projects
 
 - [Packaging Python Projects](#packaging-python-projects)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [一个简单项目](#%e4%b8%80%e4%b8%aa%e7%ae%80%e5%8d%95%e9%a1%b9%e7%9b%ae)
-    - [创建项目文件](#%e5%88%9b%e5%bb%ba%e9%a1%b9%e7%9b%ae%e6%96%87%e4%bb%b6)
-    - [创建测试文件夹](#%e5%88%9b%e5%bb%ba%e6%b5%8b%e8%af%95%e6%96%87%e4%bb%b6%e5%a4%b9)
-    - [创建 setup.py](#%e5%88%9b%e5%bb%ba-setuppy)
-    - [创建 README.md](#%e5%88%9b%e5%bb%ba-readmemd)
-    - [创建 LICENSE](#%e5%88%9b%e5%bb%ba-license)
-    - [生成分发文件](#%e7%94%9f%e6%88%90%e5%88%86%e5%8f%91%e6%96%87%e4%bb%b6)
-    - [上传分发文件](#%e4%b8%8a%e4%bc%a0%e5%88%86%e5%8f%91%e6%96%87%e4%bb%b6)
-    - [安装新创建的包](#%e5%ae%89%e8%a3%85%e6%96%b0%e5%88%9b%e5%bb%ba%e7%9a%84%e5%8c%85)
+  - [简介](#简介)
+  - [一个简单项目](#一个简单项目)
+  - [创建项目文件](#创建项目文件)
+  - [创建测试文件夹](#创建测试文件夹)
+  - [创建 setup.py](#创建-setuppy)
+  - [创建 README.md](#创建-readmemd)
+  - [创建 LICENSE](#创建-license)
+  - [生成分发文件](#生成分发文件)
+  - [安装到本地](#安装到本地)
+  - [上传分发文件](#上传分发文件)
+  - [安装新创建的包](#安装新创建的包)
 
 2020-04-18, 11:55
 ***
@@ -31,7 +32,7 @@ packaging_tutorial/
 
 以下所有命令都是在 `packaging_tutorial` 目录执行。
 
-### 创建项目文件
+## 创建项目文件
 
 完整的项目结构如下：
 
@@ -45,11 +46,11 @@ packaging_tutorial/
   README.md
 ```
 
-### 创建测试文件夹
+## 创建测试文件夹
 
 `tests/` 文件单元测试文件夹，可以保持为空。
 
-### 创建 setup.py
+## 创建 setup.py
 
 `setup.py` 时 setuptools 的构建脚本。
 
@@ -80,7 +81,7 @@ setuptools.setup(
 )
 ```
 
-### 创建 README.md
+## 创建 README.md
 
 打开 `README.md` 文件，输入如下内容：
 
@@ -92,7 +93,7 @@ This is a simple example package. You can use
 to write your content.
 ```
 
-### 创建 LICENSE
+## 创建 LICENSE
 
 选择[合适的 license](https://choosealicense.com/)，打开 `LICENSE` 文件，输入对应的 LICENSE 文本。例如，输入 MIT license:
 
@@ -118,7 +119,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### 生成分发文件
+## 生成分发文件
 
 下一步生成分布包，该分发包可以上传到 pypi，也可以使用 pip 安装。
 
@@ -134,6 +135,8 @@ python3 -m pip install --user --upgrade setuptools wheel
 python3 setup.py sdist bdist_wheel
 ```
 
+`sdist` 用于生成源码分发，`bdist_wheel` 用于生成 wheel 分发。
+
 这样就在 `dist` 目录生成两个文件：
 
 ```text
@@ -144,7 +147,15 @@ dist/
 
 其中 `tar.gz` 文件包含源码，`.whl` 文件是内置的分发文件。
 
-### 上传分发文件
+## 安装到本地
+
+```
+python setup.py install
+```
+
+该命令将包安装到本地 Python 副本。
+
+## 上传分发文件
 
 首先，你需要在 [https://test.pypi.org/account/register/](https://test.pypi.org/account/register/) 注册一个 Test PyPI 账户，并验证邮箱。Test PyPI 是单独的 PypI，主要用于测试和试验。
 
@@ -158,7 +169,7 @@ pypi-AgENdGVzdC5weXBpLm9yZwIkZWQ4OTZjN2ItZWRhYS00ZDYxLTg2Y2QtMzM3NGZlYTUyNjgwAAI
 python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 ```
 
-### 安装新创建的包
+## 安装新创建的包
 
 可以直接安装你上传的包：
 

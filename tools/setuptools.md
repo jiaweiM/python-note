@@ -1,19 +1,19 @@
 # setuptools
 
 - [setuptools](#setuptools)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [安装 setuptools](#%e5%ae%89%e8%a3%85-setuptools)
-  - [使用](#%e4%bd%bf%e7%94%a8)
-    - [指定项目版本](#%e6%8c%87%e5%ae%9a%e9%a1%b9%e7%9b%ae%e7%89%88%e6%9c%ac)
-  - [版本编号方案](#%e7%89%88%e6%9c%ac%e7%bc%96%e5%8f%b7%e6%96%b9%e6%a1%88)
-    - [编号方案](#%e7%bc%96%e5%8f%b7%e6%96%b9%e6%a1%88)
-      - [语义版本（推荐）](#%e8%af%ad%e4%b9%89%e7%89%88%e6%9c%ac%e6%8e%a8%e8%8d%90)
-      - [日期版本](#%e6%97%a5%e6%9c%9f%e7%89%88%e6%9c%ac)
-      - [序号版本（Serial）](#%e5%ba%8f%e5%8f%b7%e7%89%88%e6%9c%acserial)
-      - [混合方案](#%e6%b7%b7%e5%90%88%e6%96%b9%e6%a1%88)
-    - [Pre-release 版本](#pre-release-%e7%89%88%e6%9c%ac)
-    - [本地版本识别符](#%e6%9c%ac%e5%9c%b0%e7%89%88%e6%9c%ac%e8%af%86%e5%88%ab%e7%ac%a6)
-  - [setup() 参数](#setup-%e5%8f%82%e6%95%b0)
+  - [简介](#简介)
+  - [安装 setuptools](#安装-setuptools)
+  - [使用](#使用)
+  - [指定项目版本](#指定项目版本)
+  - [版本编号方案](#版本编号方案)
+    - [编号方案](#编号方案)
+      - [语义版本（推荐）](#语义版本推荐)
+      - [日期版本](#日期版本)
+      - [序号版本（Serial）](#序号版本serial)
+      - [混合方案](#混合方案)
+    - [Pre-release 版本](#pre-release-版本)
+    - [本地版本识别符](#本地版本识别符)
+  - [setup() 参数](#setup-参数)
     - [name](#name)
     - [version](#version)
     - [description](#description)
@@ -21,8 +21,10 @@
     - [author](#author)
     - [license](#license)
     - [classifiers](#classifiers)
-    - [python_requires](#pythonrequires)
+    - [python_requires](#python_requires)
     - [packages](#packages)
+  - [命令](#命令)
+    - [卸载](#卸载)
   - [References](#references)
 
 2020-04-17, 17:52
@@ -30,10 +32,7 @@
 
 ## 简介
 
-
-setuptools 是用于打包 Python 项目的工具。
-
-
+setuptools 对 distutils 进行了增强，可以更轻松地构建和分发 Python 软件包，尤其是那些包含依赖项的软件包。
 
 ## 安装 setuptools
 
@@ -47,6 +46,7 @@ pip install --upgrade setuptools
 
 ```py
 from setuptools import setup, find_packages
+
 setup(
     name="HelloWorld",
     version="0.1",
@@ -64,6 +64,7 @@ setup.py sdist
 
 ```py
 from setuptools import setup, find_packages
+
 setup(
     name="HelloWorld",
     version="0.1",
@@ -101,7 +102,7 @@ setup(
 
 下面我们会一一解释 `setup()` 的参数。
 
-### 指定项目版本
+## 指定项目版本
 
 项目版本由发行号（release number）和标签组成。
 
@@ -347,6 +348,12 @@ packages=find_packages(include=['sample', 'sample.*']),
 ```
 
 列出项目中的所有包。`setuptools.find_packages()` 会自动查看项目中的包。`include` 关键字参数指定查找的包，`exclude` 关键字参数用于忽略指定的包。
+
+## 命令
+
+### 卸载
+
+使用 `setup.py install` 安装的包无法直接卸载，此时运行 `setup.py install --record files.txt` 记录所有安装的文件，查看 files.txt 文件，找到这些文件直接删除。
 
 ## References
 

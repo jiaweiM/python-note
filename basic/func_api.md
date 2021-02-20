@@ -284,7 +284,7 @@ range 类型表示 immutable 数字序列，一般用在 for 循环中指定循�
 - 如果 step 为 0 或负值，返回 empty 序列
 - 如果 step 为 0，抛出 `ValueError`
 
-[使用实例](../src/python_test/range_test.py)
+[使用实例](../src/python_test/builtin_func/range_test.py)
 
 ## round
 
