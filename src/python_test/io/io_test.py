@@ -83,6 +83,16 @@ def test_write():
             f.write('This is line %d\n' % (i + 1))
 
 
+def test_write_error():
+    try:
+        data = open("missing.txt")
+        print(data.readline(), end='')
+    except IOError:
+        print("File Error")
+    finally:
+        data.close()
+
+
 def test_path_exist():
     path.exists('text.txt')
 

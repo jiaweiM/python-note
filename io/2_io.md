@@ -13,6 +13,7 @@
   - [二进制读写](#二进制读写)
   - [读写文本数据](#读写文本数据)
   - [StringIO](#stringio)
+  - [删除文件](#删除文件)
 
 ## 简介
 
@@ -267,7 +268,7 @@ f.close()
 
 ## 二进制读写
 
-使用 `pickle` 模块读写二进制文件。
+使用 `pickle` 模块读写二进制文件。用 `dump` 保存，用 `load` 恢复。
 
 写入二进制数据：
 
@@ -331,3 +332,19 @@ with open('somefile.txt', 'wt') as f:
 ## StringIO
 
 `class io.StringIO(initial_value='', neline='\n')`
+
+## 删除文件
+
+使用 `os.remove()` 函数删除文件：
+
+```py
+import os
+os.remove("demofile.txt")
+```
+
+使用 `os.rmdir()` 删除文件夹：
+
+```py
+import os
+os.rmdir("myfolder")
+```
