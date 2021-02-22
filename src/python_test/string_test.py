@@ -1,5 +1,6 @@
-import pytest
 import datetime
+
+import pytest
 
 
 def test_concanate():
@@ -27,6 +28,17 @@ def test_strip():
     lang = ' python '
     assert lang.strip() == 'python'
 
+
+def test_split():
+    line = "Man: Is this the right room for an argument?"
+    lines = line.split(":")
+    assert lines[0] == "Man"
+    assert lines[1] == " Is this the right room for an argument?"
+
+
+def test_split2():
+    line = "a:b:c"
+    line.split(":")
 
 def test_multi():
     a = 'm'

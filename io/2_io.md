@@ -24,25 +24,25 @@ Python 操作文件的步骤：
 2. 读写操作
 3. 关闭文件
 
-| 函数                        | 说明                                                                   |
-| --------------------------- | ---------------------------------------------------------------------- |
-| close()                     | 关闭文件。如果文件已关闭，调用无效                                     |
-| detach()                    | 将底层二进制缓冲区和 `TextIOBase` 分开并返回                           |
-| fileno()                    | 返回文件的一个整数描述值                                               |
-| flush()                     | flush 输出缓冲到文件流                                                 |
-| isatty()                    | 如果文件流为交互式，返回True                                           |
-| read([number])              | 读取指定数目的字符。如果无参数，则读取整个文件                         |
-| readable()                  | 如果文件流可读，返回 True                                              |
-| readline()                  | 读取下一行                                                             |
-| readline(n=-1)              | 从文件中读取一行，如果指定了 n，则最多读取 n 个字节                    |
-| readlines(n=-1)             | 读取所有行，以string 数组返回，如果指定了 n，则最多读取 n个字节        |
+| 函数 | 说明 |
+| --- | --- |
+| close()  | 关闭文件。如果文件已关闭，调用无效 |
+| detach() | 将底层二进制缓冲区和 `TextIOBase` 分开并返回 |
+| fileno() | 返回文件的一个整数描述值 |
+| flush() | flush 输出缓冲到文件流 |
+| isatty() | 如果文件流为交互式，返回True |
+| read([number]) | 读取指定数目的字符。如果无参数，则读取整个文件 |
+| readable() | 如果文件流可读，返回 True |
+| readline() | 读取下一行 |
+| readline(n=-1)  | 从文件中读取一行，如果指定了 n，则最多读取 n 个字节  |
+| readlines(n=-1) | 读取所有行，以string 数组返回，如果指定了 n，则最多读取 n个字节|
 | seek(offset, from=SEEK_SET) | 参照 `from` 位置设置文件指针 `offset`                                  |
-| seekable()                  | 如果文件支持随机访问，返回 True                                        |
-| tell()                      | 返回当前指针位置                                                       |
-| truncate(size=None)         | 将文件流大小调整为 `size` 个字节。如果 `size` 不指定，则设置到当前位置 |
-| writable()                  | 如果文件流可写入，返回 True                                            |
-| write(s)                    | 将字符串写入文件，返回写入的字符数                                     |
-| writelines(lines)           | 写入多行文本到文件                                                     |
+| seekable()          | 如果文件支持随机访问，返回 True |
+| tell()              | 返回当前指针位置  |
+| truncate(size=None) | 将文件流大小调整为 `size` 个字节。如果 `size` 不指定，则设置到当前位置 |
+| writable() | 如果文件流可写入，返回 True |
+| write(s)   | 将字符串写入文件，返回写入的字符数|
+| writelines(lines) | 写入多行文本到文件 |
 
 ## open
 

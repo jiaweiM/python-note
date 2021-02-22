@@ -11,6 +11,7 @@
     - [rfind](#rfind)
     - [index](#index)
     - [find](#find)
+    - [拆分和连接](#拆分和连接)
   - [format](#format)
     - [位置参数](#位置参数)
     - [关键字参数](#关键字参数)
@@ -116,6 +117,14 @@ def test_in():
 如果没有找到 `sub`，返回 -1.
 
 > `find()` 仅在需要知道 `sub` 的位置时使用，如果只为了检查 `sub` 是否为子字符串，用 `in` 操作符。
+
+### 拆分和连接
+
+`split` 用于拆分字符串，[实例](../src/python_test/builtin_func/str_split.py)。
+
+
+`join` 用于连接字符串，[实例](../src/python_test/builtin_func/str_join.py)。
+
 
 ## format
 

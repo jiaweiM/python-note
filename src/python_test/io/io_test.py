@@ -63,17 +63,10 @@ def test_seek():
 
 
 def test_with():
-    with open('data.txt', encoding='utf-8') as afile:
+    with open('helloworld.txt', encoding='utf-8') as afile:
         afile.seek(3)
         astr = afile.read()
         assert astr == 'lo world'
-
-
-def test_readall():
-    """read all the file"""
-    txt = open('data.txt')
-
-    print(txt.read())
 
 
 def test_lines():
@@ -92,3 +85,12 @@ def test_write():
 
 def test_path_exist():
     path.exists('text.txt')
+
+
+def test_readline(afile):
+    line = afile.readline()
+    assert line == "line1\n"
+    line = afile.readline()
+    assert line == "line2\n"
+    line = afile.readline()
+    assert line == "line3"

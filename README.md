@@ -1,7 +1,7 @@
 # Python Study Notes
 
 - [Python Study Notes](#python-study-notes)
-  - [Python 学习笔记](#python-学习笔记)
+  - [Python Syntax](#python-syntax)
     - [Python 打包和分发](#python-打包和分发)
   - [工具包](#工具包)
     - [函数编程](#函数编程)
@@ -35,7 +35,7 @@
 2020-04-12, 16:39
 ***
 
-## Python 学习笔记
+## Python Syntax
 
 - [Python 简介](basic/0_intro.md)
 - [语法](basic/1_syntax.md)
@@ -219,6 +219,7 @@ CherryPy, Flask
 包含36个Python 入门练习题。
 
 [Python Exercies, Practice, Solution](https://www.w3resource.com/python-exercises/)  
+
 包含丰富的练习题。
 
 ## Python 教程
@@ -231,7 +232,7 @@ CherryPy, Flask
 强烈推荐的入门教程，用一个个实例进行教学。
 
 - [Python Wiki](https://wiki.python.org/moin/BeginnersGuide/Programmers)
-- [x] [PyCharm使用简易教程](https://www.guru99.com/creating-your-first-python-program.html)
+- [x] [PyCharm 简易教程](https://www.guru99.com/creating-your-first-python-program.html)
 
 - [Teaching materials for the probabilistic graphical modesl and deep learning classes at Stanford](https://github.com/kuleshov/cs228-material)
 
