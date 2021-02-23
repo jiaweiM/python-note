@@ -89,19 +89,19 @@ A = [[None] * w for i in range(h)]
 
 ## 函数
 
-| 函数                               | 说明                                                       |
-| ---------------------------------- | ---------------------------------------------------------- |
-| list.append(x)                     | 添加 x 到列表末尾                                          |
-| list.extend(`iterable`)            | 将 `iterable` 中的所有元素添加到列表末尾                   |
-| list.insert(i, x)                  | 插入值到指定位置。第一个参数为插入的位置                   |
-| list.remove(x)                     | 删除列表中第一个 `x` 元素，不含 `x` 抛出 `ValueError`      |
-| list.pop([i])                      | 删除并返回指定位置的元素，如果不指定 `i`，默认为最后一个值 |
-| list.clear()                       | 删除所有元素                                               |
-| list.index(x[,start[,end]])        | 返回第一个 x 出现的索引，没有x抛出 `ValueError`            |
-| list.count(x)                      | x 出现的次数                                               |
-| list.sort(key=None, reverse=False) | list 原位排序，参数解释查看 `sorted()` 函数                |
-| list.reverse()                     | 原位反向排序                                               |
-| list.copy()                        | 浅复制，等价于 `a[:]`                                      |
+| 函数 | 说明 |
+| ----- | ----- |
+| list.append(x)  | 添加 x 到列表末尾  |
+| list.extend(`iterable`)  | 将 `iterable` 中的所有元素添加到列表末尾  |
+| list.insert(i, x)   | 插入值到指定位置。第一个参数为插入的位置   |
+| list.remove(x)  | 删除列表中第一个 `x` 元素，不含 `x` 抛出 `ValueError` |
+| list.pop([i])   | 删除并返回指定位置的元素，如果不指定 `i`，默认为最后一个值 |
+| list.clear() | 删除所有元素    |
+| list.index(x[,start[,end]])        | 返回第一个 x 出现的索引，没有x抛出 `ValueError`  |
+| list.count(x) | x 出现的次数  |
+| list.sort(key=None, reverse=False) | list 原位排序，参数解释查看 `sorted()` 函数  |
+| list.reverse()   | 原位反向排序   |
+| list.copy()      | 浅复制，等价于 `a[:]` |
 
 函数说明：
 
@@ -118,7 +118,7 @@ A = [[None] * w for i in range(h)]
 
 ## 列表推导
 
-以一种简洁的方式创建List，在方括号中包含创建元素的表达式。例：
+列表推导以一种简洁的方式从一个 List 创建另一个 List，在方括号中包含创建元素的表达式。例：
 
 ```py
 list1 = [ x for x in range(10)]  # list in range [0, 9]
