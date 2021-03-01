@@ -240,6 +240,12 @@ def test_comprehension():
     assert squares == [0, 1, 4, 9, 16]
 
 
+def test_comprehension_list():
+    n = 5
+    squared_numbers = [x ** 2 for x in range(n + 1)]
+    assert squared_numbers == [0, 1, 4, 9, 16, 25]
+
+
 def test_comprehension_dict():
     square_dict = {x: x * x for x in range(5)}
     assert square_dict == {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
@@ -250,6 +256,15 @@ def test_comprehension_dict():
 def test_comprehension_pair():
     pairs = [(x, y) for x in range(10)
              for y in range(10)]
+
+
+def test_comprehension_init():
+    t = [0 for _ in range(5)]
+    assert t == [0, 0, 0, 0, 0]
+
+    my_string = "cowboy bebop"
+    occurrences = {letter: 0 for letter in my_string}
+    assert occurrences == {'c': 0, 'o': 0, 'w': 0, 'b': 0, 'y': 0, ' ': 0, 'e': 0, 'p': 0}
 
 
 '''

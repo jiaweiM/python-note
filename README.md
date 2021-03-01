@@ -44,7 +44,7 @@
 - [表达式](basic/8_expression.md)
 - [string](basic/string.md)
 - [函数](basic/function.md)
-  - [Python 内置函数](basic/func_api.md)
+  - [Python 内置函数](basic/bif/0_built_in_function.md)
 - [模块](basic/module.md)
   - [`__main__`](basic/main.md)
 - [包](basic/package.md)

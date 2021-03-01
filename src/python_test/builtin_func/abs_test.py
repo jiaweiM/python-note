@@ -6,7 +6,7 @@ def test_num():
     assert abs(floating) == 30.33
 
 
-# 返回的是复数的大小
+# 返回的是复数的模
 def test_complex():
     complex = (3 - 4j)
     assert abs(complex) == 5

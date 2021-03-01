@@ -1,7 +1,6 @@
 # Python 内置函数
 
 - [Python 内置函数](#python-内置函数)
-  - [基本函数](#基本函数)
   - [字符串函数](#字符串函数)
   - [数学函数](#数学函数)
   - [abs](#abs)
@@ -36,35 +35,6 @@
 
 2020-04-12, 17:41
 ***
-
-## 基本函数
-
-| 内置函数                       | 说明                                                                                                                                                                                                                                                          |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| abs(x)                         | 返回数值的绝对值，x 为整数或浮点数。若为复数，返回模                                                                                                                                                                                                          |
-| all(iterable)                  | Return True if all elements of the iterable are true (or if the                                                                                                                                                                                               | iterable is empty)               |
-| any(iterable)                  | Return True if any element of the `iterable` is true. If the                                                                                                                                                                                                  | iterablbe is empty, return False |
-| ascii(object)                  | As `repr()`, return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using \x, \u or \U excapes. This generates a string similar to the returned by `repr|()` in Python 2. |
-| dir(a_moduleName)              | 返回当前模块下所有定义的命名(方法和变量)                                                                                                                                                                                                                      |
-| enumerate()                    | 返回可迭代对象索引和对应数据                                                                                                                                                                                                                                  |
-| globals()                      | 以 dict 的形式返回当前 global names 及其值                                                                                                                                                                                                                    |
-| float([x])                     |                                                                                                                                                                                                                                                               |
-| id()                           | 返回一个Python对象的内存地址                                                                                                                                                                                                                                  |
-| int(str)                       | 将字符串或另一个数转换为整数，截断，而不是四舍五入                                                                                                                                                                                                            |
-| list()                         | 创建一个新的空列表                                                                                                                                                                                                                                            |
-| max(lst)                       | 获得列表的最大值                                                                                                                                                                                                                                              |
-| min(lst)                       | 获得列表的最小值                                                                                                                                                                                                                                              |
-| next()                         | 返回一个可迭代数据结构中的下一项                                                                                                                                                                                                                              |
-| type()                         | 获得数据或变量类型                                                                                                                                                                                                                                            |
-| isinstance(object, class_type) | 验证变量是否是指定类型                                                                                                                                                                                                                                        |
-| str.encode('coding')           | 将字符串转换为指定编码的字节                                                                                                                                                                                                                                  |
-| b'bytes'.decode('encoding')    | 以指定编码解析字节                                                                                                                                                                                                                                            |
-| len(str)                       | 计算字符串长度                                                                                                                                                                                                                                                |
-| dir(a_var)                     | 列出变量所有的方法                                                                                                                                                                                                                                            |
-| range(a, b)                    | 返回 [a, b-1] 之间的整数序列                                                                                                                                                                                                                                  |
-| range(a)                       | 返回[0, a)之间的整数序列，返回 range 对象                                                                                                                                                                                                                     |
-| range(a, b, step)              | 以指定步长返回 [a, b)之间的整数序列                                                                                                                                                                                                                           |
-| sum(lst)                       | 获得列表所有元素的加和                                                                                                                                                                                                                                        |
 
 ## 字符串函数
 
