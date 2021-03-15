@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+# 载入 MNIST 数字图像数据
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
 # Building a Deep Learning Model
