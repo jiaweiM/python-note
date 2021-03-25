@@ -25,7 +25,7 @@
     - [packages](#packages)
   - [命令](#命令)
     - [卸载](#卸载)
-  - [References](#references)
+  - [参考](#参考)
 
 2020-04-17, 17:52
 ***
@@ -355,8 +355,9 @@ packages=find_packages(include=['sample', 'sample.*']),
 
 使用 `setup.py install` 安装的包无法直接卸载，此时运行 `setup.py install --record files.txt` 记录所有安装的文件，查看 files.txt 文件，找到这些文件直接删除。
 
-## References
+## 参考
 
 - [setuptools' documentation](https://setuptools.readthedocs.io/en/latest/index.html)
 - [Packaging and distributing projects](https://packaging.python.org/guides/distributing-packages-using-setuptools/#)
 - [Distributing Python Modules](https://docs.python.org/3/distributing/index.html)
+- [Python Packaging User Guide](https://packaging.python.org/tutorials/installing-packages/)

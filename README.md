@@ -48,6 +48,7 @@
 - [模块](basic/module.md)
   - [`__main__`](basic/main.md)
 - [包](basic/package.md)
+  - [安装包](basic/package_install.md)
 - [集合](basic/collect.md)
   - [list](basic/3_collect_list.md)
   - [tuple](basic/4_collect_tuple.md)

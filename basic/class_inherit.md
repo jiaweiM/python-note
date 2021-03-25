@@ -3,6 +3,8 @@
 - [继承](#继承)
   - [简介](#简介)
   - [super](#super)
+    - [MRO](#mro)
+    - [super 参数](#super-参数)
   - [继承解析](#继承解析)
   - [扩展 property](#扩展-property)
 
@@ -68,7 +70,109 @@ Run faster
 
 ## super
 
-可以使用 `super()` 调用父类方法，比如：
+```py
+super([type[, object-or-type]])
+```
+
+super 返回一个代理对象，将对方法的调用委托给父类或 `type` 类型的兄弟类。这对调用父类方法很有用。
+
+### MRO
+
+`__mro__` 属性表示方法解析顺序（method resolution order），为 tuple 类型，它提供了 `getattr()` 和 `super()` 所需的方法解析顺序，目的是保证基类方法都只调用一次。
+
+例如：
+
+```py
+class A:
+    def __init__(self):
+        print("class ---- A ----")
+
+
+class B(A):
+    def __init__(self):
+        print("class ---- B ----")
+        super(B, self).__init__()
+
+
+class C(A):
+    def __init__(self):
+        print("class ---- C ----")
+        super(C, self).__init__()
+
+
+class D(B, C):
+    def __init__(self):
+        print(D.__mro__)
+        print("class ---- D ----")
+        super(D, self).__init__()
+
+
+d = D()
+```
+
+```
+(<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+class ---- D ----
+class ---- B ----
+class ---- C ----
+class ---- A ----
+```
+
+此时 D 的 `__mro__` 数序为 `D->B->C->A->object`，如果在 D 中调用 `super()` 函数时传入的第一个参数是 D，那么 `super()` 函数就会在 `__mro__` 里从 D 的**上一级**开始查找。所以就调用 `B.__init__()`，B 的 `__init__` 继续调用 B 的 `super()` 函数，`super(B, self).__init__()`就从 B 的上一级再开始查找，一次类推，最后到 object。
+
+如果我们把 D 的 `super()` 改为：
+
+```py
+class D(B, C):
+    def __init__(self):
+        print(D.__mro__)
+        print("class ---- D ----")
+        super(B, self).__init__()
+```
+
+此时顺序为：
+
+```
+(<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+class ---- D ----
+class ---- C ----
+class ---- A ----
+```
+此时从 B 的上级开始，所以跳过了 B。
+
+### super 参数
+
+```py
+super([type[, object-or-type]])
+```
+
+从方法签名可以看出，`super()` 函数可以有两个参数。第一个 `type` 指定 MRO 链的起点，第二个参数 `object-to-type` 指定 MRO。
+
+第一个参数 `type` 通过类名指定。第二个一般是 `self`。在 Python 3 中可以用 `super().xxx` 代替 `super(Class, self).xxx`。
+
+**object-or-type**
+
+- 如果忽略该参数，则返回的 `super` 对象没有绑定。
+- 如果为对象，则 `isinstance(obj, type)` 必须为 true
+- 如果是类型，则 `issubclass(type2, type) 必须为 true。`
+
+`super` 有两个典型用法：
+
+- 在单继承中，`super` 可以引用父类，从而不用显式命名，和其它编程语言的 super 用法一致。
+- 对多继承的支持。
+
+在多继承中的用法只在 Python 中有。从而实现继承包含相同方法的多个基类。
+
+典型用法：
+
+```py
+class C(B):
+    def method(self, arg):
+        super().method(arg)    # This does the same thing as:
+                               # super(C, self).method(arg)
+```
+
+- 可以使用 `super()` 调用父类方法，比如：
 
 ```py
 class A:
@@ -114,6 +218,14 @@ class Proxy:
 ```
 
 在上例中，`__setattr__()` 的实现包含一个名字检查。如果某个属性名以下划线 `_` 开头，就通过 `super()` 调用父类的 `__setattr__()`，否则就委派给代码对象 `self._obj` 去处理。
+
+子类调用父类的方法有：
+
+```py
+super().__init__()
+Parent.__init__(self)
+super(类名, self).__init__()
+```
 
 ## 继承解析
 

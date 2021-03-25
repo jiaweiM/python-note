@@ -1,24 +1,42 @@
 # pytest
 
 - [pytest](#pytest)
-  - [命名](#%e5%91%bd%e5%90%8d)
+  - [安装 pytest](#安装-pytest)
+  - [命名规则](#命名规则)
   - [assert](#assert)
-  - [浮点数对比](#%e6%b5%ae%e7%82%b9%e6%95%b0%e5%af%b9%e6%af%94)
-  - [pytest 运行后退出代码](#pytest-%e8%bf%90%e8%a1%8c%e5%90%8e%e9%80%80%e5%87%ba%e4%bb%a3%e7%a0%81)
-  - [抛出异常](#%e6%8a%9b%e5%87%ba%e5%bc%82%e5%b8%b8)
+  - [浮点数对比](#浮点数对比)
+  - [pytest 运行后退出代码](#pytest-运行后退出代码)
+  - [抛出异常](#抛出异常)
   - [fixtures](#fixtures)
     - [setup](#setup)
     - [teardown](#teardown)
-  - [测试函数标记](#%e6%b5%8b%e8%af%95%e5%87%bd%e6%95%b0%e6%a0%87%e8%ae%b0)
-    - [mark 参数化测试](#mark-%e5%8f%82%e6%95%b0%e5%8c%96%e6%b5%8b%e8%af%95)
-    - [跳过测试](#%e8%b7%b3%e8%bf%87%e6%b5%8b%e8%af%95)
-  - [测试分组](#%e6%b5%8b%e8%af%95%e5%88%86%e7%bb%84)
-  - [捕获 stdout/stderr 输出](#%e6%8d%95%e8%8e%b7-stdoutstderr-%e8%be%93%e5%87%ba)
-    - [默认行为](#%e9%bb%98%e8%ae%a4%e8%a1%8c%e4%b8%ba)
-  - [运行命令选项](#%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4%e9%80%89%e9%a1%b9)
-  - [Reference](#reference)
+  - [测试函数标记](#测试函数标记)
+    - [mark 参数化测试](#mark-参数化测试)
+    - [跳过测试](#跳过测试)
+  - [测试分组](#测试分组)
+  - [捕获 stdout/stderr 输出](#捕获-stdoutstderr-输出)
+    - [默认行为](#默认行为)
+  - [运行命令选项](#运行命令选项)
+  - [参考](#参考)
 
-## 命名
+2021-03-23, 13:47
+***
+
+## 安装 pytest
+
+安装 pytest:
+
+```
+pip install -U pytest
+```
+
+查看 pytest 版本：
+
+```
+pytest --version
+```
+
+## 命名规则
 
 pytest 根据如下规则查找测试：
 
@@ -93,7 +111,7 @@ numpy.isclose(a,b,rtol=1e-5,atol=1e-8)`
 
 ## 抛出异常
 
-通过 `pytest.raises` 抛出指定异常，例如：
+通过 `pytest.raises` 指定抛出的异常，例如：
 
 ```py
 def test_raise_exception():
@@ -263,7 +281,7 @@ class TestClass(object):
 
 ## 运行命令选项
 
-## Reference
+## 参考
 
 - [官方文档](https://docs.pytest.org/en/latest/contents.html)
 - [简易教程](http://pythontesting.net/framework/pytest/pytest-introduction/)
