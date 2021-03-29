@@ -1,0 +1,36 @@
+import sys
+
+from PySide6.QtWidgets import QWidget, QPushButton, QLineEdit, QInputDialog, QApplication
+
+
+class Ex(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.btn = QPushButton('Dialog', self)
+        self.btn.move(20, 20)
+        self.btn.clicked.connect(self.showDialog)
+
+        self.le = QLineEdit(self)
+        self.le.move(130, 22)
+
+        self.setGeometry(300, 300, 300, 250)
+        self.setWindowTitle("Input dialog")
+
+    def showDialog(self):
+        text, ok = QInputDialog.getText(self, "Input Dialog", 'Enter your name:')
+        if ok:
+            self.le.setText(str(text))
+
+
+def main():
+    app = QApplication(sys.argv)
+    ex = Ex()
+    ex.show()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()

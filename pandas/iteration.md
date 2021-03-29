@@ -1,7 +1,7 @@
 # Iteration
 
 - [Iteration](#iteration)
-  - [简介](#%e7%ae%80%e4%bb%8b)
+  - [简介](#简介)
 
 2020-04-20, 21:53
 ***
@@ -21,15 +21,11 @@
 因此，对 `DataFrame` 迭代获得 column 名称：
 
 ```py
-In [250]: df = pd.DataFrame({'col1': np.random.randn(3),
-   .....:                    'col2': np.random.randn(3)}, index=['a', 'b', 'c'])
-   .....:
-
-In [251]: for col in df:
-   .....:     print(col)
-   .....:
-col1
-col2
+df = pd.DataFrame({"col1": np.random.randn(3), "col2": np.random.randn(3)}, index=["a", "b", "c"])
+for col in df:
+    print(col)
+# col1
+# col2
 ```
 
 要迭代 `DataFrame` 的行，使用如下方式：

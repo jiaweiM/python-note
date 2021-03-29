@@ -1,7 +1,7 @@
 # Python Study Notes
 
 - [Python Study Notes](#python-study-notes)
-  - [Python Syntax](#python-syntax)
+  - [Python 教程](#python-教程)
     - [Python 打包和分发](#python-打包和分发)
   - [工具包](#工具包)
     - [函数编程](#函数编程)
@@ -26,7 +26,7 @@
   - [pygame](#pygame)
   - [参考](#参考)
     - [代码练习](#代码练习)
-  - [Python 教程](#python-教程)
+  - [Python 教程](#python-教程-1)
   - [Data Analysis](#data-analysis)
   - [书籍](#书籍)
 
@@ -35,7 +35,7 @@
 2020-04-12, 16:39
 ***
 
-## Python Syntax
+## Python 教程
 
 - [Python 简介](basic/0_intro.md)
 - [语法](basic/1_syntax.md)

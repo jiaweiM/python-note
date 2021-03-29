@@ -2,9 +2,11 @@ from mhcflurry import Class1PresentationPredictor
 
 predictor = Class1PresentationPredictor.load()
 
+
 print(len(predictor.supported_alleles))
 
-# print(predictor.supported_alleles)
+for item in predictor.supported_alleles:
+    print(item)
 
 
 # alleles = predictor.supported_alleles

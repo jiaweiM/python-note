@@ -64,3 +64,9 @@ def test_map():
     )
     df.loc[:, 'File'] = df.loc[:, 'col1'].map(sub_str)
     print(df.loc[:, 'File'])
+
+
+def test_iter():
+    df = pd.DataFrame({"col1": np.random.randn(3), "col2": np.random.randn(3)}, index=["a", "b", "c"])
+    for col in df:
+        print(col)
