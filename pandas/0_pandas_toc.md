@@ -1,5 +1,12 @@
 # Pandas
 
+- [Pandas](#pandas)
+  - [学习笔记](#学习笔记)
+    - [Getting started](#getting-started)
+  - [参考](#参考)
+
+2021-03-31, 15:18
+
 ## 学习笔记
 
 - [简介](1_intro.md)
@@ -26,6 +33,7 @@
 
 - [描述统计](descriptive_stat.md)
 - [Iteration](iteration.md)
+- [备忘清单](cheat_sheet.md)
 
 ## 参考
 

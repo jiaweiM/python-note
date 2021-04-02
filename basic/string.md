@@ -12,6 +12,7 @@
     - [index](#index)
     - [find](#find)
     - [拆分和连接](#拆分和连接)
+    - [相等测试](#相等测试)
   - [format](#format)
     - [位置参数](#位置参数)
     - [关键字参数](#关键字参数)
@@ -124,6 +125,14 @@ def test_in():
 
 
 `join` 用于连接字符串，[实例](../src/python_test/builtin_func/str_join.py)。
+
+
+### 相等测试
+
+- `==` 操作符逐个比较字符，全部相同就返回 True。
+
+
+
 
 
 ## format

@@ -40,6 +40,7 @@ def test_split2():
     line = "a:b:c"
     line.split(":")
 
+
 def test_multi():
     a = 'm'
     b = a * 3

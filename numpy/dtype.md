@@ -1,7 +1,7 @@
 # Data type (dtype)
 
 - [Data type (dtype)](#data-type-dtype)
-  - [简介](#%e7%ae%80%e4%bb%8b)
+  - [简介](#简介)
 
 ## 简介
 
