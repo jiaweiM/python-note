@@ -70,3 +70,13 @@ def test_iter():
     df = pd.DataFrame({"col1": np.random.randn(3), "col2": np.random.randn(3)}, index=["a", "b", "c"])
     for col in df:
         print(col)
+
+
+import random
+
+
+def test_demo():
+    year_index = {'Year': [y for y in range(2010, 2031)],
+                  'Random': [random.random() for _ in range(21)]}
+    df = pd.DataFrame(year_index)
+    print(df)

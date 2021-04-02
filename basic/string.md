@@ -22,6 +22,8 @@
     - [class 格式化](#class-格式化)
     - [动态参数](#动态参数)
     - [日期格式化](#日期格式化)
+  - [f-string](#f-string)
+  - [参考](#参考)
 
 2020-04-22, 11:36
 ***
@@ -343,3 +345,219 @@ assert num.format(123.236, align='<', width=8, precision=2) == "123.24  "
 对 datetime，`format()` 内部调用 datetime 的 `__format__()` 函数。
 
 对任意对象类型，可以通过覆盖 `__format__()` 方法自定义格式化。
+
+## f-string
+
+f-string 是 Python 3.6 引入用于字符串格式化的语法。f-string 相对来说更快、易读、简明，且更不容易出错。其格式为 `f` 前缀加 `{}`。
+
+下面展示三种格式化语法：
+
+```py
+name = "Peter"
+age = 23
+
+assert "%s is %d years old" % (name, age) == "Peter is 23 years old"
+assert '{} is {} years old'.format(name, age) == "Peter is 23 years old"
+assert f'{name} is {age} years old' == "Peter is 23 years old"
+```
+
+```py
+"%s is %d years old" % (name, age)
+```
+
+这个是最老的语法，通过 `%d`, `%s` 等指定变量。
+
+```py
+'{} is {} years old'.format(name, age)
+```
+
+这个是 Python 3.0 引入的语法，提供高级格式化选项。
+
+而 f-string 是 Python 3.6 引入的语法，其优点在于：可以在 `{}` 中直接包含表达式和变量。例如：
+
+```py
+bags = 3
+apples_in_bag = 12
+assert f'There are total of {bags * apples_in_bag} apples' == "There are total of 36 apples"
+```
+
+- 在 f-string 中还可以包含字典（表达式的一种用法）
+
+```py
+user = {'name': 'Lilei', 'occupation': 'gardener'}
+assert f"{user['name']} is a {user['occupation']}" == "Lilei is a gardener"
+```
+
+- `=` 表达式
+
+在 Python 3.8 中针对 f-string 引入了表达式功能，例如：
+
+```py
+x = 0.8
+print(f"{math.cos(x) = }")
+print(f"{math.sin(x) = }")
+# math.cos(x) = 0.6967067093471654
+# math.sin(x) = 0.7173560908995228
+```
+
+可以看到，输出自动保留了前面的变量表达式。
+
+- 多行格式化
+
+多行 f-string 放在圆括号内，每行以 `f` 开头：
+
+```py
+name = "Lilei"
+age = 32
+occupation = 'gardener'
+msg = (
+    f'Name: {name}\n'
+    f'Age: {age}\n'
+    f'Occupation: {occupation}'
+)
+print(msg)
+# Name: Lilei
+# Age: 32
+# Occupation: gardener
+```
+
+- 调用函数
+
+在 f-string 中可以调用函数：
+
+```py
+def my_max(x, y):
+    return x if x > y else y
+
+
+def test_fstring_func():
+    a = 3
+    b = 4
+    print(f'Max of {a} and {b} is {my_max(a, b)}')
+
+# Max of 3 and 4 is 4
+```
+
+- 对象
+
+f-string 也接受任何实现 `__str__()` 或 `__repr__()` 函数的对象：
+
+```py
+class User:
+    def __init__(self, name, occupation):
+        self.name = name
+        self.occupation = occupation
+
+    def __repr__(self):
+        return f"{self.name} is a {self.occupation}"
+
+
+def test_fstring_obj():
+    u = User('Lilei', 'gardener')
+    print(f'{u}')
+# Lilei is a gardener
+```
+
+- 转义字符
+
+在 f-string 中转义字符的方式：
+
+- 用花括号转义花括号
+- 用反斜杠转义单个字符
+
+```py
+print(f"Python uses {{}} to evaluate a variables in f-strings")
+print(f'This was a \'great\' file')
+
+# Python uses {} to evaluate a variables in f-strings
+# This was a 'great' file
+```
+
+- 格式化日期
+
+```py
+now = datetime.datetime.now()
+print(f'{now:%Y-%m-%d %H:%M}')
+# 2021-04-02 12:50
+```
+
+- 格式化 float
+
+float 值后带 `f` 后缀。也可以指定小数点位数，例如：
+
+```py
+val = 12.3
+print(f'{val:.2f}')
+print(f'{val:.5f}')
+# 12.30
+# 12.30000
+```
+
+- 指定宽度
+
+设置宽度，宽度不足以空格或其它字符填充。
+
+```py
+for x in range(1, 11):
+    print(f'{x:02} {x * x:3} {x * x * x:4}')
+
+# 01   1    1
+# 02   4    8
+# 03   9   27
+# 04  16   64
+# 05  25  125
+# 06  36  216
+# 07  49  343
+# 08  64  512
+# 09  81  729
+# 10 100 1000
+```
+
+三栏内容，每栏设置了宽度：
+- 第一栏宽度为2，空余部分用 0 补齐：`{x:02}`
+- 第二栏宽度为3，没有指定补齐字符，默认为空格：`{x*x:3}`
+- 第三栏宽度为3，默认空格补齐
+
+- 对齐方式
+
+字符串默认左对齐，使用 `>` 表示右对齐：
+
+```py
+s1 = 'a'
+s2 = 'ab'
+s3 = 'abc'
+s4 = 'abcd'
+print(f'{s1:>10}')
+print(f'{s2:>10}')
+print(f'{s3:>10}')
+print(f'{s4:>10}')
+
+#         a
+#        ab
+#       abc
+#      abcd
+```
+
+这里指定宽度为10，右对齐 `:>10`。
+
+- 数值类型
+
+```py
+a = 300
+# hex
+print(f'{a:x}')
+# octal
+print(f'{a:o}')
+# scientific
+print(f'{a:e}')****
+```
+
+```
+12c
+454
+3.000000e+02
+```
+
+## 参考
+
+- [Zetcode Python f-string](https://zetcode.com/python/fstring/)
