@@ -246,7 +246,7 @@ CoOl__-.-__sTuFF
 ```py
 description='A sample Python project',
 long_description=long_description,
-long_description_content_type='text/x-rst',
+long_description_content_type='f_text/x-rst',
 ```
 
 `description` 是项目的一句话简短描述。

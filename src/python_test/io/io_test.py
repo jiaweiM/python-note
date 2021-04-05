@@ -94,7 +94,7 @@ def test_write_error():
 
 
 def test_path_exist():
-    path.exists('text.txt')
+    path.exists('f_text.txt')
 
 
 def test_readline(afile):

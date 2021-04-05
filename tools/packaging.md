@@ -69,7 +69,7 @@ setuptools.setup(
     author_email="author@example.com",
     description="A small example package",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="f_text/markdown",
     url="https://github.com/pypa/sampleproject",
     packages=setuptools.find_packages(),
     classifiers=[

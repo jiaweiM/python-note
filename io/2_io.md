@@ -83,7 +83,7 @@ mode 为打开文件的模式。
 
 ```py
 f = open("test.txt")      # equivalent to 'r' or 'rt'
-f = open("test.txt",'w')  # write in text mode
+f = open("test.txt",'w')  # write in f_text mode
 f = open("img.bmp",'r+b') # read and write in binary mode
 ```
 
@@ -312,7 +312,7 @@ with open('somefile.txt', 'rt') as f:
 写入文本数据 `wt`:
 
 ```py
-# Write chunks of text data
+# Write chunks of f_text data
 with open('somefile.txt', 'wt') as f:
     f.write(text1)
     f.write(text2)

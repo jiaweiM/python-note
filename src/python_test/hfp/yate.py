@@ -3,7 +3,7 @@ from string import Template
 从标准库的 string 模块导入 Template 类，它支持简单的字符串替换功能
 """
 
-def start_response(resp="text/html"):
+def start_response(resp="f_text/html"):
     return 'Content-type: ' + resp + '\n\n'
 
 
