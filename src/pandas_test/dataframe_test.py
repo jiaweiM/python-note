@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import pandas as pd
 
@@ -72,11 +74,45 @@ def test_iter():
         print(col)
 
 
-import random
-
-
 def test_demo():
     year_index = {'Year': [y for y in range(2010, 2031)],
                   'Random': [random.random() for _ in range(21)]}
     df = pd.DataFrame(year_index)
     print(df)
+
+
+def test_add_column():
+    df = pd.DataFrame({
+        'a': [1, 2],
+        'b': [3, 4]
+    })
+    df['c'] = df.apply(lambda row: row.a + row.b, axis=1)
+    print(df)
+
+
+def extract_city_name(df):
+    """
+    Chicago, IL -> Chicago for city_name column
+    """
+    df["city_name"] = df["city_and_code"].str.split(",").str.get(0)
+    return df
+
+
+def add_country_name(df, country_name=None):
+    """
+    Chicago -> Chicago-US for city_name column
+    """
+    col = "city_name"
+    df["city_and_country"] = df[col] + country_name
+
+
+def test_tablewise():
+    df_p = pd.DataFrame({"city_and_code": ["Chicago, IL"]})
+    add_country_name(extract_city_name(df_p), country_name="US")
+    print(df_p)
+
+
+def test_tablewise2():
+    df_p = pd.DataFrame({"city_and_code": ["Chicago, IL"]})
+    df_p.pipe(extract_city_name).pipe(add_country_name, country_name="US")
+    print(df_p)

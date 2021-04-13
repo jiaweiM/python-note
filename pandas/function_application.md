@@ -1,9 +1,9 @@
 # Function application
 
 - [Function application](#function-application)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [Tablewise 函数](#tablewise-%e5%87%bd%e6%95%b0)
-  - [Row or column-wise 函数](#row-or-column-wise-%e5%87%bd%e6%95%b0)
+  - [简介](#简介)
+  - [方法链](#方法链)
+  - [Row or column-wise 函数](#row-or-column-wise-函数)
 
 2020-04-21, 10:20
 ***
@@ -17,29 +17,29 @@
 3. Aggregation API:`agg()` 和 `transform()`
 4. Elementwise 函数：`applymap()`
 
-## Tablewise 函数
+## 方法链
 
-可以将 `DataFrame` 和 `Series` 传入函数。不过，如果需要链式调用函数，考虑使用 `pipe()` 方法。
+将 `DataFrame` 和 `Series` 传入函数。如果需要链式调用函数，则建议使用 `pipe()` 方法。
 
 首先进行初始设置：
 
 ```py
-In [138]: def extract_city_name(df):
-   .....:     """
-   .....:     Chicago, IL -> Chicago for city_name column
-   .....:     """
-   .....:     df['city_name'] = df['city_and_code'].str.split(",").str.get(0)
-   .....:     return df
+def extract_city_name(df):
+    """
+    Chicago, IL -> Chicago for city_name column
+    """
+    df["city_name"] = df["city_and_code"].str.split(",").str.get(0)
+    return df
 
-In [139]: def add_country_name(df, country_name=None):
-   .....:     """
-   .....:     Chicago -> Chicago-US for city_name column
-   .....:     """
-   .....:     col = 'city_name'
-   .....:     df['city_and_country'] = df[col] + country_name
-   .....:     return df
 
-In [140]: df_p = pd.DataFrame({'city_and_code': ['Chicago, IL']})
+def add_country_name(df, country_name=None):
+    """
+    Chicago -> Chicago-US for city_name column
+    """
+    col = "city_name"
+    df["city_and_country"] = df[col] + country_name
+
+df_p = pd.DataFrame({'city_and_code': ['Chicago, IL']})
 ```
 
 `extract_city_name` 和 `add_country_name` 两个函数接受 `DataFrame`，也返回 `DataFrame`。
@@ -47,8 +47,8 @@ In [140]: df_p = pd.DataFrame({'city_and_code': ['Chicago, IL']})
 对比：
 
 ```py
-In [141]: add_country_name(extract_city_name(df_p), country_name='US')
-Out[141]:
+In : add_country_name(extract_city_name(df_p), country_name='US')
+Out:
   city_and_code city_name city_and_country
 0   Chicago, IL   Chicago        ChicagoUS
 ```
@@ -56,14 +56,14 @@ Out[141]:
 等价于：
 
 ```py
-In [142]: (df_p.pipe(extract_city_name)
-   .....:      .pipe(add_country_name, country_name="US"))
-Out[142]:
+In : (df_p.pipe(extract_city_name)
+   :      .pipe(add_country_name, country_name="US"))
+Out:
   city_and_code city_name city_and_country
 0   Chicago, IL   Chicago        ChicagoUS
 ```
 
-pandas 鼓励使用第二种方式，称之为方法链。`pipe` 使得方法的链式调用更为便捷。
+pandas 鼓励使用第二种方式，称之为**方法链**。`pipe` 使得方法的链式调用更为便捷。
 
 在上例中，`extract_city_name` 和 `add_country_name` 都要求第一个参数为 `DataFrame`。如果你要应用的函数将数据放在第二个参数怎么办？
 
@@ -119,9 +119,11 @@ strong multicollinearity or other numerical problems.
 """
 ```
 
+pipe 方法受  unix pipe 以及 R 中引入的管道流 %>% 的启发。
+
 ## Row or column-wise 函数
 
-使用 `apply()` 可以应用函数到 DataFrame 的任意 axes 数据。包含一个可选的 `axis` 参数:
+使用 `apply()` 可以应用函数到 DataFrame 的任意 axes 的数据。包含一个可选的 `axis` 参数:
 
 - "index" (axis=0, default)
 - "columns"(axis=1)
@@ -168,3 +170,4 @@ c  2.004201  4.385785  3.412466
 d       NaN  1.322262  0.541630
 ```
 
+`apply()` 方法

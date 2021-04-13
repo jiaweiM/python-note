@@ -1,16 +1,17 @@
 # where()
 
 - [where()](#where)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [实例](#%e5%ae%9e%e4%be%8b)
-    - [默认替换值为 nan](#%e9%bb%98%e8%ae%a4%e6%9b%bf%e6%8d%a2%e5%80%bc%e4%b8%ba-nan)
+  - [简介](#简介)
+  - [实例](#实例)
+    - [默认替换值为 nan](#默认替换值为-nan)
     - [](#)
 
+2021-04-06, 15:44
 ***
 
 ## 简介
 
-使用布尔向量从 `Series` 中选择一般返回数据的子集。为了保证选择结果和原数据具有相同的 shape，可以使用 `Series` 和 `DataFrame` 的 `where` 方法。
+使用布尔向量从 `Series` 中选择一般返回数据的子集。为了保证选择的结果和原数据具有相同的 shape，可以使用 `Series` 和 `DataFrame` 的 `where` 方法。
 
 where 方法签名：
 

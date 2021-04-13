@@ -14,6 +14,9 @@
   - [pip 镜像](#pip-镜像)
     - [临时使用镜像](#临时使用镜像)
     - [设置默认镜像](#设置默认镜像)
+  - [Requirements Files](#requirements-files)
+    - [Requirements 文件格式](#requirements-文件格式)
+  - [Requirement Specifiers](#requirement-specifiers)
   - [参考](#参考)
 
 2020-04-13, 05:42
@@ -149,6 +152,33 @@ pip install pip -U
 ```cmd
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
+
+## Requirements Files
+
+"Requirements files" 包含需要使用 `pip install` 安装的包：
+
+```
+py -m pip install -r requirements.txt
+```
+
+
+### Requirements 文件格式
+
+需求文件每行列出一个需要安装的包，参数和 `pip install` 支持的参数类似，支持样式如下：
+
+```
+[[--option]...]
+<requirement specifier> [; markers] [[--option]...]
+<archive url/path>
+[-e] <local project path>
+[-e] <vcs project url>
+```
+
+## Requirement Specifiers
+
+pip 支持使用**需求说明符**从 pypi 安装依赖项。
+
+
 
 ## 参考
 
