@@ -1,19 +1,15 @@
 import tensorflow as tf
+import numpy as np
 
-mnist = tf.keras.datasets.mnist
+inputs = tf.keras.layers.Input(shape=(3,))
+d = tf.keras.layers.Dense(2, name='out')
+output_1 = d(inputs)
+output_2 = d(inputs)
+model = tf.keras.models.Model(
+    inputs=inputs, outputs=[output_1, output_2])
+model.compile(optimizer="Adam", loss="mse", metrics=["mae", "acc"])
+x = np.random.random((2, 3))
+y = np.random.randint(0, 2, (2, 2))
+model.fit(x, (y, y))
 
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
-
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(10, activation='softmax')
-])
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=5)
-
-model.evaluate(x_test, y_test, verbose=2)
+print(model.metrics_names)
