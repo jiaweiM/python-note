@@ -14,7 +14,6 @@
   - [map](#map)
   - [min](#min)
   - [pow](#pow)
-  - [print](#print)
   - [range](#range)
   - [round](#round)
   - [sorted](#sorted)
@@ -28,9 +27,6 @@
     - [参数长度不等](#参数长度不等)
     - [zip in Python 2](#zip-in-python-2)
     - [unzipping](#unzipping)
-  - [type()](#type)
-    - [type(object)](#typeobject)
-    - [type(name, bases, dict)](#typename-bases-dict)
   - [isinstance](#isinstance)
 
 2020-04-12, 17:41
@@ -237,9 +233,6 @@ def test_map_2():
 
 `mod` 必须为非零整数。如果 `exp` 为负，则
 
-## print
-
-参考 [io](io.md)
 
 ## range
 
@@ -465,57 +458,6 @@ numbers, letters = zip(*pairs)
 assert numbers == (1, 2, 3, 4)
 assert letters == ('a', 'b', 'c', 'd')
 ```
-
-## type()
-
-`type()` 函数有两种形式：
-
-- `type(object)`
-- `type(name, bases, dict)`
-
-### type(object)
-
-单参数形式，返回 `object` 类型。例如：
-
-```py
-number_list = [1, 2]
-assert type(number_list) == list
-
-number_dict = {1: 'one', 2: 'two'}
-assert type(number_dict) == dict
-
-class Foo:
-    a = 0
-
-foo = Foo()
-assert type(foo) == Foo
-```
-
-建议使用 `isinstance()` 查看对象类型，因为它还考虑了子类。`type()` 判断类型比较严格，不会认为子类是一种父类类型，而 `isinstance()` 则会认为子类是一种父类类型。例如：
-
-```py
-class Shape():
-    pass
-
-class Circle(Shape):
-    pass
-
-assert type(Shape()) == Shape
-assert not (type(Circle()) == Shape)
-assert isinstance(Circle(), Shape)
-```
-
-`Circle` 是 `Shape` 子类，然而 `type(Circle()) == Shape` 为 `False`。
-
-所以在判断类型上，用 `isinstance` 更合适。
-
-### type(name, bases, dict)
-
-返回一个新的 type 对象。这是 `class` 语句的动态形式。
-
-- `name` 为类名，对应 `__name__` 属性
-- `bases` tuple 逐项列出基类，对应 `__bases__` 属性
-- `dict` 为包含 class 定义的命名空间，复制到标准 dict，对应 `__dict__` 属性
 
 ## isinstance
 

@@ -25,3 +25,8 @@ def test_class():
     assert type(Shape()) == Shape
     assert not (type(Circle()) == Shape)
     assert isinstance(Circle(), Shape)
+
+
+def test_create():
+    o1 = type('X', (object,), dict(a='Foo', b=12))
+    assert type(o1) == type
