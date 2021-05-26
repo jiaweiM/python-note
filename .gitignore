@@ -142,3 +142,4 @@ cython_debug/
 # static files generated from Django application using `collectstatic`
 media
 static
+__init__.cpython-38.pyc

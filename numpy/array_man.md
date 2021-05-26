@@ -1,8 +1,25 @@
 # 数组操作
 
 - [数组操作](#数组操作)
+  - [基本操作](#基本操作)
+    - [copyto](#copyto)
   - [修改数组形状](#修改数组形状)
     - [reshape](#reshape)
+
+2021-05-26, 10:44
+@Jiawei Mao
+***
+
+## 基本操作
+
+### copyto
+
+```py
+numpy.copyto(dst, src, casting='same_kind', where=True)
+```
+
+将值从一个数组赋值到另一个数组，必要时进行广播（broadcast）。
+
 
 ## 修改数组形状
 

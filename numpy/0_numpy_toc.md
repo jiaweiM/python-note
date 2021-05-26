@@ -1,11 +1,12 @@
 # NumPy
 
-## Study Notes
+## 学习笔记
 
 - [快速入门](quickstart.md)
 - [简介](02_intro.md)
 - [数组对象](array.md)
 - [创建数组](create.md)
+- [广播](broadcasting.md)
 - [数组操作](array_man.md)
 - [数据类型](04_dtype.md)
 - [随机数](random.md)
