@@ -220,6 +220,36 @@ def test_update_tuple():
     assert d == {'x': 2, 'y': 3, 'z': 0}
 
 
+def test_translate():
+    txt = "Hello Sam!"
+    table = txt.maketrans("S", "P")
+    new_txt = txt.translate(table)
+    assert new_txt == "Hello Pam!"
+
+
+def test_translate2():
+    txt = "Hi Sam!"
+    x = 'mSa'
+    y = 'eJo'
+    table = txt.maketrans(x, y)
+    assert txt.translate(table) == 'Hi Joe!'
+
+
+def test_translate_remove():
+    txt = 'Good night Sam!'
+    x = 'mSa'
+    y = 'eJo'
+    z = 'odnght'
+    table = txt.maketrans(x, y, z)
+    assert txt.translate(table) == 'G i Joe!'
+
+
+def test_translate_dict():
+    txt = "Good night Sam!"
+    mydict = {109: 101, 83: 74, 97: 111, 111: None, 100: None, 110: None, 103: None, 104: None, 116: None}
+    assert txt.translate(mydict) == 'G i Joe!'
+
+
 def test_type():
     Dict = {'Tim': 18, 'Charlie': 12, 'Tiffany': 22, 'Robert': 25}
     print("variable Type: %s" % type(Dict))
@@ -244,6 +274,16 @@ def test_demo_1():
     ab['Guido'] = 'guido@python.org'
     if 'Guido' in ab:
         print("\nGuido's address is", ab['Guido'])
+
+
+def test_for_loop():
+    thisdict = {
+        "brand": "Ford",
+        "model": "Mustang",
+        "year": 1964
+    }
+    for x in thisdict:
+        print(x)
 
 
 def test_setdefault():

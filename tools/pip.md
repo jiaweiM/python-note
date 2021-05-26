@@ -2,7 +2,7 @@
 
 - [pip](#pip)
   - [简介](#简介)
-    - [更新 pip](#更新-pip)
+  - [更新 pip](#更新-pip)
   - [包管理](#包管理)
     - [安装包](#安装包)
       - [从 Wheels 安装](#从-wheels-安装)
@@ -28,7 +28,7 @@ pip 是 Python 包管理工具。
 
 Python 2>=2.7.9 和 Python 3 >= 3.4 自动安装了 pip，
 
-### 更新 pip
+## 更新 pip
 
 - Linux 或 macOS
 
@@ -46,10 +46,9 @@ python -m pip install -U pip
 
 ### 安装包
 
-pip 支持从 PyPI、版本控制、本地项目和分布文件安装包。
-安装命令：
+pip 支持从 PyPI、版本控制、本地项目和分发文件安装包。安装命令：
 
-```cmd
+```shell
 pip install SomePackage # latest version
 pip install SomePackage==1.0.4 # specific version
 pip install 'SomePackage>=1.0.4' # minimum version

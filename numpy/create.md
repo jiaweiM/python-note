@@ -1,25 +1,28 @@
 # 创建数组
 
 - [创建数组](#创建数组)
-- [简介](#简介)
-- [将 Python 对象转换为 NumPy 数组](#将-python-对象转换为-numpy-数组)
-- [NumPy 创建方法](#numpy-创建方法)
+  - [简介](#简介)
+  - [将 Python 数据结构转换为 NumPy 数组](#将-python-数据结构转换为-numpy-数组)
   - [`empty`](#empty)
   - [`empty_like`](#empty_like)
   - [`array`](#array)
+  - [从已有数据创建](#从已有数据创建)
+    - [array](#array-1)
+  - [参考](#参考)
 
-# [简介](https://numpy.org/doc/1.17/user/basics.creation.html#arrays-creation)
+## 简介
 
-创建数组有 5 种机制：
-1. 将其它Python数据结构（如 list, tuples）转换为数组
-2. numpy 创建方法（如 arange, ones, zeros 等）
+创建 NumPy 数组有 5 种方法：
+
+1. 将其它 Python 数据结构（如 list, tuples）转换为数组
+2. numpy 内置的创建方法（如 arange, ones, zeros 等）
 3. 从硬盘读取数组
 4. 通过字符串或缓存从字节创建数组
 5. 使用特定的库函数
 
-# 将 Python 对象转换为 NumPy 数组
+## 将 Python 数据结构转换为 NumPy 数组
 
-# NumPy 创建方法
+使用 `array()` 函数将 Python 中类数组解构转换为 NumPy 数组。
 
 ## `empty`
 ```py
@@ -63,3 +66,18 @@ numpy.empty_like(prototype, dtype=None, order='K', subok=True, shape=None)
 |shape|int or sequence of ints||
 
 ## `array` 
+
+## 从已有数据创建
+
+### array
+
+```py
+numpy.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)
+```
+
+
+
+## 参考
+
+- [Array creation routines](https://numpy.org/doc/stable/reference/routines.array-creation.html)
+- [Array creation](https://numpy.org/doc/stable/user/basics.creation.html#arrays-creation)

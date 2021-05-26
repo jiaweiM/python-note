@@ -4,9 +4,6 @@ Python 解释器内置了许多函数，如下表所示：
 
 |函数|功能|
 |---|---|
-| [abs(x)](abs.md) | 返回数值的绝对值|
-| [all(iterable)](all.md) | 可迭代对象的所有值为 True 时返回 True |
-| [any(iterable)](any.md) | 可迭代对象任意值为 True时返回 True|
 | ascii(object)                  | As `repr()`, return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using \x, \u or \U excapes. This generates a string similar to the returned by `repr|()` in Python 2. |
 | dir(a_moduleName)              | 返回当前模块下所有定义的命名(方法和变量)                                                                                                                                                                                                                      |
 | enumerate()                    | 返回可迭代对象索引和对应数据                                                                                                                                                                                                                                  |
@@ -21,7 +18,6 @@ Python 解释器内置了许多函数，如下表所示：
 | isinstance(object, class_type) | 验证变量是否是指定类型                                                                                                                                                                                                                                        |
 | str.encode('coding')           | 将字符串转换为指定编码的字节                                                                                                                                                                                                                                  |
 | b'bytes'.decode('encoding')    | 以指定编码解析字节                                                                                                                                                                                                                                            |
-| len(str)                       | 计算字符串长度                                                                                                                                                                                                                                                |
 | dir(a_var)                     | 列出变量所有的方法                                                                                                                                                                                                                                            |
 | range(a, b)                    | 返回 [a, b-1] 之间的整数序列                                                                                                                                                                                                                                  |
 | range(a)                       | 返回[0, a)之间的整数序列，返回 range 对象                                                                                                                                                                                                                     |

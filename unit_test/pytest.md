@@ -20,19 +20,20 @@
   - [参考](#参考)
 
 2021-03-23, 13:47
+@Jiawei Mao
 ***
 
 ## 安装 pytest
 
-安装 pytest:
+- 安装 pytest
 
-```
+```bash
 pip install -U pytest
 ```
 
-查看 pytest 版本：
+- 查看 pytest 版本
 
-```
+```bash
 pytest --version
 ```
 
