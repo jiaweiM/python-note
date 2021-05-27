@@ -5,7 +5,7 @@
   - [更新 pip](#更新-pip)
   - [包管理](#包管理)
     - [安装包](#安装包)
-      - [从 Wheels 安装](#从-wheels-安装)
+    - [从 Wheels 安装](#从-wheels-安装)
     - [查看已安装包](#查看已安装包)
     - [更新包](#更新包)
     - [卸载包](#卸载包)
@@ -32,13 +32,13 @@ Python 2>=2.7.9 和 Python 3 >= 3.4 自动安装了 pip，
 
 - Linux 或 macOS
 
-```cmd
+```bash
 pip install --upgrade pip
 ```
 
 - Windows
 
-```cmd
+```bash
 python -m pip install -U pip
 ```
 
@@ -48,49 +48,49 @@ python -m pip install -U pip
 
 pip 支持从 PyPI、版本控制、本地项目和分发文件安装包。安装命令：
 
-```shell
-pip install SomePackage # latest version
-pip install SomePackage==1.0.4 # specific version
+```bash
+pip install SomePackage # 默认安装最新版
+pip install SomePackage==1.0.4 # 安装特定版本
 pip install 'SomePackage>=1.0.4' # minimum version
 ```
 
-#### 从 Wheels 安装
+### 从 Wheels 安装
 
-"Wheel" 是一种内置的存档格式，与从源码构建、安装相比，使用 wheel 要快许多。
+"Wheel" 是一种 Python 内置存档格式，与从源码构建、安装相比，使用 wheel 要快许多。
 
-```cmd
+```bash
 pip install SomePackage-1.0-py2.py3-none-any.whl
 ```
 
 ### 查看已安装包
 
-显示已安装的包：
+显示已安装包：
 
-```cmd
+```bash
 pip list
 ```
 
 ### 更新包
 
-显示可更新的包：
+显示可更新包：
 
-```cmd
+```bash
 pip list --outdated
 ```
 
 更新：`-U, --upgrade` 更新
 
-```cmd
+```bash
 pip install --upgrade packagename
 ```
 
 ### 卸载包
 
-```cmd
+```bash
 pip uninstall packagename
 ```
 
-在更新时，pip会自动卸载旧版本，安装新版本。
+在更新时，pip会自动卸载旧版本、安装新版本。
 
 ### options
 
@@ -106,13 +106,13 @@ pip uninstall packagename
 
 Python有一个用户安装目录，通常类似 `~/.local/lib/python3.3/site-packages`。要强制在这个目录中安装包，可使用安装选项“-–user”。例如：
 
-```console
+```bash
 python3 setup.py install --user
 ```
 
 或者：
 
-```console
+```bash
 pip install --user packagename
 ```
 
@@ -122,19 +122,20 @@ pip install --user packagename
 
 ## pip 镜像
 
-国内的一些镜像：
+pypi 镜像以固定时间间隔同步，比如清华大学镜像 5 分钟同步一次。
 
-- 豆瓣, [https://pypi.doubanio.com/simple/](https://pypi.doubanio.com/simple/)
-- 阿里云, [https://mirrors.aliyun.com/pypi/simple/](https://mirrors.aliyun.com/pypi/simple/)
-- 清华大学
-  - [https://pypi.tuna.tsinghua.edu.cn/simple/](https://pypi.tuna.tsinghua.edu.cn/simple/)
-  - [https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/](https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/)
-- 中国科学技术大学, [http://pypi.mirrors.ustc.edu.cn/simple/](http://pypi.mirrors.ustc.edu.cn/simple/)
-- 华中科学技术大学, [http://pypi.hustunique.com/](http://pypi.hustunique.com/)
+PyPI 官方源：[https://pypi.org/simple/](https://pypi.org/simple/)
+
+|镜像|地址|
+|---|---|
+|北京外国语大学|https://mirrors.bfsu.edu.cn/pypi/|
+|清华大学|https://pypi.tuna.tsinghua.edu.cn/simple/|
+|豆瓣|https://pypi.doubanio.com/simple/|
+|阿里云|https://mirrors.aliyun.com/pypi/simple/|
 
 ### 临时使用镜像
 
-```cmd
+```bash
 pip install some-package -i https://mirrors.aliyun.com/pypi/simple/
 ```
 
@@ -142,13 +143,13 @@ pip install some-package -i https://mirrors.aliyun.com/pypi/simple/
 
 升级 pip 到最新版：
 
-```cmd
+```bash
 pip install pip -U
 ```
 
 配置默认镜像：
 
-```cmd
+```bash
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
 
@@ -156,16 +157,15 @@ pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 "Requirements files" 包含需要使用 `pip install` 安装的包：
 
-```
+```bash
 py -m pip install -r requirements.txt
 ```
-
 
 ### Requirements 文件格式
 
 需求文件每行列出一个需要安装的包，参数和 `pip install` 支持的参数类似，支持样式如下：
 
-```
+```bash
 [[--option]...]
 <requirement specifier> [; markers] [[--option]...]
 <archive url/path>
@@ -177,8 +177,6 @@ py -m pip install -r requirements.txt
 
 pip 支持使用**需求说明符**从 pypi 安装依赖项。
 
-
-
 ## 参考
 
-- [Reference Guide](https://pip.pypa.io/en/stable/reference/)
+- [pip documentation](https://pip.pypa.io/en/stable/user_guide/)

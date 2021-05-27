@@ -27,5 +27,11 @@ def test_step():
     assert seq == list([2, 4, 6, 8, 10, 12])
 
 
+def test_step_zero():
+    with pytest.raises(ValueError):
+        range(1, 10, 0)
+
+
 def test_step_negative():
-    seq = list("r")
+    seq = list(range(0, -10, -1))
+    assert seq == [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]

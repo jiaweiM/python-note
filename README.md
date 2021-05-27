@@ -1,29 +1,4 @@
-# Python Study Notes
-
-- [Python Study Notes](#python-study-notes)
-  - [Python 教程](#python-教程)
-    - [Python 打包和分发](#python-打包和分发)
-  - [工具包](#工具包)
-    - [函数编程](#函数编程)
-    - [打包和分发](#打包和分发)
-  - [单元测试](#单元测试)
-  - [Tools](#tools)
-  - [TensorFlow](#tensorflow)
-  - [scikit-learn](#scikit-learn)
-  - [PyTorch](#pytorch)
-  - [Keras](#keras)
-  - [SciPy](#scipy)
-  - [Apache MXNet](#apache-mxnet)
-  - [Theano](#theano)
-  - [Bokeh](#bokeh)
-  - [XGBoost](#xgboost)
-  - [Gensim](#gensim)
-  - [Scrapy](#scrapy)
-  - [Caffe](#caffe)
-  - [Django](#django)
-  - [BeautifulSoup](#beautifulsoup)
-  - [Panda3D](#panda3d)
-  - [pygame](#pygame)
+# Python 学习笔记
 
 2020-04-13, 06:02，打包和分发相关工具。
 
@@ -91,7 +66,7 @@
 
 - [pytest](unit_test/pytest.md)
 
-## Tools
+## 开发工具
 
 - [Visual Studio Code](py_vscode/0_vscode_toc.md)
 - [pip](tools/pip.md)

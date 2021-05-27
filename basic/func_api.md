@@ -14,7 +14,6 @@
   - [map](#map)
   - [min](#min)
   - [pow](#pow)
-  - [range](#range)
   - [round](#round)
   - [sorted](#sorted)
     - [非原生比较对象排序](#非原生比较对象排序)
@@ -232,22 +231,6 @@ def test_map_2():
 - 指定 `mod`
 
 `mod` 必须为非零整数。如果 `exp` 为负，则
-
-
-## range
-
-`range(stop)`
-
-`range(start, stop[, step])`
-
-range 类型表示 immutable 数字序列，一般用在 for 循环中指定循环次数：
-
-- 生成 [start, stop) 之间的整数序列
-- step 表示增量值，默认为 1
-- 如果 step 为 0 或负值，返回 empty 序列
-- 如果 step 为 0，抛出 `ValueError`
-
-[使用实例](../src/python_test/builtin_func/range_test.py)
 
 ## round
 
