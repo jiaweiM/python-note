@@ -110,7 +110,7 @@ class D(B, C):
 d = D()
 ```
 
-```
+```py
 (<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
 class ---- D ----
 class ---- B ----
@@ -132,12 +132,13 @@ class D(B, C):
 
 此时顺序为：
 
-```
+```py
 (<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
 class ---- D ----
 class ---- C ----
 class ---- A ----
 ```
+
 此时从 B 的上级开始，所以跳过了 B。
 
 ### super 参数
@@ -401,4 +402,3 @@ class Person:
     def name(self):
         raise AttributeError("Can't delete attribute")
 ```
-

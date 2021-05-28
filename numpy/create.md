@@ -6,6 +6,8 @@
   - [`empty`](#empty)
   - [`empty_like`](#empty_like)
   - [`array`](#array)
+  - [Ones and zeros](#ones-and-zeros)
+    - [zeros](#zeros)
   - [从已有数据创建](#从已有数据创建)
     - [array](#array-1)
   - [参考](#参考)
@@ -66,6 +68,38 @@ numpy.empty_like(prototype, dtype=None, order='K', subok=True, shape=None)
 |shape|int or sequence of ints||
 
 ## `array` 
+
+## Ones and zeros
+
+### zeros
+
+创建指定 shape 和 type 的全 0 数组。
+
+```py
+numpy.zeros(shape, dtype=float, order='C', *, like=None)
+```
+
+|参数|说明|
+|---|---|
+|shape|数组 shape|
+|dtype|数组类型，默认类型 `numpy.float64`|
+|order|以行（C）还是以列（F）存储数组|
+
+- 创建一维数组
+
+```py
+>>> np.zeros(5)
+array([ 0.,  0.,  0.,  0.,  0.])
+```
+
+- 指定类型
+
+```py
+>>> np.zeros((5,), dtype=int)
+array([0, 0, 0, 0, 0])
+```
+
+- 
 
 ## 从已有数据创建
 

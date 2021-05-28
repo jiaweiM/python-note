@@ -15,7 +15,7 @@ Qt for Python 可以在兼容 Python 的IDE 中使用，但不是所有都提供
 
 将 `.ui` 文件转换为 Python 文件：
 
-```
+```bash
 pyside6-uic -i form.ui -o ui_form.py
 ```
 

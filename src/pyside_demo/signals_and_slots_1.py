@@ -1,6 +1,6 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 import sys
-from PySide6.QtCore import Qt
+
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 
 
 class MainWindow(QMainWindow):
@@ -22,4 +22,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
