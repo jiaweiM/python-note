@@ -6,8 +6,8 @@
     - [界面定义文件 .ui](#界面定义文件-ui)
     - [资源文件 qrc](#资源文件-qrc)
     - [Qt 建模语言文件 qml](#qt-建模语言文件-qml)
+  - [载入 ui 文件](#载入-ui-文件)
   - [PyCharm](#pycharm)
-  - [软件分发](#软件分发)
 
 ## 简介
 
@@ -80,9 +80,13 @@ pyside6-designer
 
 图形化 QML 程序去 Qt Widgets 应用无关，
 
+## 载入 ui 文件
+
+
+
+`QUiLoader` 类可以载入 UI 文件创建用户界面。如果你有自定义组件，或者应用程序嵌入了 Qt Designer，还可以使用 QtDeisnger 模块提供的 `QFormBuiler` 类从 UI 文件创建用户界面。
+
+使用 `QUiLoader` 类可以根据 UI 文件或指定插件路径中的信息创建控件。
 ## PyCharm
 
 File > Settings > tools > PyCharm External Tools 配置。
-
-## 软件分发
-

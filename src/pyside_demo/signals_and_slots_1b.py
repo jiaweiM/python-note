@@ -10,6 +10,7 @@ class MainWindow(QMainWindow):
 
         button = QPushButton("Press Me!")
         button.setCheckable(True)
+
         button.clicked.connect(self.the_button_was_clicked)
         button.clicked.connect(self.the_button_was_toggled)
 
@@ -26,4 +27,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

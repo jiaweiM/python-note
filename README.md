@@ -9,10 +9,11 @@
 
 - [Python 简介](basic/0_intro.md)
 - [语法](basic/1_syntax.md)
+- [关键字](basic/python_keyword.md)
 - [数据类型](basic/types.md)
 - [运算符](basic/operator.md)
 - [表达式](basic/8_expression.md)
-- [string](basic/string.md)
+- [字符串](basic/string.md)
 - [函数](basic/function.md)
   - [Python 内置函数](basic/bif/0_built_in_function.md)
 - [模块](basic/module.md)
@@ -29,8 +30,9 @@
   - [OrderedDict](api/collections_ordereddict.md)
 - [迭代器](basic/iterator.md)
 - [生成器](basic/generator.md)
-- [IO](basic/io.md)
-  - [pathlib](io/1_pathlib.md)
+- [IO](io/python_io.md)
+  - [pathlib](io/pathlib.md)
+  - [os.path](io/os.path.md)
 - [类和对象](basic/class.md)
   - [继承](basic/class_inherit.md)
 - [异常处理](basic/exception.md)
@@ -46,7 +48,6 @@
 
 ## 工具包
 
-- [pathlib](modules/pathlib.md)
 - [heapq](api/heapq.md)
 - [Numpy](numpy/0_numpy_toc.md)
 - [pandas](pandas/0_pandas_toc.md)
