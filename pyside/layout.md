@@ -11,10 +11,12 @@
   - [QVboxLayout](#qvboxlayout)
     - [构造函数](#构造函数)
     - [使用](#使用)
+  - [QFormLayout](#qformlayout)
+  - [GridLayout](#gridlayout)
   - [参考](#参考)
 
 2021-03-25, 15:08
-****
+*** **
 
 ## 简介
 
@@ -262,6 +264,55 @@ layout.addWidget(button5)
 
 window.show()
 ```
+
+## QFormLayout
+
+`QFormLayout` 是一种简便的布局类，以两列铺设其子控件：
+
+- 左侧为标签，一般为选项名称；
+- 右侧为字段控件，如 LineEditor，复选框等。
+
+一般这种两列布局直接使用 `QGridLayout` 就可以实现，`QFormLayout` 是一种更高级的替代方案，具有如下优点：
+
+- 外观和平台保持一致；
+- 支持对长行换行；
+- 提供了创建字段-标签对的 API。
+
+例如，`addRow()` 接受 `QString` 和 `QWidget` 创建一行，方法内部会自动根据文本创建 `QLabel`，并将 `QLabel` 设置为 `QWidget` 的 buddy。如下：
+
+```py
+formLayout = QFormLayout()
+formLayout.addRow(self.tr("&Name:"), nameLineEdit)
+formLayout.addRow(self.tr("&Email:"), emailLineEdit)
+formLayout.addRow(self.tr("&Age:"), ageSpinBox)
+setLayout(formLayout)
+```
+
+如果使用 `QGridLayout`，就要复杂许多：
+
+```py
+nameLabel = QLabel(self.tr("&Name:"))
+nameLabel.setBuddy(nameLineEdit)
+
+emailLabel = QLabel(self.tr("&Name:"))
+emailLabel.setBuddy(emailLineEdit)
+
+ageLabel = QLabel(self.tr("&Name:"))
+ageLabel.setBuddy(ageSpinBox)
+
+gridLayout = QGridLayout()
+gridLayout.addWidget(nameLabel, 0, 0)
+gridLayout.addWidget(nameLineEdit, 0, 1)
+gridLayout.addWidget(emailLabel, 1, 0)
+gridLayout.addWidget(emailLineEdit, 1, 1)
+gridLayout.addWidget(ageLabel, 2, 0)
+gridLayout.addWidget(ageSpinBox, 2, 1)
+setLayout(gridLayout)
+```
+
+另外，`QFormLayout` 的默认样式，可以通过 `setLabelAlignment()`, `setFormAlignment()`, `setFieldGrowthPolicy()` 以及 `setRowWrapPolicy()` 设置。
+
+## GridLayout
 
 ## 参考
 

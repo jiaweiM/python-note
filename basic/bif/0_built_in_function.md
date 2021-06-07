@@ -7,6 +7,7 @@
   - [any](#any)
   - [len](#len)
   - [list](#list)
+  - [map](#map)
   - [int](#int)
   - [print](#print)
   - [range](#range)
@@ -152,6 +153,55 @@ assert len(s) == 5
 ```
 
 ## list
+
+## map
+
+```py
+map(function, iterable, ...)
+```
+
+将函数依次应用于 `iterable` 对象的元素，将返回的值作为迭代器返回。
+
+`map` 函数使得将函数应用到多个元素的操作更为简洁，例如，取每个值的平方：
+
+```py
+items = [1, 2, 3, 4, 5]
+squared = []
+for i in items:
+    squared.append(i**2)
+```
+
+如果用 `map` 函数：
+
+```py
+items = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, items))
+```
+
+如果提供多个 `iterable` 对象，则 `function` 参数个数要和 `iterable` 个数相同，然后 `function` 并行应用于所有元素。
+
+对多个 `iterables`，迭代器在最短的迭代对象耗尽时结束。
+
+例如：
+
+```py
+def square(x):
+    return x ** 2
+
+
+def test_map():
+    val = map(square, [1, 2, 3])
+    assert list(val) == [1, 4, 9]
+
+
+def plus(a, b):
+    return a + b
+
+
+def test_map_2():
+    val = map(plus, [1, 2, 3], [4, 5, 6])
+    assert list(val) == [5, 7, 9]
+```
 
 ## int
 

@@ -1,18 +1,18 @@
 # query
 
 - [query](#query)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [使用命名 index](#%e4%bd%bf%e7%94%a8%e5%91%bd%e5%90%8d-index)
-  - [直接使用 index](#%e7%9b%b4%e6%8e%a5%e4%bd%bf%e7%94%a8-index)
-  - [index 和 column 名称重复](#index-%e5%92%8c-column-%e5%90%8d%e7%a7%b0%e9%87%8d%e5%a4%8d)
+  - [简介](#简介)
+  - [使用命名 index](#使用命名-index)
+  - [直接使用 index](#直接使用-index)
+  - [index 和 column 名称重复](#index-和-column-名称重复)
   - [MultiIndex query](#multiindex-query)
-    - [无名称索引](#%e6%97%a0%e5%90%8d%e7%a7%b0%e7%b4%a2%e5%bc%95)
-  - [query() 实例](#query-%e5%ae%9e%e4%be%8b)
-  - [python vs pandas 语法对比](#python-vs-pandas-%e8%af%ad%e6%b3%95%e5%af%b9%e6%af%94)
+    - [无名称索引](#无名称索引)
+  - [query() 实例](#query-实例)
+  - [python vs pandas 语法对比](#python-vs-pandas-语法对比)
   - [`in` and `not in`](#in-and-not-in)
-  - [`list` 中 `==` 运算符的特殊用法](#list-%e4%b8%ad--%e8%bf%90%e7%ae%97%e7%ac%a6%e7%9a%84%e7%89%b9%e6%ae%8a%e7%94%a8%e6%b3%95)
-  - [Boolean 运算](#boolean-%e8%bf%90%e7%ae%97)
-  - [`query()` 性能](#query-%e6%80%a7%e8%83%bd)
+  - [`list` 中 `==` 运算符的特殊用法](#list-中--运算符的特殊用法)
+  - [Boolean 运算](#boolean-运算)
+  - [`query()` 性能](#query-性能)
 
 2020-04-25, 10:51
 *** *

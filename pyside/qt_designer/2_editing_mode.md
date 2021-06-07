@@ -134,7 +134,7 @@ Qt Designer 提供了四种编辑模式：
 
 ![](images/2021-06-01-15-21-55.png)
 
-buddy 控件是 Qt 基本功能之一。当用户键入 `QLabel` 的快捷键时，Buddy 组件代替 `QLabel` 接受输入聚焦。
+buddy 控件是 Qt 基本功能之一。当用户键入 `QLabel` 的快捷键时，Buddy 组件代替 `QLabel` 接受**输入聚焦**。
 
 ### 连接 Label 和 Buddy 控件
 

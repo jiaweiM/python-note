@@ -167,36 +167,6 @@ def any(iterable):
 
 如果 x 不是数字，或者提供了 `base` 参数，则 `x` 必须为 string, `bytes` 或 `bytearray`
 
-## map
-
-`map(function, iterable, ...)`
-
-将函数依次应用于 `iterable` 对象的元素，将返回的值作为迭代器返回。
-
-如果提供多个 `iterable` 对象，`function` 的参数个数要和 `iterable` 个数相同，然后 `function` 并行应用于所有元素。
-
-对多个 `iterables`，迭代器在最短的迭代对象耗尽时结束。
-
-例如：
-
-```py
-def square(x):
-    return x ** 2
-
-
-def test_map():
-    val = map(square, [1, 2, 3])
-    assert list(val) == [1, 4, 9]
-
-
-def plus(a, b):
-    return a + b
-
-
-def test_map_2():
-    val = map(plus, [1, 2, 3], [4, 5, 6])
-    assert list(val) == [5, 7, 9]
-```
 
 ## min
 

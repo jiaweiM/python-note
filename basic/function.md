@@ -14,7 +14,7 @@
   - [Lambda 函数](#lambda-函数)
 
 2021-06-02, 11:05
-****
+*****
 
 ## 简介
 
@@ -119,7 +119,8 @@ def func(i, j=100):
 ### 可变参数 *args
 
 `*args` 和 `**kwargs` 在函数定义中将不定数目的参数传递给函数。
-使用 `*args` 传递可变数目的参数给函数。例如，下面是包含两个参数的函数：
+
+使用 `*args` 传递可变数目的非关键字参数给函数。例如，下面是包含两个参数的函数：
 
 ```py
 def sum(a, b):
@@ -156,6 +157,17 @@ my_three(*a) # here list is broken into three elements
 
 `**kwargs` 可用于传递可变数目的关键字参数。
 
+例如：
+
+```py
+def greet_me(**kwargs):
+    for key, value in kwargs.items():
+        print("{0} = {1}".format(key, value))
+
+>>> greet_me(name="yasoob")
+name = yasoob
+```
+
 - 方法调用中作为参数传递
 
 ```py
@@ -163,13 +175,19 @@ def my_three(a, b, c):
     print(a, b, c)
 
 a = {'a': "one", 'b': "two", 'c': "three" }
-my_three(**a)
+my_three(**a) # 关键字参数，其实就是字典
 ```
 
 使用前提：
 
 - 参数名和键名相同;
 - 参数数目和字典大小相同。
+
+如果要在函数中同时使用 `*args` 和 `**kwargs`，顺序如下：
+
+```py
+some_func(fargs, *args, **kwargs)
+```
 
 ## Unpacking Argument Lists
 
