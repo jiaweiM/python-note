@@ -10,7 +10,7 @@
     - [默认参数](#默认参数)
     - [可变参数 *args](#可变参数-args)
     - [**kwargs](#kwargs)
-  - [Unpacking Argument Lists](#unpacking-argument-lists)
+  - [拆分参数列表](#拆分参数列表)
   - [Lambda 函数](#lambda-函数)
 
 2021-06-02, 11:05
@@ -189,18 +189,21 @@ my_three(**a) # 关键字参数，其实就是字典
 some_func(fargs, *args, **kwargs)
 ```
 
-## Unpacking Argument Lists
+## 拆分参数列表
 
-如果参数已在 list 或 tuple 中，但是调用函数需要单独的位置参数。例如 `range()` 函数需要 `start` 和 `stop` 参数。如果两者是一起存在的，可以使用 `*` 运算符从 list 或 tuple 中 unpack 参数：
+如果参数已在 list 或 tuple 中，但是调用函数需要单独的位置参数。例如 `range()` 函数需要 `start` 和 `stop` 参数。如果两者是一起存在的，可以使用 `*` 运算符从 list 或 tuple 中拆分参数：
 
 ```py
-args = [3, 6] # list
-list(range(*args)) # 从 list unpack 参数
+>>> list(range(3, 6))            # 使用参数正常调用
+[3, 4, 5]
+>>> args = [3, 6]
+>>> list(range(*args))            # 使用拆分参数语法
+[3, 4, 5]
 ```
 
 `range(*args)` 等价于 `range(3, 6)`。
 
-类似的，字典可以通过 `**` 运算符传递关键字参数：
+- 类似的，字典可以通过 `**` 运算符传递关键字参数
 
 ```py
 >>> def parrot(voltage, state='a stiff', action='voom'):

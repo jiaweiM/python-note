@@ -14,11 +14,12 @@
 
 ## 学习笔记
 
-- [Python 关键字](https://www.yuque.com/go/doc/44436590)
-- [Python 字符串](https://www.yuque.com/go/doc/44336081)
-- [Python 函数](https://www.yuque.com/go/doc/44497986)
-- [内置函数](https://www.yuque.com/go/doc/44433823)
-- [正则表达式](https://www.yuque.com/go/doc/44472779)
+- [Python 关键字](python_keyword.md)
+- [Python 字符串](string.md)
+- [Python 控制流]
+- [Python 函数](function.md)
+- [内置函数](built_in_function.md)
+- [正则表达式](regex.md)
 
 ## 参考文档
 
