@@ -2,6 +2,8 @@ import datetime
 
 import pytest
 
+def test_string_type():
+    print(type("A"))
 
 def test_concanate():
     '''使用加号连接字符串，称为字符串拼接'''

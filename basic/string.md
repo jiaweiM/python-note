@@ -14,6 +14,7 @@
     - [maketrans](#maketrans)
     - [rstrip](#rstrip)
     - [startswith](#startswith)
+    - [strip](#strip)
     - [translate](#translate)
     - [拆分和连接](#拆分和连接)
     - [相等测试](#相等测试)
@@ -178,6 +179,29 @@ str.startswith(prefix[, start[, end]])
 
 - `start` 可选参数，表示测试的起始位置；
 - `end` 参数，表示测试的终点位置。
+
+### strip
+
+```py
+str.strip([chars])
+```
+
+返回移除前后指定字符的字符串副本。`chars` 参数指定移除的字符集。如果 `chars` 为 `None`，其默认为空格。例如:
+
+```py
+>>> '   spacious   '.strip()
+'spacious'
+>>> 'www.example.com'.strip('cmowz.')
+'example'
+```
+
+移除字符串前后的指定字符。但中间的不移除，例如：
+
+```py
+>>> comment_string = '#....... Section 3.2.1 Issue #32 .......'
+>>> comment_string.strip('.#! ')
+'Section 3.2.1 Issue #32'
+```
 
 ### translate
 
@@ -702,4 +726,4 @@ string 模块中定义了如下常量：
 ## 参考
 
 - [Zetcode Python f-string](https://zetcode.com/python/fstring/)
-- [https://docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html)
+- [https://docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)

@@ -23,3 +23,10 @@ def test_compare():
 def test_slash():
     assert PurePosixPath('/etc') / 'init.d' / 'apache2' == PurePosixPath('/etc/init.d/apache2')
     assert '/usr' / PurePath('bin') == PurePath('/usr/bin')
+
+
+def test_suffix():
+    p = PurePath(r"D:\repository\Epitope\run.svg")
+    print(p.stem)
+    p2 = PurePath(p.stem, ".csv")
+    print(p2)

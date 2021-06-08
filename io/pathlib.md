@@ -2,7 +2,7 @@
 
 - [pathlib](#pathlib)
   - [简介](#简介)
-  - [基本使用](#基本使用)
+  - [使用](#使用)
     - [列出所有子目录](#列出所有子目录)
     - [列出所有源文件](#列出所有源文件)
   - [纯路径操作](#纯路径操作)
@@ -20,8 +20,11 @@
     - [PurePath.root](#purepathroot)
     - [PurePath.anchor](#purepathanchor)
     - [PurePath.parents](#purepathparents)
+    - [PurePath.joinpath](#purepathjoinpath)
+    - [PurePath.with_suffix](#purepathwith_suffix)
     - [Path.glob](#pathglob)
     - [Path.iterdir](#pathiterdir)
+    - [Path.rename](#pathrename)
 
 2021-05-31, 09:41
 ***
@@ -35,14 +38,14 @@
 
 ![](images/2021-05-31-09-40-24.png)
 
-其中 `Path` 为基于平台的具体路径，使用最为广泛。
+其中 `Path` 是基于平台的具体路径，使用最为广泛。
 
 纯路径在有些情况很有用：
 
 - 在 Unix 及其上操作 Windows 路径（反之亦然），在 Unix 上你无法实例化 `WindowsPath`，但是可以实例化 `PureWindowsPath`。
 - 不需要访问 OS，只需要操作路径。
 
-## 基本使用
+## 使用
 
 ### 列出所有子目录
 
@@ -321,6 +324,46 @@ drive 和 root 的合并：
 ### PurePath.parents
 
 
+### PurePath.joinpath
+
+```py
+PurePath.joinpath(*other)
+```
+
+合并路径操作。例如：
+
+```py
+>>> PurePosixPath('/etc').joinpath('passwd')
+PurePosixPath('/etc/passwd')
+>>> PurePosixPath('/etc').joinpath(PurePosixPath('passwd'))
+PurePosixPath('/etc/passwd')
+>>> PurePosixPath('/etc').joinpath('init.d', 'apache2')
+PurePosixPath('/etc/init.d/apache2')
+>>> PureWindowsPath('c:').joinpath('/Program Files')
+PureWindowsPath('c:/Program Files')
+```
+
+### PurePath.with_suffix
+
+```py
+PurePath.with_suffix(suffix)
+```
+
+返回一个更改后缀的新路径。如果原路径没有后缀，则添加新的后缀。如果新后缀 `suffix` 是空字符串，则移除原后缀；
+
+```py
+>>> p = PureWindowsPath('c:/Downloads/pathlib.tar.gz')
+>>> p.with_suffix('.bz2')
+PureWindowsPath('c:/Downloads/pathlib.tar.bz2')
+>>> p = PureWindowsPath('README')
+>>> p.with_suffix('.txt')
+PureWindowsPath('README.txt')
+>>> p = PureWindowsPath('README.txt')
+>>> p.with_suffix('')
+PureWindowsPath('README')
+```
+
+
 ### Path.glob
 
 
@@ -372,3 +415,10 @@ PosixPath('docs/_build')
 PosixPath('docs/_static')
 PosixPath('docs/Makefile')
 ```
+
+### Path.rename
+
+```py
+Path.rename(target)
+```
+

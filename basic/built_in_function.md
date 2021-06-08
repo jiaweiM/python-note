@@ -2,13 +2,19 @@
 
 - [Python 内置函数](#python-内置函数)
   - [总结](#总结)
+  - [ascii](#ascii)
   - [abs](#abs)
   - [all](#all)
   - [any](#any)
+  - [enumerate](#enumerate)
+  - [filter](#filter)
+  - [format](#format)
+  - [int](#int)
+  - [isinstance](#isinstance)
   - [len](#len)
   - [list](#list)
   - [map](#map)
-  - [int](#int)
+  - [min](#min)
   - [print](#print)
   - [range](#range)
   - [type](#type)
@@ -43,6 +49,12 @@ Python 解释器内置了许多函数，如下表所示：
 | range(a, b, step)              | 以指定步长返回 [a, b)之间的整数序列                                                                                                                                                                                                                           |
 | sum(lst)                       | 获得列表所有元素的加和                                                                                                                                                                                                                                        |
 
+## ascii
+
+[`ascii(object)`](../src/python_test/builtin_func/ascii_test.py)
+
+功能和 `repr()` 类似，返回对象可打印形式的字符串表示，但是对 `repr()` 返回字符串中的非 ASCII 字符，使用 `\x`, `\u` 或 `\U` 进行转义。和 Python 2 中 `repr()` 返回的字符串类似。
+
 ## abs
 
 如果 x 为整数或浮点数，返回数值的绝对值；若为复数，返回模。
@@ -64,9 +76,19 @@ complex = (3 - 4j)
 assert abs(complex) == 5
 ```
 
+- 如果 `x` 定义了 `__abs__()` 函数，`abs(x)` 返回 `x.__abs__()`.
+
 ## all
 
-当可迭代对象的所有值为 True 时，返回 True。
+如果 `iterable` 的所有元素为 true，返回 `True`。等价于：
+
+```py
+def all(iterable):
+  for element in iterable:
+    if not element:
+      return False
+  return True
+```
 
 如果可迭代对象为空，也返回 True。
 
@@ -107,9 +129,15 @@ assert not all(t1)
 
 ## any
 
-可迭代对象任何元素为 true，返回 true，否则返回 False.
+`iterable` 的任意对象为 true，返回 `True`。如果 iterable 为空，返回 `False`。等价于：
 
-如果可迭代对象为空，返回 False。
+```py
+def any(iterable):
+  for element in iterable:
+    if element:
+      return True
+  return False
+```
 
 - list 实例
 
@@ -128,6 +156,110 @@ l = [0, False, 5]
 assert any(l)
 
 assert not any([])
+```
+
+## enumerate
+
+`enumerate()` 方法给 iterable 对象添加了一个计数器。语法：
+
+`enumerate(iterable, start=0)`
+
+- `iterable`，支持迭代的任意对象
+- `start`，其实计数值，默认 **0**
+
+返回 `enumerate` 对象，可以使用 `list()` 和 `tuple()` 等转换为其它序列对象。
+
+## filter
+
+`filter(function, iterable)`
+
+返回一个迭代器，迭代所有 `function` 函数计算结果为 true 的 `iterable` 元素。
+
+如果 `function` 为 `None`，则为 `identity` 函数。
+
+## format
+
+`format(value[, format_spec])`
+
+根据 `format_spec` 将 `value` 转换为格式化表示形式。
+
+`format_spec` 的解析依赖于 `value` 的类型。
+
+`format_spec` 默认为空字符串，结果等效于 `str(value)`。
+
+调用 `format(value, format_spec)` 被转换为 `type(value.__format__(value, format_spec))`，在搜索 `value` 的 `__format__()` 方法时，直接跳过了实例字典。
+
+## int
+
+```py
+int([x])
+int(x, base=10)
+```
+
+参数：
+
+- `x` ，可以转换为整数的数值或字符串；
+- `base` ，数值格式，默认为 10 进制。
+
+`int()` 函数将指定值转换为整数类型：
+
+- 将数字或字符串 `x` 转换为 integer 对象，如果不提供参数，返回 `0`。
+- 如果 `x` 定义了 `__int__()`，`int(x)` 返回 `x.__int__()`
+- 如果 `x` 定义了 `__index__()`，返回 `x.__index__()`
+- 如果 `x` 定义了 `__trunc__()`，返回 `x.__trunc__()`
+- 如果 `value` 是浮点数，则向零取整。
+
+如果 x 不是数字，或者提供了 `base` 参数，则 `x` 必须为 string, `bytes` 或 `bytearray`。
+
+字符串：
+
+```python
+x = int('12')
+assert x == 12
+```
+
+## isinstance
+
+`isinstance()` 检查对象是否为指定类型的实例。语法：
+
+```py
+isinstance(object, classinfo)
+```
+
+| 参数      | 说明                                      |
+| --------- | ----------------------------------------- |
+| Object    | 待检查对象                                |
+| classinfo | class, type, or tuple of clases and types |
+
+- 类测试
+
+```py
+class Foo:
+    a = 5
+
+
+def test_param():
+    foo_ins = Foo()
+    assert isinstance(foo_ins, Foo)
+    assert not isinstance(foo_ins, (list, tuple))
+    assert isinstance(foo_ins, (list, tuple, Foo))
+```
+
+只要实例是 tuple 中任意一个类型的实例，返回 `true`.
+
+- 基本类型测试
+
+```py
+def test_native():
+    numbers = [1, 2, 3]
+
+    assert isinstance(numbers, list)
+    assert not isinstance(numbers, dict)
+    assert isinstance(numbers, (dict, list))
+
+    number = 5
+    assert not isinstance(number, list)
+    assert isinstance(number, int)
 ```
 
 ## len
@@ -203,31 +335,27 @@ def test_map_2():
     assert list(val) == [5, 7, 9]
 ```
 
-## int
+## min
 
-`int()` 函数将指定值转换为整数类型：
-
-- 如果没有参数，返回 0；
-- 如果参数 `value` 定义了 `__int__()` 函数，则返回 `x.__int__()` ；
-- 如果 `value` 定义了 `__index__()` 函数，则返回 `x.__index__()` ；
-- 如果 `value` 定义了 `__trunc__()` 函数，则返回 `x.__trunc__()` ；
-- 如果 `value` 是浮点数，则向零 取整。
-
-```python
-int(value, base)
+```py
+min(iterable, *[, key, default])
+min(arg1, arg2, *args[, key])
 ```
 
-参数：
+返回 `iterable` 或多个参数中的最小项。
 
-- `value` ，可以转换为整数的数值或字符串；
-- `base` ，数值格式，默认为 10 进制。
+- 如果只提供了一个位置参数，则必须为 `iterable` 类型。返回其最小项。
+- 如果提供了多个位置参数，则返回最小的位置参数。
 
-字符串：
+有两个可选的关键字参数。
 
-```python
-x = int('12')
-assert x == 12
-```
+- `key` 用于指定排序函数，和 `list.sort()` 函数使用的参数类似
+- `default` 指定 `iterable` 为空时返回的对象。
+
+如果不提供 `default` 且 `iterable` 为空，抛出 `ValueError`。
+
+如果出现多个相同的最小值，返回第一次出现的值。
+
 
 ## print
 
