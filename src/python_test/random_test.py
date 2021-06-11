@@ -18,3 +18,8 @@ def test_seed():
 def test_randrange():
     x = random.randrange(10)
     print(x)
+
+
+def test_choice():
+    a_list = ['apple', 'banana', 'cherry']
+    print(random.choice(a_list))
