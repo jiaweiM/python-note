@@ -20,6 +20,7 @@
 - [Python 函数](function.md)
 - [内置函数](built_in_function.md)
 - [正则表达式](regex.md)
+- [复制](copy.md)
 
 ## 参考文档
 
@@ -41,6 +42,10 @@
 - [Python Exercies, Practice, Solution](https://www.w3resource.com/python-exercises/)
 
 包含丰富的练习题。
+
+- [Visualize Code Execution](http://www.pythontutor.com/)
+
+查看代码运行。
 
 ## Python 教程
 

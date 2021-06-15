@@ -303,6 +303,29 @@ def test_concatenate():
     assert y == [1, 2, 3, 4, 5, 6]
 
 
+def test_copy():
+    l1 = [3, [55, 44], (7, 8, 9)]
+    l2 = list(l1)
+    assert l2 == [3, [55, 44], (7, 8, 9)]
+    assert l2 == l1
+    assert l2 is not l1
+
+
+def test_shaddow_copy():
+    l1 = [3, [66, 55, 44], (7, 8, 9)]
+    l2 = list(l1)  # 浅复制
+
+    l1.append(100)
+    l1[1].remove(55)
+    assert l1 == [3, [66, 44], (7, 8, 9), 100]  # l1 被修改
+    assert l2 == [3, [66, 44], (7, 8, 9)]  # l2 中引用列表也被修改
+
+    l2[1] += [33, 22]
+    l2[2] += (10, 11)
+    assert l2 == [3, [66, 44, 33, 22], (7, 8, 9, 10, 11)]
+    assert l1 == [3, [66, 44, 33, 22], (7, 8, 9), 100] # 修改 l2，l1 中的引用类型随时改变
+
+
 def test_extend_tuple_set():
     # language list
     language = ['French', 'English', 'German']

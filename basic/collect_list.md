@@ -7,9 +7,14 @@
   - [List 函数](#list-函数)
   - [列表推导](#列表推导)
     - [内嵌列表推导](#内嵌列表推导)
+  - [排序](#排序)
+  - [bisect](#bisect)
+    - [查找位置](#查找位置)
+    - [插入值](#插入值)
   - [del](#del)
   - [List as Stack](#list-as-stack)
   - [List as Queue](#list-as-queue)
+  - [参考](#参考)
 
 2021-06-02, 11:38
 ****
@@ -121,7 +126,7 @@ List 为序列类型，支持序列的所有操作。另外还包含特有的函
 
 ## 列表推导
 
-列表推导以一种简洁的方式从一个 List 创建另一个 List，在方括号中包含创建元素的表达式。例：
+列表推导（listcomps）以一种简洁的方式从一个 List 创建另一个 List，在方括号中包含创建元素的表达式，生成器（genexps）则是用来创建其他类型的序列。例：
 
 ```py
 list1 = [ x for x in range(10)]  # list in range [0, 9]
@@ -246,6 +251,81 @@ SyntaxError: invalid syntax
 [(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]
 ```
 
+## 排序
+
+`list.sort()` 原地排序列表，返回 `None`。
+
+内置函数 `sorted` 会新建一个列表作为返回值。这个方法可以接受任何形式的可迭代对象作为参数，包括不可变序列或生成器。不管 sorted 接受怎样的参数，最后都返回一个列表。
+
+`list.sort` 和 `sorted` 都有两个可选关键字参数：
+
+- `reverse`，如果设定为 `True`，元素以降序输出，默认为 `False`；
+- `key`，只有一个参数的函数，该函数用在序列的每一个元素上，所产生的结果是排序算法依赖的对比关键字，这个参数默认为恒等函数（identity function）。
+
+例如：
+
+```py
+fruits = ['grape', 'raspberry', 'apple', 'banana']
+
+a = sorted(fruits)  # 默认排序，不跪改变原列表
+assert a == ['apple', 'banana', 'grape', 'raspberry']
+
+a = sorted(fruits, key=len)  # 按长度排序
+assert a == ['grape', 'apple', 'banana', 'raspberry']
+
+a = sorted(fruits, key=len, reverse=True)  # 按长度降序
+assert a == ['raspberry', 'banana', 'grape', 'apple']
+
+# 以上排序都不会修改原列表
+assert fruits == ['grape', 'raspberry', 'apple', 'banana']
+
+fruits.sort()  # list.sort() 为原位排序
+assert fruits == ['apple', 'banana', 'grape', 'raspberry']
+```
+
+## bisect
+
+`bisect` 模块的两个主要函数：`bisect` 和 `insort`，利用二分查找在有序序列中查找或插入元素。
+
+### 查找位置
+
+```py
+bisect.bisect_left(a, x, lo=0, hi=len(a))
+```
+
+查找列表 `a` 中 `x` 的位置：
+
+- `lo` 和 `hi` 用于指定查找范围，默认为整个列表；
+- 如果 `a` 中已有 `x` 值，则插入点在已有值左侧；
+- 返回位置 `i` 满足两个范围：
+  - 左侧满足 `all(val < x for val in a[lo:i])`
+  - 右侧满足 `all(val >= x for val in a[i:hi])`
+
+```py
+bisect.bisect_right(a, x, lo=0, hi=len(a))
+bisect.bisect(a, x, lo=0, hi=len(a))
+```
+
+这两个函数功能与 `bisect_left()` 类似，但是返回索引位置在相同值元素的右侧。即满足：
+
+- 左侧 `all(val <= x for val in a[lo:i])`
+- 右侧 `all(val > x ffor val in a[i:hi])`
+
+### 插入值
+
+```py
+bisect.insort_left(a, x, lo=0, hi=len(a))
+```
+
+将 `x` 插入已排序的 `a`中，并保持 `a` 的排序状态。等价于 `a.insert(bisect.bisect_left(a, x, lo, hi), x)`
+
+```py
+bisect.insort_right(a, x, lo=0, hi=len(a))
+bisect.insort(a, x, lo=0, hi=len(a))
+```
+
+同样插入 `x`，只是插入位置在序列 `a` 中相同值元素的右侧。
+
 ## del
 
 list 的方法只能通过值删除元素。而使用 `del` 语句，可以通过索引删除元素。`del` 可删除列表切片，也可以清空整个列表。例如：
@@ -289,3 +369,7 @@ assert stack.pop() == 5
 List 也可以作为 Queue 使用（First in, first out），不过效率不是很高。从末尾添加删除很快，从开始插入和删除元素很慢（因为余下的元素都要随之便宜）。
 
 如果要使用 queue功能，可以使用 [`collections.deque`](collect_deque.md)，该数据结构在两侧添加和删除元素都很快。
+
+## 参考
+
+- https://docs.python.org/3/library/bisect.html

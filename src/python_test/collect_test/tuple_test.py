@@ -74,3 +74,17 @@ def test_compare():
     a = (5, 6)
     b = (1, 4)
     assert (a > b == True)
+
+
+def test_equal():
+    t1 = (1, 2, [30, 40])
+    t2 = (1, 2, [30, 40])
+    assert t1 == t2
+
+    id1 = id(t1[-1])
+    t1[-1].append(99)
+    assert t1 == (1, 2, [30, 40, 99])
+
+    id2 = id(t1[-1])
+    assert t1 != t2
+    assert id1 == id2
