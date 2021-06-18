@@ -22,6 +22,26 @@ def test_create():
     my_dict = dict([(1, 'apple'), (2, 'ball')])
 
 
+def test_dictcomp():
+    DIAL_CODES = [
+        (86, 'China'),
+        (91, 'India'),
+        (1, 'United States'),
+        (62, 'Indonesia'),
+        (55, 'Brazil'),
+        (92, 'Pakistan'),
+        (880, 'Bangladesh'),
+        (234, 'Nigeria'),
+        (7, 'Russia'),
+        (81, 'Japan'),
+    ]
+    country_code = {country: code for code, country in DIAL_CODES}
+    assert country_code == {'China': 86, 'India': 91, 'United States': 1, 'Indonesia': 62, 'Brazil': 55, 'Pakistan': 92,
+                            'Bangladesh': 880, 'Nigeria': 234, 'Russia': 7, 'Japan': 81}
+    code_upper_country = {code: country.upper() for country, code in country_code.items() if code < 66}
+    assert code_upper_country == {1: 'UNITED STATES', 62: 'INDONESIA', 55: 'BRAZIL', 7: 'RUSSIA'}
+
+
 def test_len():
     d = {1: 'apple', 2: 'ball'}
     assert len(d) == 2

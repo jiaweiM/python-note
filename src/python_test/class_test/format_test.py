@@ -21,3 +21,4 @@ class Date:
 def test_custom_format():
     d = Date(2012, 12, 21)
     assert format(d) == '2012-12-21'
+

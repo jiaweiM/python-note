@@ -1,4 +1,5 @@
 import pytest
+from unicodedata import name
 
 
 def test_creat():
@@ -34,3 +35,8 @@ def test_union():
     print(c)
     print(a)
     print(b)
+
+
+def test_comps():
+    s = {chr(i) for i in range(32, 256) if 'SIGN' in name(chr(i), '')}  # 把编码 32~255 之间的字符名字里有 “SIGN” 单词挑出来
+    print(s)

@@ -3,25 +3,31 @@
 - [Random sampling](#random-sampling)
   - [快速入门](#快速入门)
   - [简介](#简介)
-  - [Random Generator](#random-generator)
-    - [Distribution](#distribution)
-      - [Generator.standard_normal](#generatorstandard_normal)
+    - [新旧API的主要差异](#新旧api的主要差异)
+  - [Generator](#generator)
+    - [Generator.integers](#generatorintegers)
+  - [Distribution](#distribution)
+    - [Generator.standard_normal](#generatorstandard_normal)
   - [随机排列](#随机排列)
-  - [方法总结](#方法总结)
+  - [RandomState](#randomstate)
     - [`RandomState.randn(d0, d1,...,dn)`](#randomstaterandnd0-d1dn)
     - [`RandomState.rand(d0,d1,...,dn)`](#randomstaterandd0d1dn)
     - [`Generator.integer`](#generatorinteger)
+  - [参考](#参考)
+
+2021-06-18, 15:11
+***
 
 ## 快速入门
 
-Numpy 组合使用 `BitGenerator` 和 `Generator` 生成伪随机数：
+Numpy 使用 `BitGenerator` 和 `Generator` 生成伪随机数：
 
-- `BitGenerator`，负责生产随机数。通常使用 32 或 64 随机位（bit）序列填充unsigned int。
-- `Generator` 在指定区间内将 `BitGenerator` 生成的随机位（bit）序列按照指定统计分布转换为数字序列。
+- `BitGenerator`，用于生产随机数，通常使用 32 或 64 个随机位（bit）序列填充 unsigned int。
+- `Generator`，将 `BitGenerator` 生成的随机位（bit）序列按照指定统计分布转换为数字序列。
 
 > 从 Numpy 1.17.0 开始，可以使用不同的 `BitGenerator` 初始化 `Generator`。
 
-使用 `default_rng` 获得 `Generator` 实例，然后根据分布调用合适方法获得样本。`Generator` 默认使用 `PCG64` 提供的bits，其统计学性质比旧版中 `RandomState` 使用的 `MT19937` 更好。
+调用 `default_rng` 获得 `Generator` 实例，然后根据分布调用合适方法获得样本。`Generator` 默认使用 `PCG64` 提供的bits，其统计学性质比旧版中 `RandomState` 使用的 `MT19937` 更好。
 
 - 新版方式（推荐）：
 
@@ -44,11 +50,11 @@ more_vals = random.standard_normal(10)
 
 可以将 `Generator` 看作 `RandomState` 的更新版本。两个类的内部都使用 `BitGenerator` 提供 bit 流，使用 `gen.bit_generator` 访问 `BitGenerator`。两者对比：
 
-| `RandomState`   | `Generator` | 说明                                                      |
-| --------------- | ----------- | --------------------------------------------------------- |
-| random_sample   | random      | 和 `random.random` 兼容                                   |
+| `RandomState`   | `Generator` | 说明  |
+| ---- | ---- | ----- |
+| random_sample   | random      | 和 `random.random` 兼容 |
 | rand            |             |                                                           |
-| randint         | integers    | 添加了 `endpoint` 参数                                    |
+| randint         | integers    | 添加了 `endpoint` 参数   |
 | random_integers |             |                                                           |
 | tomaxint        | removed     | 使用 `integers(0, np.iinfo(np.int_).max, endpoint=False)` |
 | seed            | removed     | 使用 `SeedSequence.spawn`                                 |
@@ -75,44 +81,84 @@ rg = Generator(PCG64(12345))
 rg.standard_normal()
 ```
 
+- 下面使用 `default_rng` 创建 `Generator` 生成随机浮点数：
+
+```py
+>>> import numpy as np
+>>> rng = np.random.default_rng(12345)
+>>> print(rng)
+Generator(PCG64)
+>>> rfloat = rng.random()
+>>> rfloat
+0.22733602246716966
+>>> type(rfloat)
+<class 'float'>
+```
+
+- 使用 `default_rng` 创建 `Generator` 生成3个 [0,10) 之间的整数
+
+```py
+>>> import numpy as np
+>>> rng = np.random.default_rng(12345)
+>>> rints = rng.integers(low=0, high=10, size=3)
+>>> rints
+array([6, 2, 7])
+>>> type(rints[0])
+<class 'numpy.int64'>
+```
+
 ## 简介
 
 新版采用了不同的方法从 `RandomState` 对象生成随机数。随机数的生成分为两步，即位生成器和随机生成器。
 
-位生成器（BitGenerator） 负责管理状态、生成随机的 doubles, unsigned 32-bit 和 64-bit 值。
+位生成器（BitGenerator）负责维护状态、生成随机的 doubles, unsigned 32-bit 和 64-bit 值。
 
 随机生成器（random generator）将位生成器提供的数据流转换为更有用的分布，如模拟正态分布随机数值。而且可以采用不同的位生成器。
 
-`Generator` 是一个面向用户的对象，它和 `RandomState` 几乎相同。
+`Generator` 是一个面向用户的对象，它和旧版的 `RandomState` 几乎相同。`Generator` 以 `BitGenerator` 为参数，默认为 `PCG64`。NumPy 提供 `default_rng` 函数，以隐藏这些细节。
 
 - 默认采用 `PCG64` 位生成器作为唯一参数初始化 generator。
 
 ```py
-from numpy.random import default_rng
-rg = default_rng(12345)
-rg.random()
+>>> from numpy.random import default_rng
+>>> rg = default_rng(12345)
+>>> print(rg)
+Generator(PCG64)
+>>> print(rg.random())
+0.22733602246716966
 ```
 
-- 也可以使用 `BitGenerator` 初始化 `Generator`。例如，如果想使用旧版的 `MT19937` 算法，可以使用其实例初始化 `Generator`：
+- 也可以使用 `BitGenerator` 初始化 `Generator`。
+
+例如，使用 `PCG64` 作为位生成器初始化 `Generator`:
 
 ```py
-from numpy.random import Generator, MT19937
-rg = Generator(MT19937(12345))
-rg.random()
+>>> from numpy.random import Generator, PCG64
+>>> rg = Generator(PCG64(12345))
+>>> print(rg)
+Generator(PCG64)
 ```
 
-新旧API的主要差异：
+如果想使用旧版的 `MT19937` 算法（不建议），可以使用其实例初始化 `Generator`：
+
+```py
+>>> from numpy.random import Generator, MT19937
+>>> rg = Generator(MT19937(12345))
+>>> print(rg)
+Generator(MT19937)
+```
+
+### 新旧API的主要差异
 
 > `Generator` 不再支持 Box-Muller 方法生成正态分布。使用 `Generator` 无法重现正态分布或依赖于正态分布（如 `RandomState.gamma` 或 `RandomState.standard_t`）的随机值。如果需要向后兼容，可以使用 `RandomState`。
 
 - `Generator` 的 normal, exponential 和 gamma 函数使用 256-step Ziggurat 方法，比 Box-Muller 或 inverse CDF 快 2-10 倍。
 - 可选 `dtype` 参数为 `np.float32` 或 `np.float64`，用于生成单精度或双精度随机数。
 - 可选 `out` 参数可用随机数填充已有数组。
-- `Generator.integers` 是现在从离散均匀分布生成随机整数的规范方法。`rand` 和 `randn` 方法仅可通过旧版的 `RandomState` 访问。`endpoint` kw 参数用于指定区间是 open 或 closed。彻底替换 `randint` 和 `random_integers`。
-- `Generator.random` 是现在生成随机浮点数的规范方法，替换了 `RandomState.random_sample`, `RandomState.sample` 和 `RandomState.ranf`。
+- BitGenerator 可以用于下游的 Cython 项目。
+- `Generator.integers` 是从离散均匀分布生成随机整数的标准方法。`rand` 和 `randn` 方法仅可通过旧版的 `RandomState` 访问。`endpoint` kw 参数用于指定区间。彻底替换 `randint` 和 `random_integers`。
+- `Generator.random` 是生成随机浮点数的标准方法，替换 `RandomState.random_sample`, `RandomState.sample` 和 `RandomState.ranf`，和`random.random` 一致；
 - 所有的 BitGenerators 使用 `SeedSequence` 将 seeds 初始化。
-
-`numpy.random` 模块用于生成随机数。
 
 `numpy.random.RandomState` 是 Mersenne Twister 伪随机数生成器的容器。
 
@@ -122,25 +168,32 @@ rg.random()
 | randn(d0, d1,…,dn)  | 生成满足标准正态分布的浮点数数组，数组 shape d0, d1,…,dn. |
 | random(size=None)   | 生成[0.0,1.0)之间的随机浮点数                             |
 
-## Random Generator
+## Generator
 
-### Distribution
+### Generator.integers
 
-#### Generator.standard_normal
+```py
+random.Generator.integers(low, high=None, size=None, dtype=np.int64, endpoint=False)
+```
+
+生成 [low,high) 之间的随机整数，如果 `endpoint=True`，则生成 [low,high] 之间的随机整数。替代了 `RandomState.randint` 和 `RandomState.random_integers` 方法。
+
+
+## Distribution
+
+### Generator.standard_normal
 
 `Generator.standard_normal(size=None, dtype='d', out=None)`
 
 从标准正态分布（mean=0, stdev=1）中抽样。
 
-参数：
+|参数|类型|说明|
+|---|---|----|
+|size|int or tuple of ints, *optional*|输出随机数 shape，例如，`(m,n,k)` 表示抽取`m*n*k` 个样本。默认为 `None`，表示返回单个值|
+|dtype|dtype, *optional*|结果类型，支持 `float64` 和 `float32`，字节顺序必须为 native，默认为 np.float64|
+|out|ndarray, *optional*|输出数组，如果 `size` 不为 None，则该数组和 `size` 必须相同，类型匹配|
 
-- size, int or tuple of ints，输出随机数 shape，例如，`(m,n,k)` 表示抽取样本数为 `m*n*k`。默认为 `None`，表示返回单个值。
-- dtype, {str, dtype}，结果类型，'d' ('float64') 或 'f' ('float32')。
-- out, ndarray，备用的输出数组。如果 `size` 不为 `None`，则其 shape 必须为 `size` 相同，类型匹配。
-
-返回值：
-
-float or ndarray，如果未指定 `size`，返回一个浮点数；如果指定 `size`，返回浮点数数组。
+返回值：float or ndarray，如果未指定 `size`，返回一个浮点数；如果指定 `size`，返回浮点数数组。
 
 如果需要从 $N(\mu, \sigma^2)$ 中随机取样，使用下面两种方法的一种：
 
@@ -299,7 +352,9 @@ print(a3)
 
 解释：这里指定 `axis=1`，所以对第二维进行随机排序，第1维保持不变。
 
-## 方法总结
+## RandomState
+
+`RandomState` 是 NumPy 遗留的随机数生成器，不再推荐使用。
 
 |                                |                              |
 | ------------------------------ | ---------------------------- |
@@ -350,3 +405,7 @@ Out:
 ### `Generator.integer`
 
 `integers(low[, high, size, dtype, endpoint])`
+
+## 参考
+
+- https://numpy.org/doc/stable/reference/random/index.html

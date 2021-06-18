@@ -18,10 +18,14 @@
     - [DataFrame.sort_values](#dataframesort_values)
     - [DataFrame.sort_index](#dataframesort_index)
     - [DataFrame.pivot_table](#dataframepivot_table)
-  - [Indexing, iteration](#indexing-iteration)
+  - [索引和迭代](#索引和迭代)
+    - [pop](#pop)
+    - [iterrows](#iterrows)
+    - [itertuples](#itertuples)
     - [xs](#xs)
-  - [Reindexing / selection / label](#reindexing--selection--label)
+  - [索引、选择和标签操作](#索引选择和标签操作)
     - [set_index](#set_index)
+    - [drop](#drop)
 
 2020-05-19, 12:26
 ***
@@ -384,12 +388,105 @@ Out:
 
 `DataFrame.pivot_table(self, values=None, index=None)`
 
-## Indexing, iteration
+## 索引和迭代
+
+### pop
+
+```py
+DataFrame.pop(item)
+```
+
+删除并返回指定列。如果 `DataFrame` 中没有，抛出 `KeyError`。
+
+|参数|类型|说明|
+|---|---|---|
+|`item`|标签|移除的列标签|
+
+返回 `Series`。
+
+例如：
+
+```py
+>>> df = pd.DataFrame([('falcon', 'bird', 389.0),
+...                   ('parrot', 'bird', 24.0),
+...                   ('lion', 'mammal', 80.5),
+...                   ('monkey', 'mammal', np.nan)],
+...                  columns=('name', 'class', 'max_speed'))
+>>> df
+     name   class  max_speed
+0  falcon    bird      389.0
+1  parrot    bird       24.0
+2    lion  mammal       80.5
+3  monkey  mammal        NaN
+```
+
+- 删除并返回 `class` 列
+
+```py
+>>> df.pop('class')
+0      bird
+1      bird
+2    mammal
+3    mammal
+Name: class, dtype: object
+```
+
+```py
+>>> df
+     name  max_speed
+0  falcon      389.0
+1  parrot       24.0
+2    lion       80.5
+3  monkey        NaN
+```
+
+### iterrows
+
+```py
+DataFrame.iterrows()
+```
+
+以 `(index, Series)` 形式迭代 `DataFrame` 行。
+
+|返回值|类型|说明|
+|---|---|---|
+|`index`|标签或标签 tuple|行的index，对 MultiIndex 为 tuple|
+|`data`|`Series`|以 `Series` 的形式返回行|
+
+由于 `iterrows` 以 `Series` 的形式返回行，所以不保存 `dtype`。例如：
+
+```py
+>>> df = pd.DataFrame([[1, 1.5]], columns=['int', 'float'])
+>>> row = next(df.iterrows())[1]
+>>> row
+int      1.0
+float    1.5
+Name: 0, dtype: float64
+>>> print(row['int'].dtype)
+float64
+>>> print(df['int'].dtype)
+int64
+```
+
+要保留 `dtype`，最好使用 `itertuples()`，该方法返回命名元组，并且一般比 `iterrows` 快。
+
+### itertuples
+
+```py
+DataFrame.itertuples(index=True, name='Pandas')
+```
+
+以命名元组的形式迭代返回 `DataFrame` 的行。
+
+|参数|类型|说明|
+|---|---|---|
+|index|bool, default True|如果 True
+
+
 
 ### xs
 
-
-## Reindexing / selection / label
+## 索引、选择和标签操作
 
 ### set_index
 
@@ -421,3 +518,60 @@ bool, default True。
 
 bool, default False。
 
+### drop
+
+从行或列中删除指定标签。
+
+```py
+DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
+```
+
+通过标签名称、列名称、索引等删除行或列。当使用 MultiIndex 时，不同 level 的标签可以通过指定 level 删除。
+
+|参数|类型|说明|
+|---|---|---|
+|`labels`|标签或标签列表|用于指定删除的索引或列|
+|`axis`|0 for 'index', 1 for 'column'，默认0|指定删除行还是列|
+|`index`|标签或标签列表|指定删除的行，这样就不用指定 `axis=0`|
+|`columns`|标签或标签列表|指定删除的列，这样就不用指定 `axis=1`|
+|`inplace`|bool, default False|False 返回副本，True 原位操作，返回 `None`|
+
+例如：
+
+```py
+>>> df = pd.DataFrame(np.arange(12).reshape(3, 4),
+...                  columns=['A', 'B', 'C', 'D'])
+>>> df
+   A  B   C   D
+0  0  1   2   3
+1  4  5   6   7
+2  8  9  10  11
+```
+
+- 删除列
+
+```py
+>>> df.drop(['B', 'C'], axis=1) # axis=1 表示删除列
+   A   D
+0  0   3
+1  4   7
+2  8  11
+```
+
+```py
+>>> df.drop(columns=['B', 'C'])
+   A   D
+0  0   3
+1  4   7
+2  8  11
+```
+
+- 删除行
+
+通过 index 删除行：
+
+```py
+>>> df.drop([0, 1])
+   A  B   C   D
+2  8  9  10  11
+```

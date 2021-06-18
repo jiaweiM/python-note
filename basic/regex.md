@@ -10,10 +10,11 @@
   - [re 模块](#re-模块)
     - [re.compile](#recompile)
     - [re.findall](#refindall)
+    - [re.match](#rematch)
     - [re.search](#research)
   - [模式](#模式)
   - [Pattern](#pattern)
-    - [search](#search)
+    - [Pattern.search](#patternsearch)
   - [Match](#match)
   - [参考](#参考)
 
@@ -125,13 +126,23 @@ result = re.findall(ptn, string)
 
 如果 `pattern` 中有多个 group，则返回 group 列表，多个 group 以元祖形式返回。
 
+### re.match
+
+```py
+re.match(pattern, string, flags=0)
+```
+
+如果字符串开始 0 或多个字符匹配正则表达式，则返回对应匹配对象。否则返回 `None`。
+
+即使在 `MULTILINE` 模式，该方法也从字符串开头匹配，而不是每一行的开头。
+
 ### re.search
 
 ```py
 re.search(pattern, string, flags=0)
 ```
 
-扫描字符串，找到匹配正则表达式的第一个位置，并返回 Match 对象。如果没有匹配，返回 `None` 。参数说明：
+扫描字符串，找到匹配正则表达式的第一个位置，并返回 `Match` 对象。如果没有匹配，返回 `None` 。参数说明：
 
 - `pattern` 是正则表达式
 - `string` 是待查找的字符串。
@@ -174,11 +185,32 @@ else:
 
 编译后的正则表达式对象以 `Pattern` 类表示。
 
-### search
+### Pattern.search
+
+```py
+Pattern.search(string[, pos[, endpos]])
+```
+
+搜索和正则表达式匹配的第一个位置，返回相应匹配对象。如果如匹配，返回 `None`。
+
+可选参数 `pos` 指定搜索开始的位置，默认为 0.
+
+可选参数 `endpos` 指定搜索结束的位置，即指定搜索范围 `[pos, endpos-1]`。如果 `endpos` 小于 `pos`，则无法匹配到任何内容，返回 `None`。
+
+例如：
+
+```py
+>>> pattern = re.compile("d")
+>>> pattern.search("dog")     # Match at index 0
+<re.Match object; span=(0, 1), match='d'>
+>>> pattern.search("dog", 1)  # No match; search doesn't include the "d"
+```
 
 ## Match
 
 ## 参考
 
+- https://docs.python.org/3/library/re.html
 - [https://cuiqingcai.com/977.html](https://cuiqingcai.com/977.html)
 - [https://www.programiz.com/python-programming/regex](https://www.programiz.com/python-programming/regex)
+- https://regex101.com/

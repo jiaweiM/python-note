@@ -4,6 +4,7 @@
   - [简介](#简介)
   - [可哈希对象](#可哈希对象)
   - [创建字典](#创建字典)
+  - [字典推导](#字典推导)
   - [方法](#方法)
     - [list](#list)
     - [len](#len)
@@ -31,11 +32,33 @@
     - [映射多个值](#映射多个值)
     - [运算](#运算)
     - [字典集合操作](#字典集合操作)
+  - [defaultdict](#defaultdict)
+    - [`__missing__(key)`](#__missing__key)
+    - [`default_factory`](#default_factory)
+    - [list as default_factory](#list-as-default_factory)
+    - [int as default_factory](#int-as-default_factory)
+    - [lambda as default_factory](#lambda-as-default_factory)
+    - [set as default_factory](#set-as-default_factory)
+  - [collections.OrderedDict](#collectionsordereddict)
+    - [OrderedDict.popitem](#ordereddictpopitem)
+    - [OrderedDict.move_to_end](#ordereddictmove_to_end)
+    - [性质](#性质)
+    - [key 按照插入顺序存储](#key-按照插入顺序存储)
+    - [实现类似 functools.lru_cache()](#实现类似-functoolslru_cache)
+  - [collections.Counter](#collectionscounter)
+    - [`__add__`](#__add__)
+    - [elements()](#elements)
+    - [most_common](#most_common)
+    - [subtract](#subtract)
+    - [差异方法](#差异方法)
+    - [序列中出现次数最多的元素](#序列中出现次数最多的元素)
 
 2020-04-21, 11:27
 ****
 
 ## 简介
+
+`collections.abc` 模块中包含容器的抽象类。标准库里的所有映射类型都是用 dict 来实现的。
 
 保存键值对的集合类型， mutable。键必须可计算哈希值，值则可为任意类型。
 
@@ -51,7 +74,7 @@ Python 哈希支持：
 
 - Python 内置的大部分 immutable 对象是可哈希的；
 - mutable 容器（如 list, dict）不支持哈希；
-- 对immutable 容器（如 tuple, frozenset）如果其元素支持哈希，它们也支持哈希。
+- 对 immutable 容器（如 tuple, frozenset）如果其元素支持哈希，它们也支持哈希；
 - 用于自定义对象默认支持哈希，它们的哈希值从 `id()` 得到，除了自身，和任何对象对比都是 unequal。
 
 ## 创建字典
@@ -92,7 +115,56 @@ friends = {
 }
 ```
 
+## 字典推导
+
+字典推导（dictcomp）可以从任何以键值对作为元素的可迭代对象构建字典。例如：
+
+```py
+DIAL_CODES = [
+    (86, 'China'),
+    (91, 'India'),
+    (1, 'United States'),
+    (62, 'Indonesia'),
+    (55, 'Brazil'),
+    (92, 'Pakistan'),
+    (880, 'Bangladesh'),
+    (234, 'Nigeria'),
+    (7, 'Russia'),
+    (81, 'Japan'),
+]
+country_code = {country: code for code, country in DIAL_CODES}
+assert country_code == {'China': 86, 'India': 91, 'United States': 1, 'Indonesia': 62, 'Brazil': 55, 'Pakistan': 92,
+                        'Bangladesh': 880, 'Nigeria': 234, 'Russia': 7, 'Japan': 81}
+code_upper_country = {code: country.upper() for country, code in country_code.items() if code < 66}
+assert code_upper_country == {1: 'UNITED STATES', 62: 'INDONESIA', 55: 'BRAZIL', 7: 'RUSSIA'}
+```
+
 ## 方法
+
+|方法|dict|defaultdict|OrderedDict|说明|
+|---|---|---|---|---|
+|`d.clear()`|✔️|✔️|✔️|移除所有元素|
+|`d.__contains__(k)`|✔️|✔️|✔️|检查 k 是否在 d 中|
+|`d.copy()`|✔️|✔️|✔️|浅复制|
+|`d.__copy__()`||✔️||用于支持 `copy.copy`|
+|`d.default_factory`||✔️||在 `__missing__` 函数中被调用，用以给未找到的元素设置值|
+|`d.__delitem__(k)`|✔️|✔️|✔️|`del d[k]`，移除键为 k 的元素|
+|`d.fromkeys(it, [initial])`|✔️|✔️|✔️|将迭代器 it 里的元素设置为映射里的键，如果有 initial 参数，就把它作为这些键对应的值（默认为 `None`）|
+|`d.get(k, [default])`|✔️|✔️|✔️|返回键 k 对应的值，如果字典里没有 k，则返回 `None` 或者 `default`|
+|`d.__getitem__(k)`|✔️|✔️|✔️|让字典 d 能用 `d[k]` 的形式返回键 k 对应的值|
+|`d.items()`|✔️|✔️|✔️|返回 d 里所有的键值对|
+|`d.__iter__()`|✔️|✔️|✔️|获取键的迭代器|
+|`d.keys()`|✔️|✔️|✔️|获取所有的键|
+|`d.__len__()`|✔️|✔️|✔️|可以用 `len(d)` 的形式得到字典里键值对的数量|
+|`d.__missing__(k)`||✔️||当 `__getitem__` 找不到对应键时，该方法被调用|
+|`d.move_to_end(k, [last])`|||✔️|把键为 k 的元素移动到最靠前或最靠后的位置|
+|`d.pop(k, [default])`|✔️|✔️|✔️|返回键 k 对应的值，然后移除这个键值对。如果没有这个键，返回 `None` 或 `default`|
+|`d.popitem()`|✔️|✔️|✔️|随机返回一个键值对并从字典移除它|
+|`d.__reversed__()`||✔️||返回倒序的键的迭代器|
+|`d.setdefault(k,[default])`|✔️|✔️|✔️|若字典里有键 k，则把它对应的值设置为 default，然后返回这个值；若无，则让 `d[k]=default`，然后返回 default|
+|`d.__setitem__(k,v)`|✔️|✔️|✔️|实现 `d[k] = v` 操作，把 k 对应的值设置为 v|
+|`d.update(m, [**kargs])`|✔️|✔️|✔️|m 可以是映射或键值对迭代器，用来更细 d 里对应的条目|
+|`d.values`|✔️|✔️|✔️|返回字典里所有的值|
 
 ### list
 
@@ -221,7 +293,54 @@ popitem() 适用于对字典进行消耗性的迭代。如果字典为空，调�
 
 `setdefault(key[, default])`
 
-如果字典存在 `key` ，返回其值。如果不存在，插入 `(key, default)` 并返回 default 。 default 默认为 `None`。
+如果字典存在 `key`，返回其值，并将其值设置为 default。如果不存在，插入 `(key, default)` 并返回 default 。 default 默认为 `None`。
+
+例如：
+
+```py
+"""创建一个从单词到其出现情况的映射"""
+import sys
+import re
+
+WORD_RE = re.compile(r'\w+')
+
+index = {}
+with open(sys.argv[1], encoding='utf-8') as fp:
+    for line_no, line in enumerate(fp, 1):
+        for match in WORD_RE.finditer(line):
+            word = match.group()
+            column_no = match.start()+1
+            location = (line_no, column_no)
+            # 这其实是一种很不好的实现，这样写只是为了证明论点
+            occurrences = index.get(word, []) # 如果没有对应单词，返回 []
+            occurrences.append(location)      # 把单词新出现的位置添加到列表后面
+            index[word] = occurrences         # 把新的列表放回字典，这涉及到一次查询操作
+            # 以字母顺序打印出结果
+for word in sorted(index, key=str.upper):      
+    print(word, index[word])
+```
+
+用 `setdefault` 改进上例：
+
+```py
+"""创建从一个单词到其出现情况的映射"""
+import sys
+import re
+
+WORD_RE = re.compile(r'\w+')
+
+index = {}
+with open(sys.argv[1], encoding='utf-8') as fp:
+    for line_no, line in enumerate(fp, 1):
+        for match in WORD_RE.finditer(line):
+            word = match.group()
+            column_no = match.start()+1
+            location = (line_no, column_no)
+            index.setdefault(word, []).append(location) # 获取单词的出现情况，如果单词不存在，把单词和一个空列表放进去，然后返回这个空列表
+# 以字母顺序打印出结果
+for word in sorted(index, key=str.upper):
+    print(word, index[word])
+```
 
 ### update
 
@@ -453,4 +572,323 @@ a.items() & b.items() # { ('y', 2) }
 # Make a new dictionary with certain keys removed
 c = {key:a[key] for key in a.keys() - {'z', 'w'}}
 # c is {'x': 1, 'y': 2}
+```
+
+## defaultdict
+
+[collections.defaultdict([default_factory[,...]])](https://docs.python.org/3/library/collections.html#collections.defaultdict)
+
+`defaultdict` 是 `dict` 的子类，覆盖了 `__missing__(key)` 方法，添加了一个可写入的实例变量，余下功能和 `dict` 完全一样。即 `defaultdict` 提供了设置默认值的方法。
+
+第一个参数为 `default_factory` 属性值，默认为 `None`；余下参数和 `dict` 一样。
+
+除了 `dict` 支持的标准方法，`defaultdict` 扩展方法：
+
+### `__missing__(key)`
+
+如果 `default_factory` 为 `None`，则调用该方法抛出 `KeyError`。
+
+如果 `default_factory` 不为 `None`，不用参数调用返回默认值，该值和 `key` 作为一对键值对插入到字典，并返回该值。
+
+如果调用 `default_factory` 时抛出异常，这个异常会传递给外层。
+
+当对应的 key 没有找到，`__getitem__()` 调用 `__missing__(key)` 方法，并直接返回 `__missing__(key)` 返回的值或者抛出 `__missing__(key)` 抛出的异常。
+
+`__missing__()` 不会被 `__getitem__()` 以外的方法调用。所以 `get()` 方法和常规的字典返回一样，默认返回 `None`，而不是使用 `default_factory`。
+
+### `default_factory`
+
+该属性由 `__missing__()` 使用。构造对象时由第一个参数提供，否则为 `None`。
+
+### list as default_factory
+
+使用 `list` 作为 `default_factory`，将`键-值`转换为`键-列表`字典。
+
+```py
+s = [('yellow', 1), ('blue', 2), ('yellow', 3), ('blue', 4), ('red', 1)]
+d = defaultdict(list)
+for k, v in s:
+    d[k].append(v)  # 必须通过 [] 访问
+assert list(d) == ['yellow', 'blue', 'red']
+assert d['yellow'] == [1, 3]
+assert d['blue'] == [2, 4]
+assert d['red'] == [1]
+```
+
+当第一次遇到某个 key，由于它不在 dict，所以其值使用 `default_factory` 自动生成，此处为空的 `list`。`list.append()` 添加值到新创建的 list。
+
+当再次遇到某个 key，查询正常执行，返回 key 对应的 list，然后 `list.append()` 将另一个值添加到 list。该技术和 `dict.setdefault()`等效，而且更简单、高效。下面是等价的 `setdefault` 实现：
+
+```py
+s = [('yellow', 1), ('blue', 2), ('yellow', 3), ('blue', 4), ('red', 1)]
+d = {}
+for k, v in s:
+    d.setdefault(k, []).append(v)
+assert list(d) == ['yellow', 'blue', 'red']
+```
+
+### int as default_factory
+
+将 `default_factory` 设置为 `int` 可用于计数。
+
+```py
+>>> s = 'mississippi'
+>>> d = defaultdict(int)
+>>> for k in s:
+    d[k] += 1
+>>> sorted(d.items())
+[('i', 4), ('m', 1), ('p', 2), ('s', 4)]
+```
+
+首次碰到某个字符串，由于 dict 中没有该值，由 `default_factory` 调用 `int()` 提供默认值，即默认0。`+=` 操作实现了所有计数。
+
+### lambda as default_factory
+
+上例返回 0 的`int()` 是常量函数的特例。
+
+创建常量函数更快速、更灵活的方式是使用 lambda 函数。例如：
+
+```py
+def constant_factory(value):
+    return lambda: value
+
+d = defaultdict(constant_factory('<DAO>'))
+assert d['a'] == "<DAO>"
+```
+
+### set as default_factory
+
+```py
+>>> s = [('red', 1), ('blue', 2), ('red', 3), ('blue', 4), ('red', 1), ('blue', 4)]
+>>> d = defaultdict(set)
+>>> for k, v in s:
+      d[k].add(v)
+
+>>> sorted(d.items())
+[('blue', {2, 4}), ('red', {1, 3})]
+```
+
+## collections.OrderedDict
+
+```py
+class collections.OrderedDict([items])
+```
+
+`dict` 子类，添加了排序相关的方法，在迭代操作时保持元素被插入时的顺序。例如：
+
+```py
+from collections import OrderedDict
+
+d = OrderedDict()
+d['foo'] = 1
+d['bar'] = 2
+d['spam'] = 3
+d['grok'] = 4
+# Outputs "foo 1", "bar 2", "spam 3", "grok 4"
+for key in d:
+    print(key, d[key])
+```
+
+> 现在内置的 dict 行为和 `OrderedDict` 一致
+
+### OrderedDict.popitem
+
+`popitem(last=True)`
+
+`popitem()` 方法从有序字典中返回并删除一个 `(key, value)`。
+
+- 如果 `last=True`，则按照 LIFO 顺序返回
+- 否则按照 FIFO 顺序返回
+
+### OrderedDict.move_to_end
+
+`move_to_end(key, last=True)`
+
+将已有的 `key` 移到有序字典的末尾。
+
+- 如果 `last=True`，将其移到最右
+- 如果 `last=True`，将其移到最左
+- 如果不存在 `key`，抛出 `KeyError`
+
+例如：
+
+```py
+>>> d = OrderedDict.fromkeys('abcde')
+>>> d.move_to_end('b')
+>>> ''.join(d.keys())
+'acdeb'
+>>> d.move_to_end('b', last=False)
+>>> ''.join(d.keys())
+'bacde'
+```
+
+### 性质
+
+除了映射方法，有序字典支持 `reversed()` 反向迭代。
+
+equal 测试：
+
+- `OrderedDict` 之间equal 测试顺序敏感，通过 `list(od1.items())==list(od2.items())` 实现。
+- `OrderedDict` 和其它 `Mapping` 对象的 equal 测试顺序不敏感，和常规 dict 一样。
+
+如果你想要构建一个将来需要序列化或编码成其它格式的映射时，`OrderedDict` 非常有用。
+
+`OrderedDict` 内部维护着一个根据键插入顺序排序的双向链表。每次插入新元素，它会放到链表尾部，对于一个已存在的键重新赋值，不会改变键的顺序。
+
+需要注意的是，一个 `OrderedDict` 的大小是一个普通字典的两倍，因为它内部维护着一个链表。所以如果你要构建一个需要大量 `OrderedDict` 实例的数据结构时，要仔细权衡使用 `OrderedDict` 带来的好处是否大过额外的内存消耗的影响。
+
+### key 按照插入顺序存储
+
+通过扩展 `OrderedDict`，很容易让所有的 key 按照插入的顺序排序。如果插入一个已有的 entry，其位置被移到末尾：
+
+```py
+class LastUpdatedOrderedDict(OrderedDict):
+    'Store items in the order the keys were last added'
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self.move_to_end(key)
+```
+
+### 实现类似 functools.lru_cache()
+
+```py
+class LRU(OrderedDict):
+    'Limit size, evicting the least recently looked-up key when full'
+
+    def __init__(self, maxsize=128, /, *args, **kwds):
+        self.maxsize = maxsize
+        super().__init__(*args, **kwds)
+
+    def __getitem__(self, key):
+        value = super().__getitem__(key)
+        self.move_to_end(key)
+        return value
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        if len(self) > self.maxsize:
+            oldest = next(iter(self))
+            del self[oldest]
+```
+
+## collections.Counter
+
+```py
+class collections.Counter([iterble-or-mapping])
+```
+
+`Counter` 是 `dict` 子类，用于 hashable 对象的计数。
+
+创建方法：
+
+```py
+c = Counter()  # 创建空 Counter
+c = Counter('gallahad')  # 从 iterable 对象创建
+c = Counter({'red': 4, 'blue': 2})  # 从 mapping 对象创建
+c = Counter(cats=4, dogs=8)  # 从关键字参数创建
+```
+
+`Counter` 包含和 dict 一样的方法，不过如果元素不存在，返回 0 而不是抛出 `KeyError`:
+
+```py
+c = Counter(['eggs', 'ham'])
+assert c['bacon'] == 0
+```
+
+将 count 设置为 0 不会从 `Counter` 中移除元素。需要使用 `del` 语句：
+
+```py
+c['sausage'] = 0                        # counter entry with a zero count
+del c['sausage']                        # del actually removes the entry
+```
+
+### `__add__`
+
+由于 `Counter` 实现了 `__add__()` 方法，所以可以直接对两个 `Counter` 执行加法运算，效果是将两个 `Counter` 的数目相加：
+
+```py
+c = Counter('abbb') + Counter('bcc')
+assert c == Counter({'b': 4, 'c': 2, 'a': 1})
+```
+
+除了 dict 的方法，`Counter` 提供了额外三个方法。
+
+### elements()
+
+`elements()`
+
+返回 `Counter` 元素的迭代器，每个元素的 count 有几个，在迭代器中就出现几次。例如：
+
+```py
+c = Counter(a=4, b=2, c=0, d=-2)
+assert sorted(c.elements()) == ['a', 'a', 'a', 'a', 'b', 'b']
+```
+
+count 为负数的元素不出现。
+
+### most_common
+
+`most_common([n])`
+
+按照从大到小的顺序，返回数目最多的 n 个元素及其数目的 tuple 列表。如果不指定 n 或者 n 为 `None`，返回所有元素。对数目相同的元素，按原顺序返回。
+
+```py
+c = Counter('abracadabra')
+l = c.most_common(3)
+assert l == [('a', 5), ('b', 2), ('r', 2)]
+```
+
+### subtract
+
+`subtract([iterable-or-mapping])`
+
+从 `iterable`或 `mapping` 对象中减去对应元素计数。
+
+```py
+c = Counter(a=4, b=2, c=0, d=-2)
+d = Counter(a=1, b=2, c=3, d=4)
+c.subtract(d)
+assert c['a'] == 3
+assert c['b'] == 0
+assert c['c'] == -3
+assert c['d'] == -6
+```
+
+### 差异方法
+
+- `fromkeys(iterable)`
+
+`Counter` 没有实现该方法。
+
+- `update([iterable-or-mapping])`
+
+从 `iterable` 中计数或从另一个 `mapping` 中计数。和 `dict.update()` 不同的是，`Counter` 仅计数，而不是替代元素。
+
+### 序列中出现次数最多的元素
+
+例如，单词计数：
+
+```py
+words = [
+    'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+    'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
+    'eyes', "don't", 'look', 'around', 'the', 'eyes', 'look', 'into',
+    'my', 'eyes', "you're", 'under'
+]
+word_counts = Counter(words)
+# 出现频率最高的三个单词
+top3 = word_counts.most_common(3)
+assert top3 == [('eyes', 8), ('the', 5), ('look', 4)]
+```
+
+如果想手动计数，可以直接对 dict 元素用加法：
+
+```py
+>>> morewords = ['why','are','you','not','looking','in','my','eyes']
+>>> for word in morewords:
+...     word_counts[word] += 1
+...
+>>> word_counts['eyes']
+9
 ```

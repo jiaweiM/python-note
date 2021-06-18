@@ -1,23 +1,28 @@
 # operator
 
 - [operator](#operator)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [对象比较函数](#%e5%af%b9%e8%b1%a1%e6%af%94%e8%be%83%e5%87%bd%e6%95%b0)
-  - [逻辑运算函数](#%e9%80%bb%e8%be%91%e8%bf%90%e7%ae%97%e5%87%bd%e6%95%b0)
-  - [数学运算符](#%e6%95%b0%e5%ad%a6%e8%bf%90%e7%ae%97%e7%ac%a6)
-  - [查找方法](#%e6%9f%a5%e6%89%be%e6%96%b9%e6%b3%95)
+  - [简介](#简介)
+  - [对象比较函数](#对象比较函数)
+  - [逻辑运算函数](#逻辑运算函数)
+  - [数学运算符](#数学运算符)
+  - [查找方法](#查找方法)
     - [attrgetter](#attrgetter)
-      - [查询单个属性](#%e6%9f%a5%e8%af%a2%e5%8d%95%e4%b8%aa%e5%b1%9e%e6%80%a7)
-      - [查询多个属性](#%e6%9f%a5%e8%af%a2%e5%a4%9a%e4%b8%aa%e5%b1%9e%e6%80%a7)
-      - [带点号查询](#%e5%b8%a6%e7%82%b9%e5%8f%b7%e6%9f%a5%e8%af%a2)
+      - [查询单个属性](#查询单个属性)
+      - [查询多个属性](#查询多个属性)
+      - [带点号查询](#带点号查询)
     - [itemgetter](#itemgetter)
-      - [实例](#%e5%ae%9e%e4%be%8b)
-      - [根据某个关键字排序字典](#%e6%a0%b9%e6%8d%ae%e6%9f%90%e4%b8%aa%e5%85%b3%e9%94%ae%e5%ad%97%e6%8e%92%e5%ba%8f%e5%ad%97%e5%85%b8)
+      - [根据某个关键字排序字典](#根据某个关键字排序字典)
       - [min, max](#min-max)
+  - [methodcaller](#methodcaller)
+  - [参考](#参考)
+
+2021-06-16, 09:20
+@author Jiawei Mao
+***
 
 ## 简介
 
-`operator` 模块定义了一系列和 Python 运算符对应的函数。例如 `operator.add(x, y)` 等效于 `x+y`。许多函数名是用于特殊方法的名称，没有双下划线。为了先后兼容，其中许多还保留双下划线版本。
+`operator` 模块定义了一系列和 Python 运算符对应的函数。例如 `operator.add(x, y)` 等效于 `x+y`。许多函数名是用于特殊方法的名称，没有双下划线。为了向后兼容，其中许多还保留双下划线版本。
 
 推荐使用不带双下划线的版本。
 
@@ -35,6 +40,8 @@
 | `ne(a, b)` | `__ne__(a, b)` | `!=`   |
 | `ge(a, b)` | `__ge__(a, b)` | `>=`   |
 | `gt(a, b)` | `__gt__(a, b)` | `>`    |
+
+比价函数可能返回任何值，不一定是布尔值。
 
 ## 逻辑运算函数
 
@@ -65,11 +72,12 @@
 
 ### attrgetter
 
-`operator.attrgetter(attr)`
+```py
+operator.attrgetter(attr)
+operator.attrgetter(*attrs)
+```
 
-`operator.attrgetter(*attrs)`
-
-返回一个 `callable` 对象，该对象从其操作数中提取 `attr`。如果查询多个属性，返回 tuple 类型。属性名称可以包含点号。
+`attrgetter` 和 `itemgetter` 类似，它创建函数根据名称提取属性。返回一个 `callable` 对象，该对象从其操作数中提取 `attr`。如果查询多个属性，返回 tuple 类型。属性名称可以包含点号。
 
 等价于：
 
@@ -115,14 +123,15 @@ assert get_name(User('swan')) == 'swan'
 
 ### itemgetter
 
-`operator.itemgetter(item)`
-
-`operator.itemgetter(*items)`
+```py
+operator.itemgetter(item)
+operator.itemgetter(*items)
+```
 
 返回一个 `callable` 对象，该对象使用操作数的 `__getitem__()` 方法从操作数中获得对应项。如果指定了多项，返回 tuple。例如
 
-- 设置 `f = itemgetter(2)` 后，调用 `f(r)` 返回 `r[2]`
-- 设置 `g = itemgetter(2, 5, 3)`后，调用 `g(r)` 返回 `(r[2], r[5], r[3])`
+- 设置 `f = itemgetter(2)`，调用 `f(r)` 返回 `r[2]`
+- 设置 `g = itemgetter(2, 5, 3)`，调用 `g(r)` 返回 `(r[2], r[5], r[3])`
 
 等价于：
 
@@ -138,9 +147,7 @@ def itemgetter(*items):
     return g
 ```
 
-#### 实例
-
-其中 `items` 可以是任何 `__getitem__()` 接受的参数。dict 接受任何 hashable 值。list, tuple 和 string 接受索引和切片：
+其中 `items` 可以是任何 `__getitem__()` 接受的参数。对 dict 可以是任何 hashable 值。对 list, tuple 和 string 可以是索引和切片：
 
 ```py
 # dict
@@ -212,3 +219,27 @@ rows_by_lfname = sorted(rows, key=lambda r: (r['lname'],r['fname']))
 >>> max(rows, key=itemgetter('uid'))
 {'fname': 'Big', 'lname': 'Jones', 'uid': 1004}
 ```
+
+## methodcaller
+
+```py
+operator.methodcaller(name, /, *args, **kwargs)
+```
+
+返回一个可调用对象，该对象在其操作数上调用方法名。如果提供了额外的参数，则作为调用方法的参数。例如：
+
+- 设置 `f = methodcaller('name')`，则调用 `f(b)` 等价于 `b.name()`；
+- 设置 `f = methodcaller('name', 'foo', bar=1)`，则调用 `f(b)` 等价于 `b.name('foo', bar=1)`
+
+该方法等价于：
+
+```py
+def methodcaller(name, /, *args, **kwargs):
+    def caller(obj):
+        return getattr(obj, name)(*args, **kwargs)
+    return caller
+```
+
+## 参考
+
+- https://docs.python.org/3/library/operator.html
