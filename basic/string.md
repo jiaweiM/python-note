@@ -19,6 +19,9 @@
     - [拆分和连接](#拆分和连接)
     - [相等测试](#相等测试)
   - [format](#format)
+    - [语法](#语法)
+      - [field_name](#field_name)
+      - [conversion flag](#conversion-flag)
     - [位置参数](#位置参数)
     - [关键字参数](#关键字参数)
     - [数字格式化](#数字格式化)
@@ -295,13 +298,76 @@ def test_join():
 
 ## format
 
-用于格式化字符输出。语法：
+`str.format()` 方法和 `Formatter` 类使用相同语法格式化字符串。
 
 ```py
 template.format(p0, p1,..., k0=v0, k1=v1,...)
 ```
 
 这里 `p0, p1,...` 是位置参数，`k0, k1,...` 是关键字参数。`template` 为格式化模板。
+
+### 语法
+
+格式化字符串中的花括号 `{}` 为替换字段。花括号之外的任何内容作为文本处理，直接复制到输出。如果要在输出中添加花括号，可以通过重复实现转义 `{{` 和 `}}`。
+
+替换字段语法：
+
+```txt
+replacement_field ::=  "{" [field_name] ["!" conversion] [":" format_spec] "}"
+field_name        ::=  arg_name ("." attribute_name | "[" element_index "]")*
+arg_name          ::=  [identifier | digit+]
+attribute_name    ::=  identifier
+element_index     ::=  digit+ | index_string
+index_string      ::=  <any source character except "]"> +
+conversion        ::=  "r" | "s" | "a"
+format_spec       ::=  <described in the next section>
+```
+
+字段说明：
+
+- 替换字段可以以 `field_name` 开头，该字段名指定转换的对象；
+- `field_name` 后面有个可选的 `conversion` 字段，需加前缀 `!`；
+- `format_spec`，以冒号 `:` 开头，指定格式。
+
+#### field_name
+
+```py
+field_name        ::=  arg_name ("." attribute_name | "[" element_index "]")*
+```
+
+`field_name` 以参数名称开头，该参数名可以是数字或关键字。
+
+- 如果是数字，则表示位置参数；
+- 如果是关键字，则表示关键字参数名称。
+
+对数字标签，如果是 0,1,2,... 这样从头开始的序列标签，则可以省略。
+
+例如：
+
+```py
+"First, thou shalt count to {0}"  # References first positional argument
+"Bring me a {}"                   # Implicitly references the first positional argument
+"From {} to {}"                   # Same as "From {0} to {1}"
+"My quest is {name}"              # References keyword argument 'name'
+"Weight in tons {0.weight}"       # 'weight' attribute of first positional arg
+"Units destroyed: {players[0]}"   # First element of keyword argument 'players'.
+```
+
+#### conversion flag
+
+转换 flag 设置格式化前的类型转换。格式化通常是由替换值的 `format()` 方法完成。转换标签提供了其他选择，目前支持三种转换标签：
+
+- `!s` 调用替换值的 `str()` 方法
+- `!r` 调用替换值的 `repr()` 方法
+- `!a` 调用替换值的 `ascii()` 方法
+
+例如：
+
+```py
+"Harold's a clever {0!s}"        # Calls str() on the argument first
+"Bring out the holy {name!r}"    # Calls repr() on the argument first
+"More {!a}"                      # Calls ascii() on the argument first
+```
 
 ### 位置参数
 
@@ -726,4 +792,5 @@ string 模块中定义了如下常量：
 ## 参考
 
 - [Zetcode Python f-string](https://zetcode.com/python/fstring/)
-- [https://docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+- https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
+- https://docs.python.org/3/library/string.html

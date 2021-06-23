@@ -1,11 +1,12 @@
 # itertools
 
 - [itertools](#itertools)
-  - [简介](#%e7%ae%80%e4%bb%8b)
-  - [总结](#%e6%80%bb%e7%bb%93)
-  - [zip_longest](#ziplongest)
+  - [简介](#简介)
+  - [总结](#总结)
+  - [zip_longest](#zip_longest)
   - [groupby](#groupby)
 
+2021-06-22, 09:52
 ***
 
 ## 简介
@@ -27,7 +28,9 @@
 
 ## zip_longest
 
-`itertools.zip_longest(*iterables, fillvalue=None)`
+```py
+itertools.zip_longest(*iterables, fillvalue=None)
+```
 
 将多个 iterables 对象聚合为一个迭代器，长度不足的用 `fillvalue` 补齐。
 

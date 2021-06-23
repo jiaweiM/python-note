@@ -29,3 +29,8 @@ def test_multiple_2():
     np.testing.assert_array_equal(c, np.array([[0, 1, 4],
                                                [0, 4, 10],
                                                [0, 7, 16]]))
+
+
+def test_linspace():
+    array = np.linspace(1., 4., 6)
+    print(array)

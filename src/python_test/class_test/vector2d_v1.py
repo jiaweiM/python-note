@@ -37,13 +37,3 @@ class Vector2d:
         typecode = chr(octets[0])
         memv = memoryview(octets[1:]).cast(typecode)
         return cls(*memv)
-
-
-def test_str():
-    v1 = Vector2d(3, 4)
-    assert str(v1) == '(3.0, 4.0)'
-
-
-def test_repr():
-    v1 = Vector2d(3, 4)
-    assert repr(v1) == 'Vector2d(3.0, 4.0)'

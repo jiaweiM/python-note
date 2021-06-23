@@ -7,6 +7,7 @@
   - [Generator](#generator)
     - [Generator.integers](#generatorintegers)
   - [Distribution](#distribution)
+    - [Generator.choice](#generatorchoice)
     - [Generator.standard_normal](#generatorstandard_normal)
   - [随机排列](#随机排列)
   - [RandomState](#randomstate)
@@ -178,8 +179,21 @@ random.Generator.integers(low, high=None, size=None, dtype=np.int64, endpoint=Fa
 
 生成 [low,high) 之间的随机整数，如果 `endpoint=True`，则生成 [low,high] 之间的随机整数。替代了 `RandomState.randint` 和 `RandomState.random_integers` 方法。
 
-
 ## Distribution
+
+### Generator.choice
+
+```py
+random.Generator.choice(a, size=None, replace=True, p=None, axis=0, shuffle=True)
+```
+
+从给定数组中抽取一个随机样本。
+
+|参数|类型|说明|
+|---|---|---|
+|a|array_like, int|如果 `a` 为数组，则从中抽取随机样本；如果 `a` 为 int，则从 `np.arange(a)` 中抽取随机样本|
+
+
 
 ### Generator.standard_normal
 
