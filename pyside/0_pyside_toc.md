@@ -32,3 +32,4 @@
 - [ZetCode](https://zetcode.com/gui/pysidetutorial/)
 - https://www.mfitzp.com/courses/pyside/
 - [Qt Designer Manual](https://doc.qt.io/qt-6/qtdesigner-manual.html)
+- https://doc.qt.io/qt-6/
