@@ -10,6 +10,7 @@
     - [rfind](#rfind)
     - [capitalize](#capitalize)
     - [index](#index)
+    - [isdigit](#isdigit)
     - [find](#find)
     - [maketrans](#maketrans)
     - [rstrip](#rstrip)
@@ -58,7 +59,7 @@ Python 中以 `str` 对象处理文本数据。字符串字面量有三种格式
 
 也可以使用 `str` 构造函数创建字符串。
 
-Python 不支持字符类型，所有的字符都是字符串类型。
+Python **不支持字符类型**，所有的字符都是字符串类型。
 
 ### str
 
@@ -130,6 +131,22 @@ assert a.capitalize() == 'Python name'
 ```
 
 ### index
+
+### isdigit
+
+判断是否所有字符为数字，Python 没有字符类型，对当个字符也用这个方法：
+
+- 至少有一个字符，且全部为数字，返回 True
+- 否则返回 False
+
+例如：
+
+```py
+a = '123456'
+assert a.isdigit()
+assert '1'.isdigit()
+assert not 'a'.isdigit()
+```
 
 ### find
 

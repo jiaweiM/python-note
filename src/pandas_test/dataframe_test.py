@@ -116,3 +116,12 @@ def test_tablewise2():
     df_p = pd.DataFrame({"city_and_code": ["Chicago, IL"]})
     df_p.pipe(extract_city_name).pipe(add_country_name, country_name="US")
     print(df_p)
+
+
+def test():
+    df = {
+        "one": pd.Series([1.0, 2.0, 3.0], index=["a", "b", "c"]),
+        "two": pd.Series([1.0, 2.0, 3.0, 4.0], index=["a", "b", "c", "d"]),
+    }
+    df["three"] = df['one'] * df["two"]
+    print(df)

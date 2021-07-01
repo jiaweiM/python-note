@@ -15,6 +15,7 @@
 ## 学习笔记
 
 - [Python 关键字](python_keyword.md)
+- [数据类型](types.md)
 - [Python 字符串](string.md)
 - [Python 控制流]
 - [Python 函数](function.md)

@@ -11,6 +11,8 @@
     - [解析日期](#解析日期)
     - [Cell converters](#cell-converters)
     - [指定 dtype](#指定-dtype)
+  - [写 Excel](#写-excel)
+    - [输出 index](#输出-index)
 
 2020-04-20, 20:54
 ***
@@ -296,3 +298,16 @@ pd.read_excel('path_to_file.xls', 'Sheet1', converters={'MyInts': cfun})
 ```py
 pd.read_excel('path_to_file.xls', dtype={'MyInts': 'int64', 'MyText': str})
 ```
+
+## 写 Excel
+
+```py
+DataFrame.to_excel(excel_writer, sheet_name='Sheet1', na_rep='', ﬂoat_format=None,
+  columns=None, header=True, index=True, index_label=None, startrow=0,
+  startcol=0, engine=None, merge_cells=True, encoding=None, inf_rep='inf',
+  verbose=True, freeze_panes=None, storage_options=None)
+```
+
+### 输出 index
+
+设置参数 `index=True` （默认）数出索引。

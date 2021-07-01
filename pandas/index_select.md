@@ -27,6 +27,8 @@
     - [使用布尔向量选择行](#使用布尔向量选择行)
     - [List 推导和 map](#list-推导和-map)
     - [组合使用](#组合使用)
+  - [where](#where)
+    - [选择行](#选择行)
   - [参考](#参考)
 
 2020-04-30, 12:57
@@ -1261,6 +1263,83 @@ df.loc[criterion & (df['b'] == 'x'), 'b': 'c']
 ```cmd
    b         c
 3  x  0.155084
+```
+
+## where
+
+使用布尔向量从 `Series` 中选择一般返回数据的子集。为了保证选择的结果和原数据具有相同的 shape，可以使用 `Series` 和 `DataFrame` 的 `where` 方法。
+
+where 方法签名：
+
+```py
+Series.where(self,cond,other=nan,inplace=False,axis=None,level=None,errors='raise',try_cast=False)
+```
+
+对`cond` 为 False 的数值，用 `other` 替换其值。
+
+|参数|类型|说明|
+|---|---|---|
+|`cond`|bool Series/DataFrame, array-like, or callable|如果 `cond` 为 True，保留原值；否则以 `other` 替换。如果 `cond` 为 `callable`，则根据 Series/DataFrame 的值进行计算，返回值必须为 boolean 类型的 `Series`/`DataFrame` 或数组。`callable` 不能修改输入的 Series/DataFrame|
+|`other`|scalar, Series/DataFrame, or callable|对 `cond` 为 False 的数据，以 `other` 替代。如果 `other` 为 `callable` 类型，则根据原数据进行计算，返回值必须为 scalar, Series/DataFrame 类型。callable 不允许修改输入 Series/DataFrame|
+|`inplace`|bool, default False|是否对数据进行原位操作|
+|`axis`|int, default None|是否对齐 axis|
+|`level`|int, default None|Alignment level if needed|
+|`errors`|str, {‘raise’, ‘ignore’}, default ‘raise’|该参数不影响结果，结果总会转换为合适的 dtype。(1) 'raise'，抛出异常。(2) 'ignore'，抑制异常。|
+|`try_cast`|bool, default False|尝试将结果转换为输入类型|
+
+返回：和调用者相同的类型。
+
+> `DataFrame.where()` 签名和 `numpy.where()` 略有不同，`df1.where(m, df2)` 基本上等价于 `np.where(m, df1, df2)`。
+
+### 选择行
+
+- 只返回选择的行
+
+```py
+In [182]: s = pd.Series(range(5))
+In [183]: s[s > 0]
+Out[183]: 
+3    1
+2    2
+1    3
+0    4
+dtype: int64
+```
+
+- 默认替换值为 nan
+
+使用 `where` 替换不匹配值
+
+```py
+s = pd.Series(range(5))
+s1 = s.where(s > 0)
+```
+
+Out:
+
+```cmd
+0    NaN
+1    1.0
+2    2.0
+3    3.0
+4    4.0
+dtype: float64
+```
+
+使用 boolean 从 `DataFrame` 选择值目前也保持 shape。底层就是使用 `where` 实现的，下面代码等价于 `df.where(df < 0)`：
+
+```py
+In [185]: df[df < 0]
+Out[185]: 
+                   A         B         C         D
+2000-01-01 -2.104139 -1.309525       NaN       NaN
+2000-01-02 -0.352480       NaN -1.192319       NaN
+2000-01-03 -0.864883       NaN -0.227870       NaN
+2000-01-04       NaN -1.222082       NaN -1.233203
+2000-01-05       NaN -0.605656 -1.169184       NaN
+2000-01-06       NaN -0.948458       NaN -0.684718
+2000-01-07 -2.670153 -0.114722       NaN -0.048048
+2000-01-08       NaN       NaN -0.048788 -0.808838
 ```
 
 ## 参考

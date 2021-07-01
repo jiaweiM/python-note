@@ -11,9 +11,13 @@
     - [为 Series 数据和 index 指定名称](#为-series-数据和-index-指定名称)
     - [通过 dict 创建](#通过-dict-创建)
     - [`Series` 和 `ndarray` 类似](#series-和-ndarray-类似)
-  - [索引、选择](#索引选择)
-    - [reindex](#reindex)
+  - [索引和选择](#索引和选择)
+    - [默认索引](#默认索引)
+    - [设置索引](#设置索引)
+    - [选择值](#选择值)
     - [reset_index](#reset_index)
+  - [label 对齐](#label-对齐)
+  - [缺失值判断](#缺失值判断)
   - [描述统计](#描述统计)
     - [Series.value_counts](#seriesvalue_counts)
   - [Accerrors](#accerrors)
@@ -309,6 +313,38 @@ Wed    15
 dtype: int64
 ```
 
+```py
+In [1]: sdata = {'Ohio': 35000, 'Texas': 71000, 'Oregon': 16000, 'Utah': 5000}
+
+In [2]: obj3 = pd.Series(sdata)
+
+In [3]: obj3
+Out[3]: 
+Ohio      35000
+Oregon    16000
+Texas     71000
+Utah       5000
+dtype: int64
+```
+
+当只传入一个字典，`Series` 的 `index` 按顺序排列。可以通过传入 `index` 设置顺序：
+
+```py
+In [1]: states = ['California', 'Ohio', 'Oregon', 'Texas']
+
+In [2]: obj4 = pd.Series(sdata, index=states)
+
+In [3]: obj4
+Out[3]: 
+California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+dtype: float64
+```
+
+> 上面索引传入了一个 'California' 值，由于字典没有该值，所以以缺失值处理。
+
 ### `Series` 和 `ndarray` 类似
 
 - 例：演示 Series 类似于 ndarray 的操作
@@ -384,9 +420,110 @@ dtype: float64
 | s.get('f', np.nan) | 获得和 'f' 对应的值，如果不存在，返回 np.nan.                               |
 | s[s>s.median()]    | 返回大于 s 中值的所有值                                                     |
 
-## 索引、选择
+## 索引和选择
 
-### reindex
+`Series` 可以看作定长、有序的 dict，实现索引到值的映射。例如：
+
+```py
+In [1]: obj2 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
+In [2]: 'b' in obj2
+Out[2]: True
+In [3]: 'e' in obj2
+Out[3]: False
+```
+
+### 默认索引
+
+例如：
+
+```py
+In [1]: obj = pd.Series([4, 7, -5, 3])
+In [2]: obj
+Out[2]: 
+0    4
+1    7
+2   -5
+3    3
+dtype: int64
+```
+
+虽然我们没有指定索引，依然有默认索引，值为 0 到 N-1。
+
+可以使用 `values` 和 `index` 索引查询值和索引：
+
+```py
+In [13]: obj.values
+Out[13]: array([ 4,  7, -5,  3])
+
+In [14]: obj.index  # like range(4)
+Out[14]: RangeIndex(start=0, stop=4, step=1)
+```
+
+### 设置索引
+
+```py
+In [15]: obj2 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
+
+In [16]: obj2
+Out[16]: 
+d    4
+b    7
+a   -5
+c    3
+dtype: int64
+
+In [17]: obj2.index
+Out[17]: Index(['d', 'b', 'a', 'c'], dtype='object')
+```
+
+应该注意，指定的字符串索引类型，和默认索引的 `RangeIndex` 类型不同。
+
+通过索引可以选择及设置值：
+
+```py
+In [18]: obj2['a']
+Out[18]: -5
+
+In [19]: obj2['d'] = 6 # 将索引 d 处的值设置为 6
+
+In [20]: obj2[['c', 'a', 'd']] # 选择索引列表对应的所有值
+Out[20]: 
+c    3
+a   -5
+d    6
+dtype: int64
+```
+
+### 选择值
+
+使用 NumPy 函数或类似 NumPy 的操作，如 boolean 数字过滤、标量乘法、应用函数等，索引和值的对应关系不变：
+
+```py
+In [15]: obj2 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
+In [21]: obj2[obj2 > 0] # 选择所有 > 0 的值
+Out[21]: 
+d    6
+b    7
+c    3
+dtype: int64
+
+In [22]: obj2 * 2 # 标量乘法
+Out[22]: 
+d    12
+b    14
+a   -10
+c     6
+dtype: int64
+
+In [23]: np.exp(obj2) # 指数
+Out[23]: 
+d     403.428793
+b    1096.633158
+a       0.006738
+c      20.085537
+dtype: float64
+```
+
 
 ### reset_index
 
@@ -500,6 +637,71 @@ two  baz    3
 1  bar  two    1
 2  baz  one    2
 3  baz  two    3
+```
+
+## label 对齐
+
+在算术运算中，`Series` 会自动根据索引标签自动对齐：
+
+```py
+In [1]: obj3
+Out[1]: 
+Ohio      35000
+Oregon    16000
+Texas     71000
+Utah       5000
+dtype: int64
+
+In [2]: obj4
+Out[2]: 
+California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+dtype: float64
+
+In [3]: obj3 + obj4
+Out[3]: 
+California         NaN
+Ohio           70000.0
+Oregon         32000.0
+Texas         142000.0
+Utah               NaN
+dtype: float64
+```
+
+## 缺失值判断
+
+可以通过 pandas 的 `isnull` 和 `notnull` 函数判断是否为缺失值：
+
+```py
+In [1]: pd.isnull(obj4)
+Out[1]: 
+California     True
+Ohio          False
+Oregon        False
+Texas         False
+dtype: bool
+
+In [2]: pd.notnull(obj4)
+Out[2]:
+California    False
+Ohio           True
+Oregon         True
+Texas          True
+dtype: bool
+```
+
+`Series` 也有一个实例方法：
+
+```py
+In [1]: obj4.isnull()
+Out[1]: 
+California     True
+Ohio          False
+Oregon        False
+Texas         False
+dtype: bool
 ```
 
 ## 描述统计

@@ -8,6 +8,11 @@
     - [创建实例](#创建实例)
     - [运行 cxfreeze](#运行-cxfreeze)
     - [使用 setuptools 脚本](#使用-setuptools-脚本)
+      - [distutils 命令](#distutils-命令)
+      - [build](#build)
+      - [build_exe](#build_exe)
+      - [Executable](#executable)
+    - [添加数据文件](#添加数据文件)
   - [参考](#参考)
 
 2021-05-31, 18:22
@@ -141,14 +146,146 @@ cxfreeze hello.py
 import sys
 from cx_Freeze import setup, Executable
 
-setup(name = "MyApp",
-      version = "0.1",
-      description = "My GUI App",
-      executables = [Executable("hello.py")])
+# 会自动检测依赖项，在这里可以微调
+# "packages": ["os"] is used as example only
+build_exe_options = {"packages": ["os"], "excludes": ["tkinter"]}
+
+# base="Win32GUI" should be used only for Windows GUI app
+base = None
+if sys.platform == "win32":
+    base = "Win32GUI"
+
+setup(
+    name = "guifoo",
+    version = "0.1",
+    description = "My GUI application!",
+    options = {"build_exe": build_exe_options},
+    executables = [Executable("guifoo.py", base=base)]
+)
 ```
 
+然后调用:
 
+```shell
+python setup.py build
+```
+
+该命令会创建 `build` 子目录，在其中包含打包的程序。
+
+在 Windows 平台，还可以使用如下命令创建安装包：
+
+```shell
+python setup.py bdist_msi
+```
+
+#### distutils 命令
+
+#### build
+
+用来构建可执行文件。
+
+#### build_exe
+
+该命令用于构建可执行文件。
+
+|选项|说明|
+|---|---|
+|include_files|复制到目标目录的文件列表，字符串列表或 2-tuple 列表，2-tuple 包含文件位置和目标位置；其中目标位置不能是绝对路径|
+
+#### Executable
+
+|参数|说明|
+|---|---|
+|script|包含待执行的脚本文件|
+|target_name|可执行文件名称|
+
+### 添加数据文件
+
+除了代码，应用往往还需要额外的数据文件，如图标等。可以在 `build_exe` 的 `include_files` 选项中列出数据文件或目录，它们会自动复制到构建目录中。
+
+setup.py 文件：
+
+```py
+# Let's start with some default (for me) imports...
+
+from cx_Freeze import setup, Executable
+
+
+
+# Process the includes, excludes and packages first
+
+includes = []
+excludes = ['_gtkagg', '_tkagg', 'bsddb', 'curses', 'email', 'pywin.debugger',
+            'pywin.debugger.dbgcon', 'pywin.dialogs', 'tcl',
+            'Tkconstants', 'Tkinter']
+packages = []
+path = []
+
+# This is a place where the user custom code may go. You can do almost
+# whatever you want, even modify the data_files, includes and friends
+# here as long as they have the same variable name that the setup call
+# below is expecting.
+
+# No custom code added
+
+# The setup for cx_Freeze is different from py2exe. Here I am going to
+# use the Python class Executable from cx_Freeze
+
+
+GUI2Exe_Target_1 = Executable(
+    # what to build
+    script = "simplewx.py",
+    initScript = None,
+    base = 'Win32GUI',
+    targetDir = r"dist",
+    targetName = "simplewx.exe",
+    compress = True,
+    copyDependentFiles = True,
+    appendScriptToExe = False,
+    appendScriptToLibrary = False,
+    icon = None
+    )
+
+
+# That's serious now: we have all (or almost all) the options cx_Freeze
+# supports. I put them all even if some of them are usually defaulted
+# and not used. Some of them I didn't even know about.
+
+setup(
+    
+    version = "0.1",
+    description = "No Description",
+    author = "No Author",
+    name = "cx_Freeze Sample File",
+    
+    options = {"build_exe": {"includes": includes,
+                             "excludes": excludes,
+                             "packages": packages,
+                             "path": path
+                             }
+               },
+                           
+    executables = [GUI2Exe_Target_1]
+    )
+
+# This is a place where any post-compile code may go.
+# You can add as much code as you want, which can be used, for example,
+# to clean up your folders or to do some particular post-compilation
+# actions.
+
+# No post-compilation code added
+
+
+# And we are done. That's a setup script :-D
+```
+
+构建命令：
+
+```shell
+python setup.py build
+```
 
 ## 参考
 
 - [Qt for Python Deployment](https://doc.qt.io/qtforpython/deployment.html#deployment-guides)
+- https://cx-freeze.readthedocs.io/en/latest/

@@ -5,16 +5,22 @@
   - [属性](#属性)
     - [size](#size)
     - [shape](#shape)
-  - [创建 `DataFrame`](#创建-dataframe)
-    - [`Series` dict](#series-dict)
+  - [创建 DataFrame](#创建-dataframe)
+    - [Series dict](#series-dict)
       - [为 dict 提供 index](#为-dict-提供-index)
       - [为 dict 提供 index 和 columns](#为-dict-提供-index-和-columns)
-    - [通过 `ndarray` 或 list 的 `dict` 创建](#通过-ndarray-或-list-的-dict-创建)
+    - [通过 ndarray 或 list 的 dict 创建](#通过-ndarray-或-list-的-dict-创建)
     - [创建时提供 index](#创建时提供-index)
     - [通过 `ndarray` 创建](#通过-ndarray-创建)
-  - [DataFrame 操作](#dataframe-操作)
-  - [添加 column](#添加-column)
-    - [索引](#索引)
+  - [索引和选择](#索引和选择)
+    - [选择行](#选择行)
+  - [添加列](#添加列)
+    - [添加标量值作为列](#添加标量值作为列)
+    - [通过已有列计算](#通过已有列计算)
+    - [插入指定位置](#插入指定位置)
+    - [已有列派生-assign](#已有列派生-assign)
+  - [删除列](#删除列)
+  - [索引](#索引)
     - [DataFrame.sort_values](#dataframesort_values)
     - [DataFrame.sort_index](#dataframesort_index)
     - [DataFrame.pivot_table](#dataframepivot_table)
@@ -26,6 +32,12 @@
   - [索引、选择和标签操作](#索引选择和标签操作)
     - [set_index](#set_index)
     - [drop](#drop)
+  - [应用函数](#应用函数)
+    - [apply](#apply)
+    - [应用 elementwise 函数](#应用-elementwise-函数)
+  - [排序](#排序)
+    - [index 排序](#index-排序)
+    - [值排序](#值排序)
 
 2020-05-19, 12:26
 ***
@@ -82,7 +94,7 @@ df = pd.DataFrame({"col1": [1, 2], "col2": [3, 4], "col3": [5, 6]})
 assert df.shape == (2, 3)
 ```
 
-## 创建 `DataFrame`
+## 创建 DataFrame
 
 构造函数：
 
@@ -101,7 +113,7 @@ DataFrame(data, index=, columns= )
 
 > 如果输入数据为 `dict` 类型，且没有指定 `columns`，则 `DataFrame` 的列根据 dict 的插入顺序排序。
 
-### `Series` dict
+### Series dict
 
 输出的 indexes 为不同 `Series` index的并集，例：
 
@@ -157,25 +169,64 @@ df.index
 df.columns
 ```
 
-### 通过 `ndarray` 或 list 的 `dict` 创建
+### 通过 ndarray 或 list 的 dict 创建
 
-`ndarray` s的长度必须相同，如果提供 index，index的长度也必须和数组相同。如果不提供 index，则默认 index 为 `range(n)`，n为数组长度。
+`ndarray` 的长度必须相同，如果提供 index，index的长度也必须和数组相同。如果不提供 index，则默认 index 为 `range(n)`，n 为数组长度。
 
 ```py
-d = {'one': [1., 2., 3., 4.],
-     'two': [4., 3., 2., 1.]}
-df = pd.DataFrame(d)
+In [1]: data = {'state': ['Ohio', 'Ohio', 'Ohio', 'Nevada', 'Nevada', 'Nevada'],
+        'year': [2000, 2001, 2002, 2001, 2002, 2003],
+        'pop': [1.5, 1.7, 3.6, 2.4, 2.9, 3.2]}
+In [2]: frame = pd.DataFrame(data)
+In [3]: frame
+Out[3]: 
+   pop   state  year
+0  1.5    Ohio  2000
+1  1.7    Ohio  2001
+2  3.6    Ohio  2002
+3  2.4  Nevada  2001
+4  2.9  Nevada  2002
+5  3.2  Nevada  2003
 ```
 
-数据如下：
-|     | one | two |
-| --- | --- | --- |
-| 0   | 1.0 | 4.0 |
-| 1   | 2.0 | 3.0 |
-| 2   | 3.0 | 2.0 |
-| 3   | 4.0 | 1.0 |
+在创建时如果指定 columns，这 columns 会根据指定的 columns 排列：
+
+```py
+In [4]: pd.DataFrame(data, columns=['year', 'state', 'pop'])
+Out[4]: 
+   year   state  pop
+0  2000    Ohio  1.5
+1  2001    Ohio  1.7
+2  2002    Ohio  3.6
+3  2001  Nevada  2.4
+4  2002  Nevada  2.9
+5  2003  Nevada  3.2
+```
+
+如果指定的 columns 不存在，这全部以缺失值填充：
+
+```py
+In [5]: frame2 = pd.DataFrame(data, columns=['year', 'state', 'pop', 'debt'],
+   ....:                       index=['one', 'two', 'three', 'four',
+   ....:                              'five', 'six'])
+
+In [6]: frame2
+Out[6]: 
+       year   state  pop debt
+one    2000    Ohio  1.5  NaN
+two    2001    Ohio  1.7  NaN
+three  2002    Ohio  3.6  NaN
+four   2001  Nevada  2.4  NaN
+five   2002  Nevada  2.9  NaN
+six    2003  Nevada  3.2  NaN
+
+In [7]: frame2.columns
+Out[7]: Index(['year', 'state', 'pop', 'debt'], dtype='object')
+```
 
 ### 创建时提供 index
+
+
 
 ```py
 df = pd.DataFrame(d, index=['a', 'b', 'c', 'd'])
@@ -239,23 +290,213 @@ df = pd.DataFrame(data=data[1:, 1:],
 print(df)
 ```
 
-## DataFrame 操作
+## 索引和选择
 
-## 添加 column
+| 操作  | 语法 | 返回类型  |
+| ----- | ---- | ----- |
+| 选择列    | `df[colName]`   | `Series`    |
+| 通过 label 选择行  | `df.loc[label]` | `Series`    |
+| 通过 position 选择行 | `df.iloc[loc]`  | `Series`    |
+| 行切片| `df[5:10]`      | `DataFrame` |
+| 通过 boolean 向量选择行| `df[bool_vec]`  | `DataFrame` |
 
-### 索引
+### 选择行
 
-| 操作                          | 语法            | 返回类型    |
-| ----------------------------- | --------------- | ----------- |
-| 选择列                        | `df[colName]`   | `Series`    |
-| 通过标签选择行                | `df.loc[label]` | `Series`    |
-| 通过索引选择行                | `df.iloc[loc]`  | `Series`    |
-| Slice rows                    | `df[5:10]`      | `DataFrame` |
-| Select rows by boolean vector | `df[bool_vec]`  | `DataFrame` |
+
+
+## 添加列
+
+### 添加标量值作为列
+
+当插入标量值，会自动复制填充整个列：
+
+```py
+In [1]: df
+Out[1]:
+one flag
+a 1.0 False
+b 2.0 False
+c 3.0 True
+d NaN False
+
+In [2]: df["foo"] = "bar"
+In [3]: df
+Out[3]:
+one flag foo
+a 1.0 False bar
+b 2.0 False bar
+c 3.0 True bar
+d NaN False bar
+```
+
+### 通过已有列计算
+
+```py
+In[1]: d = {
+  ...: "one": pd.Series([1.0, 2.0, 3.0], index=["a", "b", "c"]),
+  ...: "two": pd.Series([1.0, 2.0, 3.0, 4.0], index=["a", "b", "c", "d"])
+}
+In[2: df = pd.DataFrame(d)
+In[3]: df["one"]
+Out[3]: 
+a    1.0
+b    2.0
+c    3.0
+d    NaN
+Name: one, dtype: float64
+
+In[4]: df['three'] = df['one'] * df['two'] # 新 column 为已有两列的乘积
+In[5]: df['flag'] = df['one'] > 2 # 新 column 为 one 列计算的 boolean 值
+In[6]: df
+Out[6]: 
+   one  two  three   flag
+a  1.0  1.0    1.0  False
+b  2.0  2.0    4.0  False
+c  3.0  3.0    9.0   True
+d  NaN  4.0    NaN  False
+```
+
+如果插入的 `Series` 的 index 和 `DataFrame` 不同，会自动和 `DataFrame` 对齐：
+
+```py
+In [78]: df["one_trunc"] = df["one"][:2] # 不足自动填充 NaN
+
+In [79]: df
+Out[79]:
+one flag foo one_trunc
+a 1.0 False bar 1.0
+b 2.0 False bar 2.0
+c 3.0 True bar NaN
+d NaN False bar NaN
+```
+
+### 插入指定位置
+
+添加的列默认在最厚，可以通过 `insert` 函数在指定位置插入：
+
+```py
+In [80]: df.insert(1, "bar", df["one"]) # 插入到第二的位置
+
+In [81]: df
+Out[81]:
+one bar flag foo one_trunc
+a 1.0 1.0 False bar 1.0
+b 2.0 2.0 False bar 2.0
+c 3.0 3.0 True bar NaN
+d NaN NaN False bar NaN
+```
+
+### 已有列派生-assign
+
+```py
+DataFrame.assign(**kwargs)
+```
+
+通过 `assign` 方法通过已有列派生新列：
+
+```py
+In [82]: iris = pd.read_csv("data/iris.data")
+
+In [83]: iris.head()
+Out[83]:
+SepalLength SepalWidth PetalLength PetalWidth Name
+0 5.1 3.5 1.4 0.2 Iris-setosa
+1 4.9 3.0 1.4 0.2 Iris-setosa
+2 4.7 3.2 1.3 0.2 Iris-setosa
+3 4.6 3.1 1.5 0.2 Iris-setosa
+4 5.0 3.6 1.4 0.2 Iris-setosa
+
+In [84]: iris.assign(sepal_ratio=iris["SepalWidth"] / iris["SepalLength"]).head()
+Out[84]:
+SepalLength SepalWidth PetalLength PetalWidth Name sepal_ratio
+0 5.1 3.5 1.4 0.2 Iris-setosa 0.686275
+1 4.9 3.0 1.4 0.2 Iris-setosa 0.612245
+2 4.7 3.2 1.3 0.2 Iris-setosa 0.680851
+3 4.6 3.1 1.5 0.2 Iris-setosa 0.673913
+4 5.0 3.6 1.4 0.2 Iris-setosa 0.720000
+```
+
+也可以使用以 `DataFrame` 为参数的函数传入进去：
+
+```py
+In [85]: iris.assign(sepal_ratio=lambda x: (x["SepalWidth"] / x["SepalLength"])).head()
+Out[85]:
+SepalLength SepalWidth PetalLength PetalWidth Name sepal_ratio
+0 5.1 3.5 1.4 0.2 Iris-setosa 0.686275
+1 4.9 3.0 1.4 0.2 Iris-setosa 0.612245
+2 4.7 3.2 1.3 0.2 Iris-setosa 0.680851
+3 4.6 3.1 1.5 0.2 Iris-setosa 0.673913
+4 5.0 3.6 1.4 0.2 Iris-setosa 0.720000
+```
+
+`assign` 返回 `DataFrame` 的 copy，不回修改原 `DataFrame`。
+
+使用 `callable` 而不是实际值，在串联操作时十分有用：
+
+```py
+In [86]: (
+....: iris.query("SepalLength > 5")
+....: .assign(
+....: SepalRatio=lambda x: x.SepalWidth / x.SepalLength,
+....: PetalRatio=lambda x: x.PetalWidth / x.PetalLength,
+....: )
+....: .plot(kind="scatter", x="SepalRatio", y="PetalRatio")
+....: )
+....:
+Out[86]: <AxesSubplot:xlabel='SepalRatio', ylabel='PetalRatio'>
+```
+
+传入的函数基于 `DataFrame` 计算新 column 的值。
+
+`assign` 函数签名参数为 `**kwargs`，key 是新 column 名称，而值为插入的值（如 `Series` 或 NumPy 数组），或者以 `DataFrame` 为参数的函数。返回插入新值的原 `DataFrame` 的 copy。
+
+到 Python 3.6，`**kwargs` 键的顺序保留，这样就可以使用依赖型的赋值，即在一次 `assign` 调用中，`**kwargs` 后面的表达式可以使用前面表达式值，例如：
+
+```py
+In [87]: dfa = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+
+In [88]: dfa.assign(C=lambda x: x["A"] + x["B"], D=lambda x: x["A"] + x["C"])
+Out[88]:
+A B C D
+0 1 4 5 6
+1 2 5 7 9
+2 3 6 9 12
+```
+
+第二个表达式中 `x['C']` 表示前面刚创建的子。
+
+
+
+## 删除列
+
+```py
+In[1]: df
+Out[2]: 
+   one  two  three   flag
+a  1.0  1.0    1.0  False
+b  2.0  2.0    4.0  False
+c  3.0  3.0    9.0   True
+d  NaN  4.0    NaN  False
+
+In [3]: del df["two"] # 使用 del 关键字删除
+
+In [4]: three = df.pop("three") # 使用 pop 删除
+
+In [75]: df
+Out[75]:
+one flag
+a 1.0 False
+b 2.0 False
+c 3.0 True
+d NaN False
+```
+
+## 索引
 
 其他操作
-| 操作                                  | 说明                                                                                                                                                                                    |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| 操作  | 说明   |
+| ------ | ----- |
 | df.head(n=5)                          | 获得开头的 n 行数据，默认为5                                                                                                                                                            |
 | df.tail(n=5)                          | 获得末尾的 n 行数据，默认为5                                                                                                                                                            |
 | df.iloc[:3]                           | 前三行                                                                                                                                                                                  |
@@ -574,4 +815,246 @@ DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplac
 >>> df.drop([0, 1])
    A  B   C   D
 2  8  9  10  11
+```
+
+## 应用函数
+
+### apply
+
+### 应用 elementwise 函数
+
+不是所有函数都可以向量化，所以 `DataFrame` 提供了 `applymap()`， `Series` 提供了 `map()`，可以应用于单个参数单个返回值的函数。例如：
+
+```py
+In [197]: df4
+Out[197]:
+one two three
+a 1.394981 1.772517 NaN
+b 0.343054 1.912123 -0.050390
+c 0.695246 1.478369 1.227435
+d NaN 0.279344 -0.613172
+
+In [198]: def f(x): # 单参数函数，返回当个值
+.....: return len(str(x))
+.....:
+
+In [199]: df4["one"].map(f) # map 接受单参数函数
+Out[199]:
+a 18
+b 19
+c 18
+d 3
+Name: one, dtype: int64
+
+In [200]: df4.applymap(f) # applymap 应用于所有元素
+Out[200]:
+one two three
+a 18 17 3
+b 19 18 20
+c 18 18 16
+d 3 19 19
+```
+
+## 排序
+
+pandas 支持三种类型的排序：
+
+- index label 排序
+- column 值排序
+- 以上两者
+
+### index 排序
+
+`Series.sort_index()` 和 `DataFrame.sort_index()` 方法用于 index 排序：
+
+```py
+In [300]: df = pd.DataFrame(
+   .....: {
+   .....: "one": pd.Series(np.random.randn(3), index=["a", "b", "c"]),
+   .....: "two": pd.Series(np.random.randn(4), index=["a", "b", "c", "d"]),
+   .....: "three": pd.Series(np.random.randn(3), index=["b", "c", "d"]),
+   .....: }
+   .....: )
+   .....:
+ 
+In [301]: unsorted_df = df.reindex(
+   .....: index=["a", "d", "c", "b"], columns=["three", "two", "one"]
+   .....: )
+   .....:
+
+In [302]: unsorted_df
+Out[302]:
+three two one
+a NaN -1.152244 0.562973
+d -0.252916 -0.109597 NaN
+c 1.273388 -0.167123 0.640382
+b -0.098217 0.009797 -1.299504
+
+# DataFrame
+In [303]: unsorted_df.sort_index() # 按 index 排序
+Out[303]:
+three two one
+a NaN -1.152244 0.562973
+b -0.098217 0.009797 -1.299504
+c 1.273388 -0.167123 0.640382
+d -0.252916 -0.109597 NaN
+
+In [304]: unsorted_df.sort_index(ascending=False) # 降序
+Out[304]:
+three two one
+d -0.252916 -0.109597 NaN
+c 1.273388 -0.167123 0.640382
+b -0.098217 0.009797 -1.299504
+a NaN -1.152244 0.562973
+
+In [305]: unsorted_df.sort_index(axis=1) # 按照行 index 排序
+Out[305]:
+one three two
+a 0.562973 NaN -1.152244
+d NaN -0.252916 -0.109597
+c 0.640382 1.273388 -0.167123
+b -1.299504 -0.098217 0.009797
+
+# Series
+In [306]: unsorted_df["three"].sort_index()
+Out[306]:
+a NaN
+b -0.098217
+c 1.273388
+d -0.252916
+Name: three, dtype: float64
+```
+
+- `sort_index` 可以使用一个 `key` 参数，该参数应用于待排序 index 的 callable 函数。对 `MultiIndex` 对象，`key` 通过 `level` 参数应用到指定 axis
+
+```py
+In [307]: s1 = pd.DataFrame({"a": ["B", "a", "C"], "b": [1, 2, 3], "c": [2, 3, 4]}).set_index(
+   .....: list("ab")
+   .....: )
+   .....:
+In [308]: s1
+Out[308]:
+    c
+a b
+B 1 2
+a 2 3
+C 3 4
+
+
+In [309]: s1.sort_index(level="a") # 对 MultiIndex，通过 level='a' 指定排序的 index
+Out[309]:
+    c
+a b
+B 1 2
+C 3 4
+a 2 3
+
+In [310]: s1.sort_index(level="a", key=lambda idx: idx.str.lower()) # 通过 key 指定函数
+Out[310]:
+    c
+a b
+a 2 3
+B 1 2
+C 3 4
+```
+
+### 值排序
+
+`Series.sort_values()` 用于排序 `Series` 值。`DataFrame.sort_values()` 用于排序 `DataFrame` 的行或列值。例如：
+
+```py
+In [311]: df1 = pd.DataFrame(
+   .....: {"one": [2, 1, 1, 1], "two": [1, 3, 2, 4], "three": [5, 4, 3, 2]}
+   .....: )
+   .....:
+
+In [312]: df1.sort_values(by="two") # 排序
+Out[312]:
+one two three
+0 2 1 5
+2 1 2 3
+1 1 3 4
+3 1 4 2
+```
+
+- `by` 参数可以指定 column 名称列表
+
+```py
+In [313]: df1[["one", "two", "three"]].sort_values(by=["one", "two"])
+Out[313]:
+one two three
+2 1 2 3
+1 1 3 4
+3 1 4 2
+0 2 1 5
+```
+
+通过 `na_position` 参数可以指定 NA 值的位置：
+
+```py
+In [314]: s[2] = np.nan
+
+In [315]: s.sort_values()
+Out[315]:
+0 A
+3 Aaba
+1 B
+4 Baca
+6 CABA
+8 cat
+7 dog
+2 <NA>
+5 <NA>
+dtype: string
+
+In [316]: s.sort_values(na_position="first")
+Out[316]:
+2 <NA>
+5 <NA>
+0 A
+3 Aaba
+1 B
+4 Baca
+6 CABA
+8 cat
+7 dog
+dtype: string
+```
+
+- 同样也支持 `key` 参数，设置 callable 函数应用于待排序的值
+
+```py
+In [317]: s1 = pd.Series(["B", "a", "C"])
+In [318]: s1.sort_values()
+Out[318]:
+0 B
+2 C
+1 a
+dtype: object
+
+In [319]: s1.sort_values(key=lambda x: x.str.lower())
+Out[319]:
+1 a
+0 B
+2 C
+dtype: object
+```
+
+`key` 函数接受 `Series` 值，返回相同 shape 的 `Series` 或数组。对 `DataFrame`，`key` 应用于 column，因此参数为 `Series`，返回值也为 `Series`：
+
+```py
+In [320]: df = pd.DataFrame({"a": ["B", "a", "C"], "b": [1, 2, 3]})
+In [321]: df.sort_values(by="a")
+Out[321]:
+  a b
+0 B 1
+2 C 3
+1 a 2
+
+In [322]: df.sort_values(by="a", key=lambda col: col.str.lower())
+Out[322]:
+  a b
+1 a 2
+0 B 1
+2 C 3
 ```

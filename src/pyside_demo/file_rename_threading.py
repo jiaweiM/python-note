@@ -85,11 +85,13 @@ class RenameFilesGUI(QWidget):
 
         self.change_name_edit = QLineEdit()
         self.change_name_edit.setToolTip(
-            "Files will be appended with numerical values.For example: filename < b > 01 < / b >.jpg")
+            "Files will be appended with numerical values.For example: filename <b> 01 </b >.jpg")
         self.change_name_edit.setPlaceholderText("Change file names to...")
+
         rename_button = QPushButton("Rename Files")
         rename_button.setToolTip("Begin renaming files in directory.")
         rename_button.clicked.connect(self.renameFiles)
+
         file_exts = [".jpg", ".jpeg", ".png", ".gif", ".txt"]
 
         # Create combo box for selecting file extensions.
@@ -98,6 +100,7 @@ class RenameFilesGUI(QWidget):
         ext_cb.setToolTip("Only files with this extension will be changed.")
         ext_cb.addItems(file_exts)
         ext_cb.currentTextChanged.connect(self.updateCbValue)
+
         # Text edit is for displaying the file names as they are updated.
         self.display_files_edit = QTextEdit()
         self.display_files_edit.setReadOnly(True)

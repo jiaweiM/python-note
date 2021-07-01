@@ -1,7 +1,7 @@
 # Python Types
 
 - [Python Types](#python-types)
-  - [数据类型转换](#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2)
+  - [数据类型转换](#数据类型转换)
 
 ## 数据类型转换
 

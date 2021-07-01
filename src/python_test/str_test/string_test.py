@@ -2,8 +2,10 @@ import datetime
 
 import pytest
 
+
 def test_string_type():
     print(type("A"))
+
 
 def test_concanate():
     '''使用加号连接字符串，称为字符串拼接'''
@@ -193,6 +195,13 @@ def test_in():
     assert 'a' in 'program'
     assert 'at' in 'battle'
     assert 'file' not in 'windows'
+
+
+def test_isdigit():
+    a = '123456'
+    assert a.isdigit()
+    assert '1'.isdigit()
+    assert not 'a'.isdigit()
 
 
 def test_join():
