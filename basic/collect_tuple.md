@@ -267,4 +267,3 @@ Point: x=14.000  y= 0.714  hypot=14.018
 ```py
 Point3D = namedtuple('Point3D', Point._fields + ('z',))
 ```
-

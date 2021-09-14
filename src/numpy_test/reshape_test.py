@@ -15,3 +15,4 @@ def test_order_f():
 
 def test_auto():
     a = np.array([[1, 2, 3], [4, 5, 6]])
+

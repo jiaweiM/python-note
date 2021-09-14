@@ -709,7 +709,7 @@ float64
 int64
 ```
 
-要保留 `dtype`，最好使用 `itertuples()`，该方法返回命名元组，并且一般比 `iterrows` 快。
+要保留 `dtype`，最好使用 `itertuples()`，该方法返回命名元组，并且比 `iterrows` 快。
 
 ### itertuples
 
@@ -717,13 +717,48 @@ int64
 DataFrame.itertuples(index=True, name='Pandas')
 ```
 
-以命名元组的形式迭代返回 `DataFrame` 的行。
+以命名元组的形式迭代 `DataFrame` 的行。
 
 |参数|类型|说明|
 |---|---|---|
-|index|bool, default True|如果 True
+|index|bool, default True|True 表示将索引作为元祖的第一个元素返回|
+|name|str or None, default "Pandas"|命名元祖的名称，`None` 表示常规元祖|
 
+如果列名是无效的 Python 识别符、重复或以下划线开头，则重命名为位置名称。
 
+```py
+>>> df = pd.DataFrame({'num_legs': [4, 2], 'num_wings': [0, 2]},
+...                  index=['dog', 'hawk'])
+>>> df
+      num_legs  num_wings
+dog          4          0
+hawk         2          2
+>>> for row in df.itertuples():
+...    print(row)
+...
+Pandas(Index='dog', num_legs=4, num_wings=0)
+Pandas(Index='hawk', num_legs=2, num_wings=2)
+```
+
+- 如果将 `index` 设置为 `False`，则移除索引
+
+```py
+>>> for row in df.itertuples(index=False):
+...    print(row)
+...
+Pandas(num_legs=4, num_wings=0)
+Pandas(num_legs=2, num_wings=2)
+```
+
+- `name` 用于自定义命名元祖的名称
+
+```py
+>>> for row in df.itertuples(name='Animal'):
+...    print(row)
+...
+Animal(Index='dog', num_legs=4, num_wings=0)
+Animal(Index='hawk', num_legs=2, num_wings=2)
+```
 
 ### xs
 

@@ -13,6 +13,7 @@
     - [指定 dtype](#指定-dtype)
   - [写 Excel](#写-excel)
     - [输出 index](#输出-index)
+  - [参考](#参考)
 
 2020-04-20, 20:54
 ***
@@ -308,6 +309,15 @@ DataFrame.to_excel(excel_writer, sheet_name='Sheet1', na_rep='', ﬂoat_format=N
   verbose=True, freeze_panes=None, storage_options=None)
 ```
 
+将单个对象写入 Excel .xlsx 文件，只需要指定目标文件名。要写入多个 sheet，则需要创建 `ExcelWriter` 对象。
+
+|参数|说明|
+|---|---|
+|index|bool, default True|输出行号|
+
 ### 输出 index
 
 设置参数 `index=True` （默认）数出索引。
+
+## 参考
+

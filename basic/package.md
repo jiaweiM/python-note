@@ -6,6 +6,8 @@
   - [控制模块导出的内容](#控制模块导出的内容)
   - [从包中导入模块](#从包中导入模块)
   - [使用相对路径导入子模块](#使用相对路径导入子模块)
+  - [QAs](#qas)
+    - [ImportError: attempted relative import with no known parent package](#importerror-attempted-relative-import-with-no-known-parent-package)
 
 2020-04-17, 11:55
 添加更多内容。
@@ -175,11 +177,21 @@ from ..B import bar
 
 ```py
 # mypackage/A/spam.py
-from mypackage.A import grok # OK
-from . import grok # OK
+from mypackage.A import grok # 绝对路径
+from . import grok # 相对路径
 import grok # Error (not found)
 ```
 
 像 `mypackage.A` 这样使用绝对路径的缺点是，这将顶层包名硬编码到源码中。如果你想重新组织它，比如改变包名，你就必须检查所有文件来修正源码。同样，硬编码的名称会使移动代码变得困难。
 
 `.` 表示当前目录；`..` 为父目录；`..B` 等价于 `../B`，这种语法只适用于 import 语句。
+
+## QAs
+
+### ImportError: attempted relative import with no known parent package
+
+解决方案：
+
+1. 使用 `-m` 命令运行脚本；
+2. 手动设置 `__package__`；
+3. 使用绝对引用。

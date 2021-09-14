@@ -13,6 +13,7 @@
     - [encoding](#encoding)
   - [NA 和缺失值处理](#na-和缺失值处理)
     - [na_values](#na_values)
+  - [to_csv](#to_csv)
 
 2020-08-13, 10:35
 ***
@@ -97,3 +98,12 @@ boolean, default False.
 `na_values`，scalar, str, list-like, or dict, default `None`。
 
 识别为 `NA/NaN` 的额外字符串。如果使用 dict，则可以对每列单独设置。
+
+## to_csv
+
+```py
+DataFrame.to_csv(path_or_buf=None, sep=',', na_rep='', float_format=None, columns=None, header=True, index=True, index_label=None, mode='w', encoding=None, compression='infer', quoting=None, quotechar='"', line_terminator=None, chunksize=None, date_format=None, doublequote=True, escapechar=None, decimal='.', errors='strict', storage_options=None)
+```
+
+输出问 `csv` 格式。
+
