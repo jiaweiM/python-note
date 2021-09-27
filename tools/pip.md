@@ -155,9 +155,20 @@ pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 ## Requirements Files
 
-"Requirements files" 包含需要使用 `pip install` 安装的包：
+"Requirements files" 包含需要使用 `pip install` 安装的包，例如：
 
 ```bash
+py -m pip install -r requirements.txt
+```
+
+简而言之，requirements 文件包含需要通过 pip 安装的依赖包列表。
+
+requirements 文件有以下 4 种常见用途：
+
+1. requirements 文件保存 `pip freeze` 结果，以实现可重复安装。此时 requirements 文件包含 `pip freeze` 运行时所有包的指定版本。
+
+```bash
+py -m pip freeze > requirements.txt
 py -m pip install -r requirements.txt
 ```
 

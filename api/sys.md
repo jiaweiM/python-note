@@ -6,6 +6,10 @@
   - [sys.exit](#sysexit)
   - [sys.path](#syspath)
   - [sys.version](#sysversion)
+  - [sys.stdin, stdout, stderr](#sysstdin-stdout-stderr)
+    - [stderr](#stderr)
+    - [stdin](#stdin)
+  - [参考](#参考)
 
 2021-03-26, 10:10
 ***
@@ -43,3 +47,29 @@ print(sys.version)
 
 # 3.8.8 (tags/v3.8.8:024d805, Feb 19 2021, 13:18:16) [MSC v.1928 64 bit (AMD64)]
 ```
+
+## sys.stdin, stdout, stderr
+
+解释器使用的标准输入、输出和错误文件对象：
+
+- `stdin` 用于所有交互输入（包括 `input()` 调用）；
+- `stdout` 用于 `print()` 的输出以及 `input()` 的提示信息输出；
+- `stderr` 用于解释器的提示信息和错误信息输出。
+
+### stderr
+
+stderr 即标准错误流，它和 stdout 类似，都是向控制台输出信息，不同之处在于 stderr 只输出错误信息。例如：
+
+```py
+sys.stderr.write('This is an error message')
+```
+
+### stdin
+
+`stdin` 是 Python 的标准输入流，用于从
+
+
+
+## 参考
+
+- https://docs.python.org/3/library/sys.html

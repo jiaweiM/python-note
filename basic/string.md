@@ -592,7 +592,7 @@ assert '{} is {} years old'.format(name, age) == "Peter is 23 years old"
 assert f'{name} is {age} years old' == "Peter is 23 years old"
 ```
 
-- C 语法
+- **C 语法**
 
 ```py
 "%s is %d years old" % (name, age)
@@ -600,7 +600,7 @@ assert f'{name} is {age} years old' == "Peter is 23 years old"
 
 这个是最老的语法，通过 `%d`, `%s` 等指定变量。
 
-- Python 初始语法
+- **Python 初始语法**
 
 ```py
 '{} is {} years old'.format(name, age)
@@ -608,7 +608,7 @@ assert f'{name} is {age} years old' == "Peter is 23 years old"
 
 这个是 Python 3.0 引入的语法，提供高级格式化选项。
 
-- f-string 语法
+- **f-string 语法**
 
 而 f-string 是 Python 3.6 引入的语法，其优点在于：可以在 `{}` 中直接包含表达式和变量。例如：
 

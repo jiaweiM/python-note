@@ -356,10 +356,9 @@ min(arg1, arg2, *args[, key])
 
 如果出现多个相同的最小值，返回第一次出现的值。
 
-
 ## print
 
-参考 [IO 部分](https://www.yuque.com/crazyphilo/bt29bt/ihl5m8#print)。
+参考 [IO 部分](../io/python_io.md#print)。
 
 ## range
 
