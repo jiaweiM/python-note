@@ -1,22 +1,49 @@
-# Binary Sequence
+# 二进制序列类型
 
-- [Binary Sequence](#binary-sequence)
+- [二进制序列类型](#二进制序列类型)
   - [简介](#简介)
-  - [字节对象](#字节对象)
+  - [bytes](#bytes)
   - [memoryview](#memoryview)
     - [使用](#使用)
     - [cast](#cast)
+  - [参考](#参考)
 
 2021-06-15, 14:23
 ***
 
 ## 简介
 
-用于操作二进制数据的内置类型主要为 `bytes` 和 `bytearray`。
+用于操作二进制数据的内置类型主要为 `bytes` 和 `bytearray`。两者内部由 `memoryview` 实现，`memoryview` 使用缓冲协议直接访问其它二进制对象的内存，从而避免复制数据。
 
-## 字节对象
+`array` 模块支持基本数据类型的有效存储，如 32-bit 整数和 IEEE754 双精度浮点数等。
 
-Bytes 是不可变单字节序列。由于许多主要的二进制协议都是基于 ASCII 编码的，所以 `bytes` 提供了几种处理 ASCII 数据的方法。
+## bytes
+
+Bytes 是不可变(immutable)单字节序列。由于许多重要的二进制协议都是基于 ASCII 编码，所以 `bytes` 提供了几种专门处理 ASCII 数据的方法。
+
+定义 `bytes` 的方法和定义字符串字面量的方法基本相同，只是需要一个 `b` 前缀：
+
+**单引号**
+
+```py
+b'still allows embedded "double" quotes'
+```
+
+**双引号**
+
+```py
+b"still allows embedded 'single' quotes"
+```
+
+**三引号**
+
+```py
+b'''3 single quotes''', b"""3 double quotes"""
+```
+
+字节字面量只允许定义 ASCII 字符。任何超过 127 的二进制值都需要使用适当的转义序列输入字节字面量。
+
+和字符串字面量一样，字节字面量也可以使用 `r` 前缀来禁用转义。
 
 
 
@@ -149,3 +176,7 @@ bytearray(b'ayz')
 >>> y.tolist()
 [[0, 1, 2], [3, 4, 5]]
 ```
+
+## 参考
+
+- https://docs.python.org/3/library/stdtypes.html#binary-sequence-types-bytes-bytearray-memoryview

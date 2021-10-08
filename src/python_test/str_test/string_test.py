@@ -15,6 +15,29 @@ def test_concanate():
     assert full_name == 'zhang chen'
 
 
+def test_plus():
+    s = 'Python'
+    t = 'Java'
+    y = s + t
+    assert y == 'PythonJava'
+    assert s * 3 == 'PythonPythonPython'
+
+
+def test_to_list():
+    s = 'python'
+    l = list(s)
+    assert l == ['p', 'y', 't', 'h', 'o', 'n']
+    l[1] = 'x'
+    assert ''.join(l) == 'pxthon'
+
+
+def test_to_array():
+    a = bytearray(b'python')
+    a.extend(b' java')
+    b = a.decode()
+    assert b == 'python java'
+
+
 def test_rstrip():
     '''移除字符串后面的空白'''
     lang = ' python '
@@ -25,6 +48,23 @@ def test_lstrip():
     '''移除字符串前面的空白'''
     lang = ' python '
     assert lang.lstrip() == 'python '
+
+
+def test_len():
+    S = "Python"
+    assert len(S) == 6
+    assert S[0] == 'P'
+    assert S[1] == 'y'
+    assert S[-1] == 'n'
+
+
+def test_slice2():
+    S = "Python"
+    assert S[1:3] == 'yt'
+    assert S[:3] == 'Pyt'
+    assert S[3:] == 'hon'
+    assert S[:] == 'Python'
+    assert S[:-1] == 'Pytho'
 
 
 def test_strip():
@@ -94,11 +134,16 @@ def test_create():
     print(my_str)
 
 
+def test_encode():
+    txt = "My name is Ståle"
+    x = txt.encode()
+    assert x == b'My name is St\xc3\xa5le'
+
+
 def test_replace():
     oldstring = 'I like Python'
-    newstring = oldstring.replace('like', 'love')
-    print(oldstring)
-    print(newstring)
+    newstring = oldstring.replace('like', 'use')
+    assert newstring == 'I use Python'
 
 
 def test_reverse():
@@ -341,6 +386,9 @@ def test_find():
     x = "Hello World"
     index = x.find('or')
     assert index == 7
+
+    x = 'python'
+    assert x.find('th') == 2
 
 
 def all_occurrences(lst, elem):

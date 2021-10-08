@@ -4,21 +4,30 @@
   - [简介](#简介)
     - [str](#str)
     - [immutable](#immutable)
-  - [字符串操作](#字符串操作)
+  - [序列操作](#序列操作)
+    - [长度](#长度)
     - [切片](#切片)
+    - [连接](#连接)
+  - [字符串方法](#字符串方法)
     - [包含](#包含)
     - [rfind](#rfind)
     - [capitalize](#capitalize)
+    - [encode](#encode)
+    - [isalpha](#isalpha)
     - [index](#index)
     - [isdigit](#isdigit)
     - [find](#find)
     - [maketrans](#maketrans)
+    - [replace](#replace)
     - [rstrip](#rstrip)
     - [startswith](#startswith)
     - [strip](#strip)
     - [translate](#translate)
     - [拆分和连接](#拆分和连接)
     - [相等测试](#相等测试)
+    - [upper](#upper)
+  - [字符串格式化](#字符串格式化)
+    - [% 格式化](#-格式化)
   - [format](#format)
     - [语法](#语法)
       - [field_name](#field_name)
@@ -27,7 +36,7 @@
     - [关键字参数](#关键字参数)
     - [数字格式化](#数字格式化)
     - [数字对齐](#数字对齐)
-    - [字符串格式化](#字符串格式化)
+    - [字符串格式化](#字符串格式化-1)
     - [class 格式化](#class-格式化)
     - [动态参数](#动态参数)
     - [日期格式化](#日期格式化)
@@ -91,7 +100,42 @@ str1 和 str2 引用相同字符串 "welcome"，使用 `id()` 函数，可以确
 
 虽然是 immutable 类型，但是使用 `str.join()` 和 `io.StringIO` 可以高效的合并字符串。
 
-## 字符串操作
+Python 核心类型，numbers、strings 和 tuple 不可变，list、dict、set 可变。
+
+如果想**原位修改**文本，可以将 string 先扩展为字符的 `list`，修改后再连接为字符串：
+
+```py
+s = 'python'
+l = list(s)
+assert l == ['p', 'y', 't', 'h', 'o', 'n']
+l[1] = 'x'
+assert ''.join(l) == 'pxthon'
+```
+
+也可以使用 `bytearray`，不过只支持 8 字节字符的修改，如 ASCII 字符，其它字符依然不可修改：
+
+```py
+a = bytearray(b'python')
+a.extend(b' java')
+b = a.decode()
+assert b == 'python java'
+```
+
+## 序列操作
+
+字符串是序列类型，即有序的字符序列类型。在字符串中，所有字符保持前后顺序不变，可以根据位置查找和存储字符。
+
+### 长度
+
+序列类型可以执行索引和 `len()` 查询长度操作：
+
+```py
+S = "Python"
+assert len(S) == 6
+assert S[0] == 'P'
+assert S[1] == 'y'
+assert S[-1] == 'n'
+```
 
 ### 切片
 
@@ -99,6 +143,32 @@ str1 和 str2 引用相同字符串 "welcome"，使用 `id()` 函数，可以确
 
 - `[]`, 获得指定索引的字符
 - `[:]`，范围切片，获得指定范围的字符。
+
+例如：
+
+```py
+S = "Python"
+assert S[1:3] == 'yt'
+assert S[:3] == 'Pyt' # 起始索引默认为 0
+assert S[3:] == 'hon' # 结束索引默认为序列长度
+assert S[:] == 'Python' # 复制序列
+assert S[:-1] == 'Pytho' # -1 等价于 len(S)-1
+```
+
+### 连接
+
+序列对象可以直接使用 `+` 连接起来：
+
+```py
+s = 'Python'
+t = 'Java'
+y = s + t
+assert y == 'PythonJava'
+assert s * 3 == 'PythonPythonPython' # 可以直接使用该方式创建重复序列
+
+```
+
+## 字符串方法
 
 ### 包含
 
@@ -130,6 +200,46 @@ a = "python name"
 assert a.capitalize() == 'Python name'
 ```
 
+### encode
+
+```py
+str.encode(encoding='utf-8', errors='strict')
+```
+
+将字符串以指定编码转换为字节对象。
+
+`encoding` 用于指定编码，默认编码为 'utf-8'。例如：
+
+```py
+txt = "My name is Ståle"
+x = txt.encode()
+assert x == b'My name is St\xc3\xa5le'
+```
+
+`errors` 用于指定针对错误的处理方法：
+
+|方案|说明|
+|---|---|
+|`'backslashreplace'`|使用反斜杠替代无法编码的字符|
+|`'ignore'`|忽略无法编码的字符|
+|`'strict'`|默认方案，对无法编码的字符抛出 `UnicodeError`|
+|`'replace'`|使用问号替代无法编码的字符|
+|`'xmlcharrefreplace'`|使用 xml 字符替代无法编码的字符|
+
+
+### isalpha
+
+如果字符串非空且所有字符为 ASCII 字母，返回 `True`，否则返回 `False`。ASCII 字母包括 `b'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'`。
+
+例如：
+
+```py
+>>> b'ABCabc'.isalpha()
+True
+>>> b'ABCabc1'.isalpha()
+False
+```
+
 ### index
 
 ### isdigit
@@ -154,11 +264,16 @@ assert not 'a'.isdigit()
 str.find(sub[,start[,end]])
 ```
 
-在切片 `s[start:end]` 查找 `sub` 第一次出现的 index。`start` 和 `end` 为切片参数。
+在切片 `s[start:end]` 查找 `sub` 第一次出现的索引。`start` 和 `end` 为切片参数。
 
 如果没有找到 `sub`，返回 -1.
 
-> `find()` 仅在需要知道 `sub` 的位置时使用，如果只为了检查 `sub` 是否为子字符串，用 `in` 操作符。
+```py
+x = 'python'
+assert x.find('th') == 2
+```
+
+> **NOTE**：`find()` 只在需要知道 `sub` 的位置时使用，如果只为了检查 `sub` 是否为子字符串，用 `in` 操作符。
 
 ### maketrans
 
@@ -173,6 +288,20 @@ static str.maketrans(x[, y[, z]])
 | x | 如果只指定 x，则 x 为描述映射关系的 dict ；如果有多个参数，则 x 为待替换的字符串 |
 | y | 和 x 等长的字符串。x 中相同位置的字符被 y 中对应位置字符替换 |
 | z | 原字符串中待移除的字符 |
+
+### replace
+
+```py
+str.replace(old, new[, count])
+```
+
+将字符串中所有 `old` 字符串替换为 `new` 字符串。如果提供 `count` 参数，则只替换前 `count` 各个 `old` 字符串。
+
+```py
+oldstring = 'I like Python'
+newstring = oldstring.replace('like', 'use')
+assert newstring == 'I use Python'
+```
 
 ### rstrip
 
@@ -312,6 +441,23 @@ def test_join():
 ### 相等测试
 
 - `==` 操作符逐个比较字符，全部相同就返回 True。
+
+### upper
+
+大小写转换：
+
+```py
+a = "lower"
+assert a.upper() == "LOWER"
+name = 'Zhang Chen'
+assert name.lower() == 'zhang chen'
+```
+
+## 字符串格式化
+
+### % 格式化
+
+% 是
 
 ## format
 
@@ -811,3 +957,4 @@ string 模块中定义了如下常量：
 - [Zetcode Python f-string](https://zetcode.com/python/fstring/)
 - https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
 - https://docs.python.org/3/library/string.html
+- https://www.w3schools.com/python/python_strings_methods.asp

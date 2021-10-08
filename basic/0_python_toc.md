@@ -1,6 +1,6 @@
-# Python 学习
+# Python 基础
 
-- [Python 学习](#python-学习)
+- [Python 基础](#python-基础)
   - [学习笔记](#学习笔记)
   - [参考文档](#参考文档)
   - [代码练习](#代码练习)
@@ -16,6 +16,7 @@
 
 - [Python 关键字](python_keyword.md)
 - [数据类型](types.md)
+  - [二进制序列类型](collect_binary.md)
 - [Python 字符串](string.md)
 - [Python 控制流]
 - [Python 函数](function.md)

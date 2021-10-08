@@ -51,7 +51,7 @@ pip 支持从 PyPI、版本控制、本地项目和分发文件安装包。安�
 ```bash
 pip install SomePackage # 默认安装最新版
 pip install SomePackage==1.0.4 # 安装特定版本
-pip install 'SomePackage>=1.0.4' # minimum version
+pip install 'SomePackage>=1.0.4' # 执行最低版本
 ```
 
 ### 从 Wheels 安装

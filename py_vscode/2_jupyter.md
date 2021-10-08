@@ -18,6 +18,8 @@
     - [清除输出或重启 kernel](#清除输出或重启-kernel)
     - [行号](#行号)
   - [IntelliSense support](#intellisense-support)
+  - [Magic Commands](#magic-commands)
+  - [Matplotlib 集成](#matplotlib-集成)
   - [变量视图和数据视图](#变量视图和数据视图)
   - [Plot viewer](#plot-viewer)
   - [Debug Jupyter Notebook](#debug-jupyter-notebook)
@@ -184,6 +186,33 @@ code cell 默认是 code 模式，点击下方的 Markdown 图标切换模式：
 Python Jupyter Notebook Editor 完整支持 IntelliSense，包括代码完成、成员列表、方法快速信息和参数提示。
 
 ![intellisense](images/2019-11-23-09-53-06.png)
+
+## Magic Commands
+
+Jupyter 特有的命令（不在 Python 中）称为 magic 命令，用于执行一些常见的任务，控制 jupyter 系统。magic 命令以 % 开头。
+
+常见的 magic 命令如下所示：
+
+|命令|说明|
+|---|---|
+|%quickref|显示 IPython 的快速参考|
+|%magic|显示可用 magic 命令的详细文档|
+|%debug|在上一次的异常 traceback 下进入交互 debugger|
+|%hist|输出输入命令历史|
+|%pdb|碰到任何异常自动进入 debugger|
+|%paste|从剪切板执行预格式化的 Python 代码|
+|%cpaste|对粘贴的 Python 代码给出特殊提示|
+|%reset|删除交互命名空间中定义的所有变量|
+|%run script.py|在 Ipython 中执行 Python 脚本|
+|%prun statement|使用 cProfile 执行 `statement`，并报告 profiler 输出|
+|%time statement|输出单个语句的运行时间|
+|%timeit statement|多次运行单个语句，计算平均运行时间，适合运行时间很短的代码|
+|%who, %who_ls, %whos|显示命名空间中定义的变量|
+|%xdel variable|删除变量，并尝试清除所有对该变量的引用|
+
+## Matplotlib 集成
+
+`%matplotlib` magic 函数用于集成 matplotlib 到 IPython 或 Jupyter notebook。
 
 ## 变量视图和数据视图
 

@@ -1,6 +1,5 @@
 /.idea/
-# Byte-compiled / optimized / DLL files
-__pycache__/
+/__pycache__
 *.py[cod]
 *$py.class
 
@@ -143,3 +142,4 @@ cython_debug/
 media
 static
 __init__.cpython-38.pyc
+src/__pycache__/__init__.cpython-38.pyc

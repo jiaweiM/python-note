@@ -1,22 +1,23 @@
-# Working with text data
+# 文本数据
 
-- [Working with text data](#working-with-text-data)
-  - [Text 数据类型](#text-%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b)
-    - [行为差异](#%e8%a1%8c%e4%b8%ba%e5%b7%ae%e5%bc%82)
-  - [提取子字符串](#%e6%8f%90%e5%8f%96%e5%ad%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
+- [文本数据](#文本数据)
+  - [文本数据类型](#文本数据类型)
+    - [行为差异](#行为差异)
+  - [提取子字符串](#提取子字符串)
   - [Concatenation](#concatenation)
-    - [将一个 Series 转换为一个字符串](#%e5%b0%86%e4%b8%80%e4%b8%aa-series-%e8%bd%ac%e6%8d%a2%e4%b8%ba%e4%b8%80%e4%b8%aa%e5%ad%97%e7%ac%a6%e4%b8%b2)
-    - [连接 Series 和 list-like 对象](#%e8%bf%9e%e6%8e%a5-series-%e5%92%8c-list-like-%e5%af%b9%e8%b1%a1)
-    - [连接 Series 和 array-like](#%e8%bf%9e%e6%8e%a5-series-%e5%92%8c-array-like)
-    - [连接 Series 和 index 对象](#%e8%bf%9e%e6%8e%a5-series-%e5%92%8c-index-%e5%af%b9%e8%b1%a1)
-    - [连接 Series 和多个对象](#%e8%bf%9e%e6%8e%a5-series-%e5%92%8c%e5%a4%9a%e4%b8%aa%e5%af%b9%e8%b1%a1)
-  - [子字符串](#%e5%ad%90%e5%ad%97%e7%ac%a6%e4%b8%b2)
-  - [参考](#%e5%8f%82%e8%80%83)
+    - [将一个 Series 转换为一个字符串](#将一个-series-转换为一个字符串)
+    - [连接 Series 和 list-like 对象](#连接-series-和-list-like-对象)
+    - [连接 Series 和 array-like](#连接-series-和-array-like)
+    - [连接 Series 和 index 对象](#连接-series-和-index-对象)
+    - [连接 Series 和多个对象](#连接-series-和多个对象)
+  - [子字符串](#子字符串)
+  - [参考](#参考)
     - [rfind](#rfind)
 
+2021-09-30, 15:25
 ***
 
-## Text 数据类型
+## 文本数据类型
 
 在 pandas 中保存字符串的方式有两种：
 
@@ -25,11 +26,11 @@
 
 pandas 推荐使用 `StringDtype` 保存文本数据。
 
-在 pandas 1.0 之前只能使用 `object` dtype，使用该类型的缺点：
+在 pandas 1.0 之前只能使用 `object` dtype，使用该类型有如下缺点：
 
-- 在 `object` dtype 数组中可能存储混合类型
-- `object` dtype 会中断特定于 dtype 的操作，如 `DataFrame.select_dtypes()`。在 `object` dtype 列中没有明确只选择文本的犯法。
-- `object` dtype 没有 `string` 清晰。
+1. 在 `object` dtype 数组中可能存储字符串和非字符串的混合类型，最好使用专门的 dtype 存储字符串；
+2. `object` dtype 会中断特定于 dtype 的操作，如 `DataFrame.select_dtypes()`。在 `object` dtype 列中没有明确只选择文本的方法。
+3. `object` dtype 没有 `string` 清晰。
 
 目前使用 `object` dtype 数组和 `arrays.StingArray` 性能差不多。
 
@@ -76,6 +77,22 @@ dtype: object
 1    b
 2    c
 dtype: string
+```
+
+对非字符串数据，也可以使用 "string" 类型，它会被转换为 dtype `string`：
+
+```py
+In [7]: s = pd.Series(["a", 2, np.nan], dtype="string")
+
+In [8]: s
+Out[8]:
+0 a
+1 2
+2 <NA>
+dtype: string
+
+In [9]: type(s[1])
+Out[9]: str
 ```
 
 ### 行为差异

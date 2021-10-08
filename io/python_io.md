@@ -204,7 +204,7 @@ Python 操作文件的步骤：
 f = open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
 ```
 
-`open` 函数打开文件，返回对应的文件对象。如果文件打开失败抛出 `OSError`。
+`open` 函数打开文件，返回对应的文件对象。如果打开失败抛出 `OSError`。
 
 1. file
 
@@ -241,9 +241,11 @@ binary 和 text 模式：
 例如：
 
 ```python
-f = open("test.txt")      # 等价于 'r' or 'rt'
+f = open("test.txt")      # 等价于 'r' 或 'rt'
 f = open("test.txt",'w')  # write in f_text mode
 f = open("img.bmp",'r+b') # read and write in binary mode
+output = open(r'C:\spam', 'w') # 创建输出文件
+input = open('data', 'r') # 创建输入文件
 ```
 
 3. buffering
