@@ -6,8 +6,7 @@
   - [包管理](#包管理)
     - [安装包](#安装包)
     - [从 Wheels 安装](#从-wheels-安装)
-    - [查看已安装包](#查看已安装包)
-    - [更新包](#更新包)
+    - [查看包](#查看包)
     - [卸载包](#卸载包)
     - [options](#options)
       - [`--user`](#--user)
@@ -17,12 +16,16 @@
   - [Requirements Files](#requirements-files)
     - [Requirements 文件格式](#requirements-文件格式)
   - [Requirement Specifiers](#requirement-specifiers)
+  - [ensurepip](#ensurepip)
+    - [命令行接口](#命令行接口)
   - [参考](#参考)
 
 2020-04-13, 05:42
 ****
 
 ## 简介
+
+Python 打包系统的核心是 Python Packaging Index (PyPI)。PyPI 是一个庞大的公共资源库，其中大部分是可以免费使用的 Python 项目。
 
 pip 是 Python 包管理工具。
 
@@ -62,20 +65,24 @@ pip install 'SomePackage>=1.0.4' # 执行最低版本
 pip install SomePackage-1.0-py2.py3-none-any.whl
 ```
 
-### 查看已安装包
+### 查看包
 
-显示已安装包：
+- 显示已安装包
 
 ```bash
 pip list
 ```
 
-### 更新包
-
-显示可更新包：
+- 显示可更新包
 
 ```bash
 pip list --outdated
+```
+
+- 显示已安装包的详细信息
+
+```bash
+pip show 'package_name'
 ```
 
 更新：`-U, --upgrade` 更新
@@ -188,6 +195,41 @@ py -m pip install -r requirements.txt
 
 pip 支持使用**需求说明符**从 pypi 安装依赖项。
 
+## ensurepip
+
+ensurepip 包用于将 pip 程序安装到现有的 Python 版本或虚拟环境中。
+
+在大多数情况，Python 终端用户不需要直接调用这个模块，因为默认会安装 pip。如果跳过了 pip 安装，或者不小心卸载了 pip（升级 pip 时，如果在卸载旧版 pip 后升级出错，也会导致该问题），就可以使用这个包安装 pip。
+
+> ensurepip 运行不需要联网，安装 pip 所需的所有组件都内嵌在 ensurepip 包中。
+
+### 命令行接口
+
+使用Python 解释器的 `-m` 选项调用命令接口。最简单用法：
+
+```shell
+python -m ensurepip
+```
+
+如果没有安装 pip，该命令会安装 pip；如果已安装 pip，该命令不执行任何操作。
+
+如果希望已安装的 `pip` 版本至少不低于 `ensurepip` 中内嵌的版本，可以使用 `--upgrade` 选项：
+
+```shell
+python -m ensurepip --upgrade
+```
+
+`pip` 默认被安装到当前虚拟环境（处于激活状态），如果无激活状态的虚拟环境，则安装到系统 Python 中。安装位置可以通过以下两个命令选项控制：
+
+- `--root <dir>`：相对于给定的根目录安装 `pip`，而不是当前虚拟环境的根目录；
+- `--user`：将 `pip` 安装到用户目录，而不是全局目录，该选项对虚拟环境无效。
+
+另外，默认会安装 `pipX` 和 `pipX.Y` 两个脚本，其中 `X.Y` 表示当前 Python 版本。该行为可以通过如下两个命令选项控制：
+
+- `--altinstall`：使用该选项表示不安装 `pipX` 脚本；
+- `--default-pip`：使用该选项表示额外安装 `pip` 脚本。
+
 ## 参考
 
 - [pip documentation](https://pip.pypa.io/en/stable/user_guide/)
+- https://docs.python.org/3/library/ensurepip.html

@@ -23,6 +23,7 @@
 - [内置函数](built_in_function.md)
 - [正则表达式](regex.md)
 - [复制](copy.md)
+- [PEP 文档简介](pep.md)
 
 ## 参考文档
 

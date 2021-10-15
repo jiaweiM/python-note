@@ -1,8 +1,31 @@
 # Python 学习笔记
 
-2020-04-13, 06:02，打包和分发相关工具。
+- [Python 学习笔记](#python-学习笔记)
+  - [Python 教程](#python-教程)
+    - [Python 打包和分发](#python-打包和分发)
+  - [工具包](#工具包)
+    - [函数编程](#函数编程)
+  - [单元测试](#单元测试)
+  - [开发工具](#开发工具)
+  - [TensorFlow](#tensorflow)
+  - [scikit-learn](#scikit-learn)
+  - [PyTorch](#pytorch)
+  - [Keras](#keras)
+  - [SciPy](#scipy)
+  - [Apache MXNet](#apache-mxnet)
+  - [Theano](#theano)
+  - [Bokeh](#bokeh)
+  - [XGBoost](#xgboost)
+  - [Gensim](#gensim)
+  - [Scrapy](#scrapy)
+  - [Caffe](#caffe)
+  - [Django](#django)
+  - [BeautifulSoup](#beautifulsoup)
+  - [Panda3D](#panda3d)
+  - [pygame](#pygame)
+  - [信息源](#信息源)
+    - [awesome list](#awesome-list)
 
-2020-04-12, 16:39
 ***
 
 ## Python 教程
@@ -39,6 +62,11 @@
 - [wheel](tools/wheel.md)
 - [setuptools](tools/setuptools.md)
 
+|工具|功能|
+|---|---|
+|[pip](tools/pip.md)|Python 包管理|
+|[venv](tools/venv.md)|创建虚拟环境|
+
 ## 工具包
 
 - [heapq](api/heapq.md)
@@ -49,12 +77,6 @@
 
 - [itertool](api/itertool.md)
 - [operator](api/module_operator.md)
-
-### 打包和分发
-
-帮助分发和安装 Python 包。
-
-- [venv](tools/venv.md)，创建虚拟环境
 
 ## 单元测试
 
@@ -162,3 +184,24 @@ CherryPy, Flask
 ## pygame
 
 2D 游戏开发。
+
+## 信息源
+
+- [Python Weekly](https://www.pythonweekly.com/)
+- [PyCoder's Weekly](https://pycoders.com/)
+
+### awesome list
+
+awesome list 是精选的资源列表。通常会随着时间的推移而增长，它不适合用来追更，但是可以作为进一步研究的良好起点。
+
+- [awesome-python by vinta](https://github.com/vinta/awesome-python)
+
+其中包含了大量有趣的项目列表，和分为 80 多个主题类别的标准库模块。
+
+- [pycrumbs by kirang89](https://github.com/kirang89/pycrumbs)
+
+这个集中在有趣和有价值的文章，分为 100 多个类别，专门讨论特定的 Python 特性、通用编程技术等。
+
+- [pythonidae by svaksha](https://github.com/svaksha/pythonidae)
+
+这个 awesome 列表专注于使用 Python 的特定科学和技术领域，如数学、生物、化学、Web 开发、物理、图像处理等。主页包含超过 20 个主要类别页面的列表。

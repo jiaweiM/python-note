@@ -7,6 +7,12 @@ def test_sub_dir():
     assert PurePath('../io') in dir_lst
 
 
+def test_iterdir():
+    p = Path(r'D:\data\test')
+    dir_lst = [x for x in p.iterdir() if x.is_dir()]
+    print(dir_lst)
+
+
 def test_purepath():
     p = PurePath('path', 'to', "hell")
     assert p == PurePath('path/to/hell')

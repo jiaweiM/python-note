@@ -5,6 +5,7 @@
   - [属性](#属性)
     - [size](#size)
     - [shape](#shape)
+  - [方法](#方法)
   - [创建 DataFrame](#创建-dataframe)
     - [Series dict](#series-dict)
       - [为 dict 提供 index](#为-dict-提供-index)
@@ -38,6 +39,7 @@
   - [排序](#排序)
     - [index 排序](#index-排序)
     - [值排序](#值排序)
+  - [参考](#参考)
 
 2020-05-19, 12:26
 ***
@@ -59,12 +61,14 @@
 
 ## 属性
 
-| 属性  | 说明                            |
-| ----- | ------------------------------- |
-| index | DataFrame 的索引（行标签）      |
-| size  | 元素个数                        |
-| shape | 返回表示 DataFrame 维数的 tuple |
+| 属性  | 说明 |
+| --- | --- |
 |columns|columns labels|
+|dtypes|每一列的类型|
+| index | DataFrame 的索引（行标签） |
+| size  | 单元格个数  |
+| shape | 返回 DataFrame 的维数（tuple）|
+
 
 ### size
 
@@ -93,6 +97,16 @@ assert df.shape == (2, 2)
 df = pd.DataFrame({"col1": [1, 2], "col2": [3, 4], "col3": [5, 6]})
 assert df.shape == (2, 3)
 ```
+
+## 方法
+
+以下 `frame` 指代 `DataFrame` 对象。
+
+|方法|说明|
+|---|---|
+|`frame.head(n)`|返回开始的 `n` 行|
+|`frame.tail(n)`|返回末尾的 `n` 行|
+|`len(frame)`|frame 行数|
 
 ## 创建 DataFrame
 
@@ -292,15 +306,16 @@ print(df)
 
 ## 索引和选择
 
-| 操作  | 语法 | 返回类型  |
-| ----- | ---- | ----- |
-| 选择列    | `df[colName]`   | `Series`    |
-| 通过 label 选择行  | `df.loc[label]` | `Series`    |
-| 通过 position 选择行 | `df.iloc[loc]`  | `Series`    |
-| 行切片| `df[5:10]`      | `DataFrame` |
-| 通过 boolean 向量选择行| `df[bool_vec]`  | `DataFrame` |
+| 操作 | 语法 | 返回类型 |
+| --- | --- | --- |
+| 选择列    | `frame[colName]`   | `Series`    |
+| 通过行标签选择行  | `frame.loc[label]` | `Series`    |
+| 通过行位置选择行 | `frame.iloc[loc]`  | `Series`    |
+| 行切片| `frame[5:10]`      | `DataFrame` |
+| 通过 boolean 向量选择行| `frame[bool_vec]`  | `DataFrame` |
 
 ### 选择行
+
 
 
 
@@ -896,7 +911,7 @@ pandas 支持三种类型的排序：
 
 - index label 排序
 - column 值排序
-- 以上两者
+- 以上两者组合排序
 
 ### index 排序
 
@@ -1093,3 +1108,5 @@ Out[322]:
 0 B 1
 2 C 3
 ```
+
+## 参考
