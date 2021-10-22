@@ -3,7 +3,7 @@
 - [CSV](#csv)
   - [简介](#简介)
   - [读 CSV](#读-csv)
-    - [指定索引列](#指定索引列)
+    - [指定 index](#指定-index)
     - [返回 Series 类型](#返回-series-类型)
     - [指定列](#指定列)
     - [解析日期列](#解析日期列)
@@ -45,7 +45,7 @@ import pandas as pd
 df = pd.read_csv('sample.csv')
 ```
 
-### 指定索引列
+### 指定 index
 
 `index_col` 用于指定索引列，接受类型：
 

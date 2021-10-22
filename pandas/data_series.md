@@ -35,11 +35,13 @@
   - [缺失值处理](#缺失值处理)
     - [dropna](#dropna)
     - [isnull](#isnull)
+    - [fillna](#fillna)
   - [数学运算](#数学运算)
     - [add](#add)
     - [mul](#mul)
     - [round](#round)
   - [统计计算](#统计计算)
+    - [between](#between)
     - [eq](#eq)
     - [ne](#ne)
     - [cumsum](#cumsum)
@@ -1350,6 +1352,42 @@ Texas          True
 dtype: bool
 ```
 
+### fillna
+
+```py
+Series.fillna(value=None, method=None, axis=None, inplace=False, limit=None, downcast=None)
+```
+
+使用指定方法替换 NA 值。
+
+`method` 用于指定替换方法：
+
+- 'backfill', 'bfill'，将下一个有效值向上传播；
+- 'ffill', 'pad'，将上一个有效值向下传播；
+- None，默认值
+
+**例1**，用 0 替换 NA 值
+
+```py
+>>> df = pd.DataFrame([[np.nan, 2, np.nan, 0],
+                   [3, 4, np.nan, 1],
+                   [np.nan, np.nan, np.nan, 5],
+                   [np.nan, 3, np.nan, 4]],
+                  columns=list("ABCD"))
+>>> df
+     A    B   C  D
+0  NaN  2.0 NaN  0
+1  3.0  4.0 NaN  1
+2  NaN  NaN NaN  5
+3  NaN  3.0 NaN  4
+>>> df.fillna(0)
+     A    B    C  D
+0  0.0  2.0  0.0  0
+1  3.0  4.0  0.0  1
+2  0.0  0.0  0.0  5
+3  0.0  3.0  0.0  4
+```
+
 ## 数学运算
 
 ### add
@@ -1498,6 +1536,66 @@ dtype: float64
 ```
 
 ## 统计计算
+
+### between
+
+```py
+Series.between(left, right, inclusive='both')
+```
+
+返回 left <= series <= right 的 boolean Series。
+
+`between` 函数一个布尔向量，如果值在 left 和 right 之间，对应位置为 True，否则为 False。NA 值作为 False 处理。
+
+`left` 指定区间左侧，scalar 或 list-like。
+
+`right` 指定区间右侧，scalar 或 lilst-like。
+
+`inclusive` 是否包含边界：
+
+- "both"，包含两侧边界，默认值；
+- "neither"，不包含边界；
+- "left"，只包含左侧边界；
+- "right"，只包含右侧边界。
+
+该函数等价于 `(left <= ser) & (ser <= right)`。
+
+**例1**，默认包含边界：
+
+```py
+>>> s = pd.Series([2, 0, 4, 8, np.nan])
+>>> s.between(1, 4)
+0     True
+1    False
+2     True
+3    False
+4    False
+dtype: bool
+```
+
+**例2**，设置 `inclusive="neither"` 不包含边界
+
+```py
+>>> s.between(1, 4, inclusive="neither")
+0     True
+1    False
+2    False
+3    False
+4    False
+dtype: bool
+```
+
+**例3**，`left` 和 `right` 可以是任意标量值，包括字符串
+
+```py
+>>> s = pd.Series(['Alice', 'Bob', 'Carol', 'Eve'])
+>>> s.between('Anna', 'Daniel')
+0    False
+1     True
+2     True
+3    False
+dtype: bool
+```
 
 ### eq
 

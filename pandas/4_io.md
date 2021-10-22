@@ -2,8 +2,8 @@
 
 pandas I/O API 提供了许多读写函数，读文件的函数命名类似于`pandas.read_csv()` 返回一个 pandas 对象。对应的输出函数类似于 `DataFrame.to_csv()`。下面列举了所有的I/O方法：
 
-| 格式类型 | 格式                  | 读方法           | 写方法         |
-| -------- | --------------------- | ---------------- | -------------- |
+| 格式类型 | 格式  | 读 | 写 |
+| --- | --- | --- | --- |
 | text     | CSV                   | `read_csv`       | `to_csv`       |
 | text     | Fixed-Width Text File | `read_fwf`       |                |
 | text     | JSON                  | `read_json`      | `to_json`      |
@@ -21,4 +21,3 @@ pandas I/O API 提供了许多读写函数，读文件的函数命名类似于`p
 | binary   | Python Pickle Format  | `read_pickle`    | `to_pickle`    |
 | SQL      | SQL                   | `read_sql`       | `to_sql`       |
 | SQL      | Google Big Query      | `read_gbq`       | `to_gbq`       |
-
