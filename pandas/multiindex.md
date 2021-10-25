@@ -1,9 +1,11 @@
-# MultiIndex / advanced indexing
+# MultiIndex
 
-- [MultiIndex / advanced indexing](#multiindex--advanced-indexing)
-  - [分层索引（MultiIndex）](#%e5%88%86%e5%b1%82%e7%b4%a2%e5%bc%95multiindex)
-    - [创建 MultiIndex 对象](#%e5%88%9b%e5%bb%ba-multiindex-%e5%af%b9%e8%b1%a1)
+- [MultiIndex](#multiindex)
+  - [分层索引（MultiIndex）](#分层索引multiindex)
+    - [创建 MultiIndex 对象](#创建-multiindex-对象)
 
+2021-10-22, 12:38
+@author Jiawei Mao
 ***
 
 ## 分层索引（MultiIndex）

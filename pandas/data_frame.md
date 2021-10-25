@@ -34,7 +34,6 @@
     - [设置索引（set_index）](#设置索引set_index)
     - [重置 index（reset_index）](#重置-indexreset_index)
     - [重命名标签（rename）](#重命名标签rename)
-    - [drop](#drop)
   - [过滤](#过滤)
     - [单个布尔表达式](#单个布尔表达式)
     - [组合逻辑运算](#组合逻辑运算)
@@ -44,17 +43,19 @@
     - [删除重复值（drop_duplicates）](#删除重复值drop_duplicates)
   - [设置值](#设置值)
     - [基于标签设置（loc）](#基于标签设置loc)
-  - [添加列](#添加列)
+  - [添加](#添加)
     - [添加标量值作为列](#添加标量值作为列)
     - [通过已有列计算](#通过已有列计算)
     - [插入指定位置](#插入指定位置)
     - [已有列派生-assign](#已有列派生-assign)
+  - [删除](#删除)
+    - [使用标签删除（drop）](#使用标签删除drop)
+    - [删除缺失值](#删除缺失值)
   - [删除列](#删除列)
   - [索引和迭代](#索引和迭代)
     - [pop](#pop)
     - [iterrows](#iterrows)
     - [itertuples](#itertuples)
-    - [xs](#xs)
   - [应用函数](#应用函数)
     - [apply](#apply)
     - [应用 elementwise 函数](#应用-elementwise-函数)
@@ -72,7 +73,8 @@
   - [缺失值](#缺失值)
     - [检测缺失值（isnull）](#检测缺失值isnull)
     - [检测非缺失值（notnull）](#检测非缺失值notnull)
-    - [移除缺失值（dropna）](#移除缺失值dropna)
+    - [删除缺失值（dropna）](#删除缺失值dropna)
+    - [替换（replace）](#替换replace)
   - [参考](#参考)
 
 2020-05-19, 12:26
@@ -1387,64 +1389,6 @@ KeyError: "['C'] not found in axis"
 4  3  6
 ```
 
-### drop
-
-从行或列中删除指定标签。
-
-```py
-DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
-```
-
-通过标签名称、列名称、索引等删除行或列。当使用 MultiIndex 时，不同 level 的标签可以通过指定 level 删除。
-
-|参数|类型|说明|
-|---|---|---|
-|`labels`|标签或标签列表|用于指定删除的索引或列|
-|`axis`|0 for 'index', 1 for 'column'，默认0|指定删除行还是列|
-|`index`|标签或标签列表|指定删除的行，这样就不用指定 `axis=0`|
-|`columns`|标签或标签列表|指定删除的列，这样就不用指定 `axis=1`|
-|`inplace`|bool, default False|False 返回副本，True 原位操作，返回 `None`|
-
-例如：
-
-```py
->>> df = pd.DataFrame(np.arange(12).reshape(3, 4),
-...                  columns=['A', 'B', 'C', 'D'])
->>> df
-   A  B   C   D
-0  0  1   2   3
-1  4  5   6   7
-2  8  9  10  11
-```
-
-- 删除列
-
-```py
->>> df.drop(['B', 'C'], axis=1) # axis=1 表示删除列
-   A   D
-0  0   3
-1  4   7
-2  8  11
-```
-
-```py
->>> df.drop(columns=['B', 'C'])
-   A   D
-0  0   3
-1  4   7
-2  8  11
-```
-
-- 删除行
-
-通过 index 删除行：
-
-```py
->>> df.drop([0, 1])
-   A  B   C   D
-2  8  9  10  11
-```
-
 ## 过滤
 
 过滤和选择，从某种意义上来说是一样的。
@@ -1817,7 +1761,7 @@ viper               0       0
 sidewinder          0       0
 ```
 
-## 添加列
+## 添加
 
 ### 添加标量值作为列
 
@@ -1978,6 +1922,106 @@ A B C D
 
 第二个表达式中 `x['C']` 表示前面刚创建的子。
 
+## 删除
+
+### 使用标签删除（drop）
+
+从行或列中删除指定标签。
+
+```py
+DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
+```
+
+通过标签名称、列名称、索引等删除行或列。当使用 MultiIndex 时，不同 level 的标签可以通过指定 level 删除。
+
+`labels` 为标签或标签列表，用于指定待删除的 column 或 index labels。
+
+`axis` 指定删除行或列：
+
+- 0 or 'index' 对应行，默认；
+- 1 或 'columns' 对应列。
+
+`index` 删除 index 专用，`index=labels` 等价于 `(labels, axis=0)`。删除行时推荐。
+
+`columns` 删除列专用，`columns=labels` 等价于 `(labels, axis=1)`。
+
+`level` 用于 MultiIndex，指定删除的 index label。
+
+**例1**，删除 'B', 'C' 两列
+
+```py
+>>> df = pd.DataFrame(np.arange(12).reshape(3, 4),
+                  columns=['A', 'B', 'C', 'D'])
+>>> df
+   A  B   C   D
+0  0  1   2   3
+1  4  5   6   7
+2  8  9  10  11
+>>> df.drop(['B', 'C'], axis=1) # 等价于 drop(columns=['B', 'C'])
+   A   D
+0  0   3
+1  4   7
+2  8  11
+```
+
+**例2**，删除行
+
+```py
+>>> df
+   A  B   C   D
+0  0  1   2   3
+1  4  5   6   7
+2  8  9  10  11
+>>> df.drop([0,1]) # axis 默认为0，即默认删除行
+   A  B   C   D
+2  8  9  10  11
+```
+
+**例3**，MultiIndex 删除操作
+
+```py
+>>> midx = pd.MultiIndex(levels=[['lama', 'cow', 'falcon'],
+                             ['speed', 'weight', 'length']],
+                     codes=[[0, 0, 0, 1, 1, 1, 2, 2, 2],
+                            [0, 1, 2, 0, 1, 2, 0, 1, 2]])
+>>> df = pd.DataFrame(index=midx, columns=['big', 'small'],
+                  data=[[45, 30], [200, 100], [1.5, 1], [30, 20],
+                        [250, 150], [1.5, 0.8], [320, 250],
+                        [1, 0.8], [0.3, 0.2]])
+>>> df
+                 big  small
+lama   speed    45.0   30.0
+       weight  200.0  100.0
+       length    1.5    1.0
+cow    speed    30.0   20.0
+       weight  250.0  150.0
+       length    1.5    0.8
+falcon speed   320.0  250.0
+       weight    1.0    0.8
+       length    0.3    0.2
+>>> df.drop(index='cow', columns='small') # 删除 'cow' 行和 'small' 列
+                 big
+lama   speed    45.0
+       weight  200.0
+       length    1.5
+falcon speed   320.0
+       weight    1.0
+       length    0.3
+>>> df.drop(index='length', level=1) # 删除 level=1 的length 行
+                 big  small
+lama   speed    45.0   30.0
+       weight  200.0  100.0
+cow    speed    30.0   20.0
+       weight  250.0  150.0
+falcon speed   320.0  250.0
+       weight    1.0    0.8
+>>> 
+```
+
+### 删除缺失值
+
+参考 [dropna](#移除缺失值dropna)。
+
 ## 删除列
 
 ```py
@@ -2132,9 +2176,6 @@ Pandas(num_legs=2, num_wings=2)
 Animal(Index='dog', num_legs=4, num_wings=0)
 Animal(Index='hawk', num_legs=2, num_wings=2)
 ```
-
-### xs
-
 
 ## 应用函数
 
@@ -2690,7 +2731,7 @@ dtype: float64
 dtype: bool
 ```
 
-### 移除缺失值（dropna）
+### 删除缺失值（dropna）
 
 ```py
 DataFrame.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
@@ -2763,6 +2804,170 @@ DataFrame.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
        name        toy       born
 1    Batman  Batmobile 1940-04-25
 2  Catwoman   Bullwhip        NaT
+```
+
+### 替换（replace）
+
+```py
+DataFrame.replace(to_replace=None, value=None, inplace=False, limit=None, regex=False, method='pad')
+```
+
+将 `to_replace` 替换为 `value`。
+
+`to_place` 支持多种类型，单值类型：
+
+- str，待替换的字符串；
+- numeric，替换和 `to_replace` 相同的数字；
+- regex，匹配的正则表达式
+
+列表类型：
+
+- 如果 `to_place` 和 `value` 都是 list，它们长度必须相同；
+- 如果 `regex=True`，两个 list 中的字符串都作为 regex 解析，否则直接作为字符串解析
+
+**例1**，标量值替换
+
+```py
+>>> s = pd.Series([0, 1, 2, 3, 4])
+>>> s.replace(0, 5)
+0    5
+1    1
+2    2
+3    3
+4    4
+dtype: int64
+>>> df = pd.DataFrame({'A': [0, 1, 2, 3, 4],
+                   'B': [5, 6, 7, 8, 9],
+                   'C': ['a', 'b', 'c', 'd', 'e']})
+>>> df
+   A  B  C
+0  0  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+>>> df.replace(0, 5)
+   A  B  C
+0  5  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+```
+
+**例2**，`to_replace` 为 list 类型，`value` 为单个值，所有值被替换为指定值
+
+```py
+>>> df
+   A  B  C
+0  0  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+>>> df.replace([0, 1, 2, 3], 4)
+   A  B  C
+0  4  5  a
+1  4  6  b
+2  4  7  c
+3  4  8  d
+4  4  9  e
+```
+
+**例3**，`to_replace` 和 `value` 都是 list，两者长度相同，替换值一一对应
+
+```py
+>>> df
+   A  B  C
+0  0  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+>>> df.replace([0, 1, 2, 3], [4, 3, 2, 1])
+   A  B  C
+0  4  5  a
+1  3  6  b
+2  2  7  c
+3  1  8  d
+4  4  9  e
+```
+
+**例4**，可以不指定 `value`，用 `method` 设置值：
+
+- 'pad'
+- 'ffill'
+- 'bfill'，用后面的值替换前面需要替换的值
+- None
+
+```py
+>>> s
+0    0
+1    1
+2    2
+3    3
+4    4
+dtype: int64
+>>> s.replace([1, 2], method='bfill')
+0    0
+1    3
+2    3
+3    3
+4    4
+dtype: int64
+```
+
+**例5**，如果使用 dict 类型，可以指定替换值的对应关系
+
+```py
+>>> df
+   A  B  C
+0  0  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+>>> df.replace({0: 10, 1: 100})
+     A  B  C
+0   10  5  a
+1  100  6  b
+2    2  7  c
+3    3  8  d
+4    4  9  e
+```
+
+**例6**，使用 dict 还可以指定不同列的替换值
+
+将 A 列的 0 和 B 列的 5 替换为 100.
+
+```py
+>>> df.replace({'A': 0, 'B': 5}, 100)
+     A    B  C
+0  100  100  a
+1    1    6  b
+2    2    7  c
+3    3    8  d
+```
+
+**例7**，使用嵌套 dict，可以指定不同列不同值的替换关系
+
+将 A 列的 0 替换为 100；A 列的 4 替换为 400.
+
+```py
+>>> df
+   A  B  C
+0  0  5  a
+1  1  6  b
+2  2  7  c
+3  3  8  d
+4  4  9  e
+>>> df.replace({'A': {0: 100, 4: 400}})
+     A  B  C
+0  100  5  a
+1    1  6  b
+2    2  7  c
+3    3  8  d
+4  400  9  e
 ```
 
 ## 参考

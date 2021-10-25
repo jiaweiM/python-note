@@ -15,7 +15,6 @@
   - [DataFrame](data_frame.md)
 - [数据的索引和选择](index_select.md)
   - [boolean 索引](index_boolean.md)
-  - [where](select_where.md)
   - [query](select_query.md)
   - [Index 对象](index_object.md)
   - [set/reset index](index_set.md)
