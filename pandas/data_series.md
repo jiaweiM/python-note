@@ -12,7 +12,6 @@
     - [index](#index)
     - [values](#values)
   - [Series 常用方法](#series-常用方法)
-    - [基本数组操作](#基本数组操作)
     - [应用 Python 内置函数](#应用-python-内置函数)
   - [函数应用](#函数应用)
     - [值函数应用-apply](#值函数应用-apply)
@@ -333,11 +332,14 @@ dtype: float64
 ```
 
 - np 函数操作
-```
+
+```py
 np.exp(s)
 ```
+
 Out:
-```
+
+```py
 a    0.305749
 b    0.667405
 c    1.889713
@@ -347,11 +349,14 @@ dtype: float64
 ```
 
 - 使用 index label切片
-```
+
+```py
 s['b':'d']
 ```
+
 Out
-```
+
+```py
 b   -0.404359
 c    0.636425
 d   -0.750244
@@ -476,8 +481,6 @@ Categories (3, object): ['a', 'b', 'c']
 | s.iloc[3]          | 返回第4个值     |
 | s.iloc[start:end]  | 切片，即使超过范围也没事儿  |
 | s.sort_index()     | 按照 index label 进行排序，返回排序后的 Series，原Series不变  |
-
-### 基本数组操作
 
 ### 应用 Python 内置函数
 
@@ -659,7 +662,6 @@ def test_apply_numpy_func():
     s1 = s.apply(np.log)
 ```
 
-
 ## 查询方法
 
 ### head
@@ -729,7 +731,6 @@ Series.tail(n=5)
 - 如果 n 为负值，在返回除前 n 行的所有数据，登记员 `series[n:]`。
 
 `tail` 适合于在排序或附加数据后快速验证。
-
 
 ## 索引和选择
 

@@ -20,6 +20,7 @@
   - [set/reset index](index_set.md)
   - [返回视图还是副本](index_view_copy.md)
   - [重建索引](reindex.md)
+- [文本数据分析](text.md)
 - [MultiIndex](multiindex.md)
 - [groupby](groupby.md)
 - [IO](4_io.md)
@@ -36,7 +37,6 @@
 ## 参考
 
 - http://pandas.pydata.org/pandas-docs/stable/
-- [官方的PDF文档](pandas_0.25.1.pdf)
 - [Github pandas cookbook](https://github.com/jvns/pandas-cookbook)
 - [中文教程-中级](https://github.com/hangsz/pandas-tutorial)
 - [tutorialspoint 教程](https://www.tutorialspoint.com/python_pandas/index.htm)

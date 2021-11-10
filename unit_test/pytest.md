@@ -8,8 +8,13 @@
   - [pytest 运行后退出代码](#pytest-运行后退出代码)
   - [抛出异常](#抛出异常)
   - [fixtures](#fixtures)
+    - [fixture 示例](#fixture-示例)
+    - [fixture 可以 request 其它 fixture](#fixture-可以-request-其它-fixture)
+    - [fixture 可重复使用](#fixture-可重复使用)
+    - [autouse fixture](#autouse-fixture)
     - [setup](#setup)
     - [teardown](#teardown)
+    - [fixture scope](#fixture-scope)
   - [测试函数标记](#测试函数标记)
     - [mark 参数化测试](#mark-参数化测试)
     - [跳过测试](#跳过测试)
@@ -142,6 +147,159 @@ fixture为测试提供可靠的重复运行的代码。用于执行测试前初�
 - 测试类运行前后
 - 测试方法运行前后
 
+pytest 进入测试时，会先查看测试函数签名中的参数，然后搜索与这些参数相同名称的 fixture，如果找到，pytest 会运行这些 fixture，如果有返回值，捕获返回值并将其作为参数传递给测试函数。
+
+### fixture 示例
+
+```py
+import pytest
+
+
+class Fruit:
+    def __init__(self, name):
+        self.name = name
+        self.cubed = False
+
+    def cube(self):
+        self.cubed = True
+
+
+class FruitSalad:
+    def __init__(self, *fruit_bowl):
+        self.fruit = fruit_bowl
+        self._cube_fruit()
+
+    def _cube_fruit(self):
+        for fruit in self.fruit:
+            fruit.cube()
+
+
+# Arrange
+@pytest.fixture
+def fruit_bowl():
+    return [Fruit("apple"), Fruit("banana")]
+
+
+def test_fruit_salad(fruit_bowl):
+    # Act
+    fruit_salad = FruitSalad(*fruit_bowl)
+
+    # Assert
+    assert all(fruit.cubed for fruit in fruit_salad.fruit)
+```
+
+在该示例中，`test_fruit_salad` 需要 `fruit_bowl`，当 pytest 看到方法签名 `test_fruit_salad(fruit_bowl)`，会先执行 `fruit_bowl` fixture 函数，并将其返回值传递给 `test_fruit_salad`。
+
+如果手动该过程，大致过程人如下：
+
+```py
+def fruit_bowl():
+    return [Fruit("apple"), Fruit("banana")]
+
+
+def test_fruit_salad(fruit_bowl):
+    # Act
+    fruit_salad = FruitSalad(*fruit_bowl)
+
+    # Assert
+    assert all(fruit.cubed for fruit in fruit_salad.fruit)
+
+
+# Arrange
+bowl = fruit_bowl()
+test_fruit_salad(fruit_bowl=bowl)
+```
+
+### fixture 可以 request 其它 fixture
+
+pytest 的 fixture 系统十分灵活，它允许我们将复杂的需求转换为简单的函数，依次指定依赖项：
+
+```py
+# contents of test_append.py
+import pytest
+
+
+# Arrange
+@pytest.fixture
+def first_entry():
+    return "a"
+
+
+# Arrange
+@pytest.fixture
+def order(first_entry):
+    return [first_entry]
+
+
+def test_string(order):
+    # Act
+    order.append("b")
+
+    # Assert
+    assert order == ["a", "b"]
+```
+
+对 fixture 指定所需 fixture 和 test 一样。如果手动执行该过程，大致如下：
+
+```py
+def first_entry():
+    return "a"
+
+
+def order(first_entry):
+    return [first_entry]
+
+
+def test_string(order):
+    # Act
+    order.append("b")
+
+    # Assert
+    assert order == ["a", "b"]
+
+
+entry = first_entry()
+the_list = order(first_entry=entry)
+test_string(order=the_list)
+```
+
+### fixture 可重复使用
+
+### autouse fixture
+
+"Autouse" fixture 所有测试自动依赖，不需要通过参数显式指定。使用 `autouse=True` 指定。
+
+```py
+# contents of test_append.py
+import pytest
+
+
+@pytest.fixture
+def first_entry():
+    return "a"
+
+
+@pytest.fixture
+def order(first_entry):
+    return []
+
+
+@pytest.fixture(autouse=True)
+def append_first(order, first_entry):
+    return order.append(first_entry)
+
+
+def test_string_only(order, first_entry):
+    assert order == [first_entry]
+
+
+def test_string_and_int(order, first_entry):
+    order.append(2)
+    assert order == [first_entry, 2]
+```
+
+其中 `append_first` 是 autousee fixture。因为是自动执行，两个测试都受其影响。
+
 ### setup
 
 下面演示测试方法运行前后的fixture：
@@ -202,6 +360,10 @@ def smtp():
 ```
 
 在测试结束后，`smpt` 在 `with`语句结束后自动关闭。
+
+### fixture scope
+
+
 
 ## 测试函数标记
 
