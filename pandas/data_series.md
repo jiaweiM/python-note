@@ -34,6 +34,7 @@
   - [缺失值处理](#缺失值处理)
     - [dropna](#dropna)
     - [isnull](#isnull)
+    - [isna](#isna)
     - [fillna](#fillna)
   - [数学运算](#数学运算)
     - [add](#add)
@@ -1352,6 +1353,16 @@ Oregon         True
 Texas          True
 dtype: bool
 ```
+
+### isna
+
+```py
+Series.isna()
+```
+
+检测缺失值。
+
+
 
 ### fillna
 

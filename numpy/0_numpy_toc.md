@@ -27,3 +27,4 @@
 - [包含一个较为复杂例子的教程](https://github.com/rougier/numpy-tutorial)
 - Learning NumPy Array, book
 - [tutorialpoint 教程](https://www.tutorialspoint.com/numpy/index.htm)
+- [100 numpy exercises](https://github.com/rougier/numpy-100)

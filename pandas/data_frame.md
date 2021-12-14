@@ -73,7 +73,9 @@
   - [缺失值](#缺失值)
     - [检测缺失值（isnull）](#检测缺失值isnull)
     - [检测非缺失值（notnull）](#检测非缺失值notnull)
+    - [检测缺失值（isna）](#检测缺失值isna)
     - [删除缺失值（dropna）](#删除缺失值dropna)
+    - [fillna](#fillna)
     - [替换（replace）](#替换replace)
   - [参考](#参考)
 
@@ -2731,6 +2733,14 @@ dtype: float64
 dtype: bool
 ```
 
+### 检测缺失值（isna）
+
+```py
+DataFrame.isna()
+```
+
+
+
 ### 删除缺失值（dropna）
 
 ```py
@@ -2804,6 +2814,85 @@ DataFrame.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
        name        toy       born
 1    Batman  Batmobile 1940-04-25
 2  Catwoman   Bullwhip        NaT
+```
+
+### fillna
+
+```py
+DataFrame.fillna(value=None, method=None, axis=None, inplace=False, limit=None, downcast=None)
+```
+
+使用指定方法填充 NA/NaN 值。
+
+`value` 支持多种形式：
+
+- 标量值；
+- 指定特定 column 替换值得 `dict`, `Series` 或 `DataFrame`；  
+
+对后一种参数形式，不在 dict 中的值不会被替换。
+
+`method` 指定填充的方式：
+
+- `backffill`/`bfill`，使用下一个有效值向上填充；
+- `ffill` / `pad`，使用上一个有效值向下填充。
+- `None`，默认行为。
+
+`axis`：
+
+- 0 或 `index`
+- 1 或 `columns`
+
+`limit`, int：
+
+- 如果指定了 `method`，这是向前/向后连续填充 NaN 值得最大数目。换句话说，如果连续 NaN 值个数超过这个值，则只部分填充 NaN 值;
+- 如果未指定 `method`，则是沿这个轴最大条目数。
+- 如果不是 `None`，则必须大于 0.
+
+**例1**，将 所有 NaN 替换为 0
+
+```py
+>>> import pandas as pd
+>>> import numpy as np
+>>> df = pd.DataFrame([[np.nan, 2, np.nan, 0],
+                       [3, 4, np.nan, 1],
+                       [np.nan, np.nan, np.nan, 5],
+                       [np.nan, 3, np.nan, 4]],
+                     columns=list("ABCD"))
+>>> df.fillna(0)
+     A    B    C  D
+0  0.0  2.0  0.0  0
+1  3.0  4.0  0.0  1
+2  0.0  0.0  0.0  5
+3  0.0  3.0  0.0  4
+```
+
+**例2**，向前填充：
+
+```py
+>>> df
+     A    B   C  D
+0  NaN  2.0 NaN  0
+1  3.0  4.0 NaN  1
+2  NaN  NaN NaN  5
+3  NaN  3.0 NaN  4
+>>> df.fillna(method="ffill")
+    A   B   C   D
+0   NaN 2.0 NaN 0
+1   3.0 4.0 NaN 1
+2   3.0 4.0 NaN 5
+3   3.0 3.0 NaN 4
+```
+
+**例3**，替换 column 'A', 'B', 'C' 和 'D' 列的 NaN 值，分别替换为 0， 1， 2， 3：
+
+```py
+>>> values = {"A": 0, "B": 1, "C": 2, "D": 3}
+>>> df.fillna(value=values)
+    A   B   C   D
+0   0.0 2.0 2.0 0
+1   3.0 4.0 2.0 1
+2   0.0 1.0 2.0 5
+3   0.0 3.0 2.0 4
 ```
 
 ### 替换（replace）

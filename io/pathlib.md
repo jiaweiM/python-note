@@ -30,6 +30,7 @@
       - [PurePath.as_uri()](#purepathas_uri)
       - [PurePath.is_absolute()](#purepathis_absolute)
   - [实路径](#实路径)
+    - [Path.exists](#pathexists)
   - [os 中对应工具](#os-中对应工具)
   - [方法和属性](#方法和属性)
     - [PurePath.joinpath](#purepathjoinpath)
@@ -500,6 +501,23 @@ True
 ## 实路径
 
 实路径（concrete path）是纯路径（pure path）的子类，额外提供了 IO 功能。
+
+### Path.exists
+
+path 是否指向已有的文件或目录：
+
+```python
+>>> Path('.').exists()
+True
+>>> Path('setup.py').exists()
+True
+>>> Path('/etc').exists()
+True
+>>> Path('nonexistentfile').exists()
+False
+```
+
+如果 path 指向 symlink，`exists()` 返回 symlink 是否指向已有文件或目录。
 
 ## os 中对应工具
 

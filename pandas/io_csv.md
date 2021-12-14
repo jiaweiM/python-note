@@ -11,6 +11,7 @@
     - [delimiter](#delimiter)
     - [delim_whitespace](#delim_whitespace)
     - [header](#header)
+    - [names](#names)
   - [引号、压缩和文件格式](#引号压缩和文件格式)
     - [thousands](#thousands)
     - [encoding](#encoding)
@@ -233,6 +234,14 @@ boolean, default False.
 空白（如 ' ' 或 '\t'） 是否当作分隔符。等价于设置 `sep='\s+'`。如果启用该选项，不能同时使用 `delimiter` 选项。
 
 ### header
+
+### names
+
+column names 列表。不允许重复值。
+
+如果文件包含标题行，应该显式传递 `header=0` 覆盖列名。
+
+
 
 ## 引号、压缩和文件格式
 
