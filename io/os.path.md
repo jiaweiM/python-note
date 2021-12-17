@@ -24,7 +24,7 @@
 os.path.join(path, *paths)
 ```
 
-`os.path.join(path, *paths)` 连接一个或多个路径。将 `path` 和后面的所有 `*paths` 以目录分隔符 `os.sep` 分隔。如果其中有绝对路径，则舍弃该绝对路径前面的所有组分。
+连接一个或多个路径。将 `path` 和后面的所有 `*paths` 以目录分隔符 `os.sep` 分隔。如果其中有绝对路径，则舍弃该绝对路径前面的所有组分。
 
 ## os.path.exists
 
