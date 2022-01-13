@@ -10,8 +10,6 @@
   - [镜像](#镜像)
     - [查看镜像](#查看镜像)
   - [环境](#环境)
-    - [创建环境](#创建环境)
-    - [激活环境](#激活环境)
     - [查看环境列表](#查看环境列表)
     - [回到默认环境](#回到默认环境)
     - [删除环境](#删除环境)
@@ -24,7 +22,12 @@
     - [删除包](#删除包)
   - [命令](#命令)
     - [conda config](#conda-config)
+    - [conda create](#conda-create)
+    - [conda info](#conda-info)
     - [conda search](#conda-search)
+    - [conda update](#conda-update)
+      - [目标环境](#目标环境)
+      - [输出、提示和流控制选项](#输出提示和流控制选项)
   - [参考](#参考)
 
 2021-11-03, 13:17
@@ -95,66 +98,6 @@ conda config --set show_channel_urls yes
 ```
 
 ## 环境
-
-使用 conda 创建、导出、列出以及更新环境。
-
-### 创建环境
-
-创建的环境默认放在 conda 目录下的 `envs` 目录。
-
-1. 创建环境
-
-```bash
-conda create --name myenv
-```
-
-其中 `myenv` 为环境名称，可替换为自定义名称。
-
-2. 当 conda 询问是否继续，输入 `y`
-
-```bash
-proceed ([y]/n)?
-```
-
-3. 创建指定 Python 版本的环境
-
-```bash
-conda create -n myenv python=3.8
-```
-
-4. 创建包含指定依赖项的环境
-
-```bash
-conda create -n myenv scipy
-```
-
-或者：
-
-```bash
-conda create -n myenv python
-conda install -n myenv scipy
-```
-
-5. 创建包含指定版本依赖项的环境
-
-```bash
-conda create -n myenv scipy=0.15.0
-```
-
-或者：
-
-```bash
-conda create -n myenv python
-conda install -n myenv scipy=0.15.0
-```
-
-6. 创建包含指定版本 Python 及多个依赖项的环境
-
-### 激活环境
-
-```sh
-conda activate myenv
-```
 
 ### 查看环境列表
 
@@ -304,6 +247,46 @@ conda config --show
 conda config --add channels conda-canary
 ```
 
+### conda create
+
+创建新的 conda 环境。
+
+```sh
+usage: conda create [-h] [--clone ENV] [-n ENVIRONMENT | -p PATH] [-c CHANNEL]
+                    [--use-local] [--override-channels]
+                    [--repodata-fn REPODATA_FNS] [--strict-channel-priority]
+                    [--no-channel-priority] [--no-deps | --only-deps]
+                    [--no-pin] [--copy] [-C] [-k] [--offline] [-d] [--json]
+                    [-q] [-v] [-y] [--download-only] [--show-channel-urls]
+                    [--file FILE] [--no-default-packages] [--dev]
+                    [package_spec [package_spec ...]]
+```
+
+- `package_spec`
+
+位置参数，指定要在 conda 环境中安装或更新的包。
+
+- `-n, --name`
+
+新创建的环境名称。
+
+**例 1**，创建环境 `myenv`，其中包含 sqlite 包
+
+```sh
+conda create -n myenv sqlite
+```
+
+### conda info
+
+显示当前 conda 的信息。
+
+```sh
+usage: conda info [-h] [--json] [-v] [-q] [-a] [--base] [-e] [-s]
+                  [--unsafe-channels]
+```
+
+
+
 ### conda search
 
 搜索包，并显示相关信息。
@@ -320,6 +303,60 @@ usage: conda search [-h] [--envs] [-i] [--subdir SUBDIR] [-c CHANNEL]
 ```sh
 
 ```
+
+### conda update
+
+更新 conda 包到最新的兼容版本。
+
+该命令后可以跟着包命令列表，并将它们全部更新为与环境中其它包兼容的最新版本。
+
+conda 视图安装所请求包的最新版本，为了实现这一点，它可能会更新一些已经安装的包，或者安装额外的包。要阻止现有包的更新，使用 `--no-update-deps` 选项，这可能强制 conda 安装所请求包的旧版本，并且不会组织安装额外的依赖包。
+
+```sh
+usage: conda update [-h] [-n ENVIRONMENT | -p PATH] [-c CHANNEL] [--use-local]
+                    [--override-channels] [--repodata-fn REPODATA_FNS]
+                    [--strict-channel-priority] [--no-channel-priority]
+                    [--no-deps | --only-deps] [--no-pin] [--copy] [-C] [-k]
+                    [--offline] [-d] [--json] [-q] [-v] [-y] [--download-only]
+                    [--show-channel-urls] [--file FILE] [--force-reinstall]
+                    [--freeze-installed | --update-deps | -S | --update-all | --update-specs]
+                    [--clobber]
+                    [package_spec [package_spec ...]]
+```
+
+- `package_spec`
+
+位置参数，需要在 conda 环境中安装或更新的包。
+
+**例1**，将 conda 更新到最新版本
+
+```sh
+conda update -n base conda
+```
+
+**例2**，更新所有包
+
+将所有包更新到最新版本（只安装稳定、兼容的版本）。
+
+```sh
+conda update anaconda
+```
+
+#### 目标环境
+
+- `-n, --name`
+
+环境名称。
+
+- `-p, --prefix`
+
+环境的完整路径。
+
+#### 输出、提示和流控制选项
+
+`-y, --yes`
+
+不要弹出确认选项，直接安装。
 
 ## 参考
 
