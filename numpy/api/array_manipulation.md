@@ -6,6 +6,7 @@
   - [修改数组形状](#修改数组形状)
     - [reshape](#reshape)
   - [修改维度数](#修改维度数)
+  - [合并数组](#合并数组)
   - [参考](#参考)
 
 2021-05-26, 10:44
@@ -75,6 +76,12 @@ np.reshape(a, (3,-1))       # the unspecified value is inferred to be 2
 |方法|功能|
 |---|---|
 |[expand_dims(a, axis)](numpy.expand_dims.md)|扩展数组 shape|
+
+## 合并数组
+
+|方法|功能|
+|---|---|
+|[vstack(tup)](numpy.vstack.md)|按顺序垂直（逐行）堆叠数组|
 
 ## 参考
 
