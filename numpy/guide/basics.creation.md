@@ -24,9 +24,12 @@
   - [矩阵](#矩阵)
   - [矩阵类](#矩阵类)
   - [参考](#参考)
+  - [参考](#参考-1)
 
 2021-06-23, 14:45, v1.1
 ***
+
+> 以同时参考 [创建数组 API](../api/api.routines.array-creation.md)
 
 ## 简介
 
@@ -476,3 +479,8 @@ array([0, 0, 0, 0, 0])
 
 - [Array creation routines](https://numpy.org/doc/stable/reference/routines.array-creation.html)
 - [Array creation](https://numpy.org/doc/stable/user/basics.creation.html#arrays-creation)
+
+
+## 参考
+
+- https://numpy.org/devdocs/user/basics.creation.html
