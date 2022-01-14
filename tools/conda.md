@@ -6,7 +6,6 @@
     - [conda 命令](#conda-命令)
     - [conda package](#conda-package)
       - [.conda 文件格式](#conda-文件格式)
-  - [安装](#安装)
   - [镜像](#镜像)
     - [查看镜像](#查看镜像)
   - [环境](#环境)
@@ -14,12 +13,6 @@
     - [回到默认环境](#回到默认环境)
     - [删除环境](#删除环境)
   - [Python 管理](#python-管理)
-  - [包管理](#包管理)
-    - [查看已安装包](#查看已安装包)
-    - [检索包](#检索包)
-    - [安装包](#安装包)
-    - [更新包](#更新包)
-    - [删除包](#删除包)
   - [命令](#命令)
     - [conda config](#conda-config)
     - [conda create](#conda-create)
@@ -72,9 +65,6 @@ conda 包只包含文件（包括符号链接），目录不包括在内。
 .conda 文件格式是在 conda 4.7 引入的用于替换 tarball 的格式，更紧凑，因此更快。
 
 .conda 文件格式由一个外部的、未压缩的 zip 格式和两个内部压缩的 .tar 文件组成。
-
-
-## 安装
 
 ## 镜像
 
@@ -148,76 +138,6 @@ conda activate snakes
 conda info --envs
 ```
 
-## 包管理
-
-### 查看已安装包
-
-```bash
-conda list
-```
-
-### 检索包
-
-检索包 SciPy：
-
-```bash
-conda search scipy
-```
-
-### 安装包
-
-- 安装包如 SciPy 到指定环境 "myenv":
-
-```bash
-conda install --name myenv scipy
-```
-
-- 如果不指定环境名称，即 `--name myenv` ，包会包装到当前环境：
-
-```bash
-conda install scipy
-```
-
-- 安装指定版本的包
-
-```bash
-conda install scipy=0.15.0
-```
-
-- 同时安装多个包
-
-```bash
-conda install scipy curl
-```
-
-> **WARNING**:  最好一次安装所有的包，以便同时安装所有依赖项。
-
-安装多个指定版本的包：
-
-```bash
-conda install scipy=0.15.0 curl=7.26.0
-```
-
-### 更新包
-
-```bash
-# 更新conda，保持conda最新
-conda update conda
-
-# 更新anaconda
-conda update anaconda
-
-# 更新python
-conda update python
-# 假设当前环境是python 3.4, conda会将python升级为3.4.x系列的当前最新版本
-```
-
-### 删除包
-
-```bash
-conda remove numpy
-```
-
 ## 命令
 
 ### conda config
@@ -284,8 +204,6 @@ conda create -n myenv sqlite
 usage: conda info [-h] [--json] [-v] [-q] [-a] [--base] [-e] [-s]
                   [--unsafe-channels]
 ```
-
-
 
 ### conda search
 

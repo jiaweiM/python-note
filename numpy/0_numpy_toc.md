@@ -16,6 +16,12 @@
 - [方法总结]
 - [QA](numpy_qas.md)
 
+## API
+
+- [数组操作](api/array_manipulation.md)
+
+
+
 ## References
 
 - [NumPy User Guide](https://numpy.org/devdocs/)

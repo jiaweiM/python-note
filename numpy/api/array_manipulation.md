@@ -5,6 +5,8 @@
     - [copyto](#copyto)
   - [修改数组形状](#修改数组形状)
     - [reshape](#reshape)
+  - [修改维度数](#修改维度数)
+  - [参考](#参考)
 
 2021-05-26, 10:44
 @Jiawei Mao
@@ -67,3 +69,13 @@ np.reshape(a, (3,-1))       # the unspecified value is inferred to be 2
 #        [3, 4],
 #        [5, 6]])
 ```
+
+## 修改维度数
+
+|方法|功能|
+|---|---|
+|[expand_dims(a, axis)](numpy.expand_dims.md)|扩展数组 shape|
+
+## 参考
+
+- https://numpy.org/devdocs/reference/routines.array-manipulation.html
