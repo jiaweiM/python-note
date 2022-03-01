@@ -5,7 +5,7 @@
   - [更新 pip](#更新-pip)
   - [包管理](#包管理)
     - [安装包](#安装包)
-    - [从 Wheels 安装](#从-wheels-安装)
+    - [安装 Wheels](#安装-wheels)
     - [查看包](#查看包)
     - [卸载包](#卸载包)
     - [options](#options)
@@ -57,11 +57,11 @@ pip install SomePackage==1.0.4 # 安装特定版本
 pip install 'SomePackage>=1.0.4' # 执行最低版本
 ```
 
-### 从 Wheels 安装
+### 安装 Wheels
 
-"Wheel" 是一种 Python 内置存档格式，与从源码构建、安装相比，使用 wheel 要快许多。
+"Wheel" 是一种 Python 内置的存档格式，与从源码构建、安装相比，使用 wheel 要快许多。
 
-```bash
+```sh
 pip install SomePackage-1.0-py2.py3-none-any.whl
 ```
 

@@ -11,15 +11,16 @@
 - [数组操作](array_man.md)
 - [数据类型](04_dtype.md)
 - [排序](search_sort.md)
-- [线性代数运算](linear_algebra.md)
 - [随机数](random.md)
 - [方法总结]
 - [QA](numpy_qas.md)
 
+
 ## API
 
 - [数组操作](api/array_manipulation.md)
-
+- [数学操作](routines/math.md)
+- [线性代数](routines/linalg.md)
 
 
 ## References

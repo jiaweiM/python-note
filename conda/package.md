@@ -3,6 +3,7 @@
 - [包管理](#包管理)
   - [查看已安装包](#查看已安装包)
   - [检索包](#检索包)
+    - [可更新包](#可更新包)
   - [安装包](#安装包)
     - [安装相似包](#安装相似包)
     - [从 Anaconda.org 安装](#从-anacondaorg-安装)
@@ -22,6 +23,13 @@ conda list
 
 ## 检索包
 
+```sh
+usage: conda search [-h] [--envs] [-i] [--subdir SUBDIR] [-c CHANNEL]
+                    [--use-local] [--override-channels]
+                    [--repodata-fn REPODATA_FNS] [-C] [-k] [--offline]
+                    [--json] [-v] [-q]
+```
+
 - 检索 SciPy 包
 
 ```sh
@@ -38,6 +46,12 @@ conda search --override-channels --channel defaults scipy
 
 ```sh
 conda search --override-channels --channel http://conda.anaconda.org/mutirri iminuit
+```
+
+### 可更新包
+
+```sh
+conda search --outdated
 ```
 
 ## 安装包
@@ -149,3 +163,4 @@ conda remove numpy
 ## 参考
 
 - https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
+- https://docs.conda.io/projects/conda/en/latest/commands/search.html

@@ -142,4 +142,3 @@ cython_debug/
 media
 static
 __init__.cpython-38.pyc
-src/__pycache__/__init__.cpython-38.pyc

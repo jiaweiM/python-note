@@ -2,6 +2,7 @@
 
 - [os.path](#ospath)
   - [简介](#简介)
+  - [os.path..dirname](#ospathdirname)
   - [os.path.join](#ospathjoin)
   - [os.path.exists](#ospathexists)
   - [参考](#参考)
@@ -17,6 +18,14 @@
 - 在 Windows 系统上部分文件名不能用字节表示，此时应该使用字符串表示所有文件名。
 
 和 Unix shell 不同，Python 不执行任何自动路径扩展，如果需要类似 shell 的路径扩展，可以显示调用 `expanduser()`和 `expandvars()`之类的函数。
+
+## os.path..dirname
+
+```python
+os.path.dirname(path)
+```
+
+返回路径 `path` 的目录名称。这是 `split()` 函数返回的 pair 的第一个元素。
 
 ## os.path.join
 

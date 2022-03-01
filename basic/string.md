@@ -13,6 +13,7 @@
     - [rfind](#rfind)
     - [capitalize](#capitalize)
     - [encode](#encode)
+    - [endswith](#endswith)
     - [isalpha](#isalpha)
     - [index](#index)
     - [isdigit](#isdigit)
@@ -226,6 +227,9 @@ assert x == b'My name is St\xc3\xa5le'
 |`'replace'`|使用问号替代无法编码的字符|
 |`'xmlcharrefreplace'`|使用 xml 字符替代无法编码的字符|
 
+### endswith
+
+
 
 ### isalpha
 
@@ -281,7 +285,7 @@ assert x.find('th') == 2
 static str.maketrans(x[, y[, z]])
 ```
 
-创建一个映射表，该映射表可用在 `translate()` 中以替换指定字符。
+创建一个映射表，该映射表可用在 [translate()](#translate)中以替换指定字符。
 
 | 参数 | 说明 |
 | --- | --- |
@@ -354,13 +358,20 @@ str.strip([chars])
 
 ### translate
 
-```py
+```python
 str.translate(table)
 ```
 
-将字符串中的指定字符以 `table` 中的字符替换，返回替换后的副本。
+将字符串中的指定字符以 `table` 中的字符替换，返回替换后的副本。`table` 是实现 `__getitem__()` 索引方法的对象，通常为 `mapping` 或 `sequence`。
 
-使用 `maketrans()` 方法创建映射表。如果使用 dict 作为参数，则需要使用 UNICODE 编码，而不是字符。
+当使用 Unicode 号（整数）进行索引时，`table` 对象可以执行以下任何操作：
+
+- 返回 Unicode 号或字符串；
+- 将字符映射到一个或多个其它字符；
+- 返回 None，从而将对应字符从字符串中移除；
+- 抛出 `LookupError`，以将字符映射到自身。
+
+使用 [maketrans()](#maketrans) 方法创建映射表。如果使用 dict 作为参数，则需要使用 UNICODE 编码，而不是字符。
 
 - 例：将 "S" 替换为 "P"
 

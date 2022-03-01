@@ -5,6 +5,7 @@
   - [创建环境](#创建环境)
   - [使用 environment.yml 文件创建环境](#使用-environmentyml-文件创建环境)
   - [激活环境](#激活环境)
+  - [删除环境](#删除环境)
   - [参考](#参考)
 
 2022-01-13, 09:13
@@ -84,6 +85,18 @@ conda create --no-default-packages -n myenv python
 
 ```sh
 conda activate myenv
+```
+
+## 删除环境
+
+```sh
+conda remove --name myenv --all
+```
+
+也可以使用：
+
+```sh
+conda env remove --name myenv
 ```
 
 ## 参考
