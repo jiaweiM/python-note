@@ -201,7 +201,7 @@ Python 操作文件的步骤：
 ### open
 
 ```python
-f = open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
 ```
 
 `open` 函数打开文件，返回对应的文件对象。如果打开失败抛出 `OSError`。

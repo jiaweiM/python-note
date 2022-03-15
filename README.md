@@ -8,13 +8,8 @@
   - [Python 标准库](#python-标准库)
   - [单元测试](#单元测试)
   - [开发工具](#开发工具)
-  - [TensorFlow](#tensorflow)
   - [scikit-learn](#scikit-learn)
-  - [PyTorch](#pytorch)
-  - [Keras](#keras)
   - [SciPy](#scipy)
-  - [Apache MXNet](#apache-mxnet)
-  - [Theano](#theano)
   - [Bokeh](#bokeh)
   - [XGBoost](#xgboost)
   - [Gensim](#gensim)
@@ -94,52 +89,17 @@
 - [pyCharm](tools/pycharm.md)
 - [VS Code](tools/vscode_python.md)
 
-## TensorFlow
-
-“TensorFlow 是一个使用数据流图进行数值计算的开源软件库。图形节点表示数学运算，而图形边缘表示在它们之间流动的多维数据阵列（张量）。这种灵活的体系结构使用户可以将计算部署到桌面、服务器或移动设备中的一个或多个 CPU/GPU，而无需重写代码。 ”
-
-[GitHub 地址](https://github.com/tensorflow/tensorflow)
-
 ## scikit-learn
 
 scikit-learn 是一个基于 NumPy，SciPy 和 matplotlib 的机器学习 Python 模块。它为数据挖掘和数据分析提供了简单而有效的工具。SKLearn 所有人都可用，并可在各种环境中重复使用。
 
 [GitHub 地址](https://github.com/scikit-learn/scikit-learn)
 
-## PyTorch
-
-PyTorch 是一个 Python 包，提供两个高级功能：
-
-- 具有强大的 GPU 加速度的张量计算（如 NumPy）
-- 基于磁带的自动编程系统构建的深度神经网络
-
-你可以重复使用自己喜欢的 Python 软件包，如 NumPy，SciPy 和 Cython，以便在需要时扩展 PyTorch。”
-
-[GitHub 地址](https://github.com/pytorch/pytorch)
-
-## Keras
-
-Keras 是一个高级神经网络 API，用 Python 编写，能够在 TensorFlow，CNTK 或 Theano 之上运行。它旨在实现快速实验，能够以最小的延迟把想法变成结果，这是进行研究的关键。
-
-[GitHub 地址](https://github.com/keras-team/keras)
-
 ## SciPy
 
 SciPy（发音为”Sigh Pie“）是数学、科学和工程方向的开源软件，包含统计、优化、集成、线性代数、傅立叶变换、信号和图像处理、ODE 求解器等模块。相对 NumPy 扩展了许多功能。
 
 [GitHub 地址](https://github.com/scipy/scipy)
-
-## Apache MXNet
-
-Apache MXNet（孵化）是一个深度学习框架，旨在提高效率和灵活性，让你可以混合符号和命令式编程，以最大限度地提高效率和生产力。 MXNet 的核心是一个动态依赖调度程序，可以动态地自动并行化符号和命令操作。
-
-[GitHub 地址](https://github.com/apache/incubator-mxnet)
-
-## Theano
-
-Theano 是一个 Python 库，让你可以有效地定义、优化和评估涉及多维数组的数学表达式。它可以使用 GPU 并实现有效的符号区分。
-
-[GitHub 地址](https://github.com/Theano/Theano)
 
 ## Bokeh
 

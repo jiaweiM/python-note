@@ -17,6 +17,7 @@
   - [list](#list)
   - [map](#map)
   - [min](#min)
+  - [ord](#ord)
   - [pow](#pow)
   - [print](#print)
   - [range](#range)
@@ -416,6 +417,15 @@ min(arg1, arg2, *args[, key])
 
 如果出现多个相同的最小值，返回第一次出现的值。
 
+## ord
+
+```python
+ord(c)
+```
+
+对一个 Unicode 字符，返回该字符的 Unicode 整数编码。例如，`ord('a')` 返回整数 97，`ord('€')` 返回 8364.
+
+`ord` 是 `chr()` 的逆操作。
 
 ## pow
 

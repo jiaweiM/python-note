@@ -6,6 +6,7 @@
     - [重命名导入](#重命名导入)
     - [from...import](#fromimport)
     - [导入所有定义](#导入所有定义)
+    - [相对导入](#相对导入)
   - [Python 模块搜索路径](#python-模块搜索路径)
   - [重载模块](#重载模块)
   - [dir() 函数](#dir-函数)
@@ -103,6 +104,45 @@ print("The value of pi is", pi)
 ```
 
 使用 `*` 导入了除下划线开头命名的所有内容。
+
+### 相对导入
+
+使用相对导入，很容易出现错误 `ImportError: attempted relative import with no known parent package`。
+
+加载 Python 文件的方法有两种：
+
+- 作为顶级脚本加载
+- 作为模块加载
+
+如果直接执行，则该文件作为顶级脚本加载。如果在其它文件中使用 `import` 语句导入，则是模块。一次只能有一个顶级脚本。
+
+**命名**
+
+加载文件时，会给该文件一个名称（`__name__` 属性）。如果作为顶级脚本加载，其名称为 `__main__`；如果作为模块加载，其名称为文件名加上包的前缀。
+
+例如：
+
+```python
+package/
+    __init__.py
+    subpackage1/
+        __init__.py
+        moduleX.py
+    moduleA.py
+```
+
+如果导入 `moduleX`，其名称为 `package.subpackage1.moduleX`；如果导入 `moduleA`，其名称为 `package.moduleA`。
+
+然而，如果在命令行直接运行 `moduleX`，其名称为 `__main__`；如果直接运行 `moduleA`，其名称也是 `__main__`。即，如果模块作为顶层脚本运行，它会丢失常规名称，取而代之的是 `__main__`。
+
+**不是从模块所在的包访问模块**
+
+还有一个问题，模块的名称取决于它是直接从它所在的目录导入，还是通过包导入。导入相同目录或子目录下的模块时会有差别。例如，如果在目录 `package/subpackage1` 启动 Python 解释器，然后 `import moduleX`，此时 `moduleX` 的名称为 `moduleX`，而不是 `package.subpackage1.moduleX`。这是因为当解释器你以交互式方式进入时，Python 会将当前目录添加到搜索路径，如果 Python 在当前路径中找到要导入的模块，就不知道该目录是包的一部分，因此包的信息也不会出现在模块名称中。
+
+**相对导入**
+
+如果模块的名称为 `__main__`，则不被作为在 package 中，因为也没 parent package，此时使用 `from .. import` 语句就会出错。
+
 
 ## Python 模块搜索路径
 
