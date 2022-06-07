@@ -14,8 +14,6 @@
     - [删除环境](#删除环境)
   - [Python 管理](#python-管理)
   - [命令](#命令)
-    - [conda config](#conda-config)
-    - [conda create](#conda-create)
     - [conda info](#conda-info)
     - [conda search](#conda-search)
     - [conda update](#conda-update)
@@ -139,62 +137,6 @@ conda info --envs
 ```
 
 ## 命令
-
-### conda config
-
-该命令用于修改配置文件 .condarc。默认写入用户 .condarc 文件（/home/docs/.condarc）。
-
-选项：
-
-```sh
-usage: conda config [-h] [--json] [-v] [-q] [--system | --env | --file FILE]
-                    [--show [SHOW [SHOW ...]] | --show-sources | --validate |
-                    --describe [DESCRIBE [DESCRIBE ...]] | --write-default]
-                    [--get [KEY [KEY ...]] | --append KEY VALUE | --prepend
-                    KEY VALUE | --set KEY VALUE | --remove KEY VALUE |
-                    --remove-key KEY | --stdin]
-```
-
-**例1**，显示所有配置信息
-
-```sh
-conda config --show
-```
-
-**例2**，添加 `conda-canary` channel:
-
-```sh
-conda config --add channels conda-canary
-```
-
-### conda create
-
-创建新的 conda 环境。
-
-```sh
-usage: conda create [-h] [--clone ENV] [-n ENVIRONMENT | -p PATH] [-c CHANNEL]
-                    [--use-local] [--override-channels]
-                    [--repodata-fn REPODATA_FNS] [--strict-channel-priority]
-                    [--no-channel-priority] [--no-deps | --only-deps]
-                    [--no-pin] [--copy] [-C] [-k] [--offline] [-d] [--json]
-                    [-q] [-v] [-y] [--download-only] [--show-channel-urls]
-                    [--file FILE] [--no-default-packages] [--dev]
-                    [package_spec [package_spec ...]]
-```
-
-- `package_spec`
-
-位置参数，指定要在 conda 环境中安装或更新的包。
-
-- `-n, --name`
-
-新创建的环境名称。
-
-**例 1**，创建环境 `myenv`，其中包含 sqlite 包
-
-```sh
-conda create -n myenv sqlite
-```
 
 ### conda info
 

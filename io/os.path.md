@@ -5,6 +5,7 @@
   - [os.path..dirname](#ospathdirname)
   - [os.path.join](#ospathjoin)
   - [os.path.exists](#ospathexists)
+  - [os.path.realpath](#ospathrealpath)
   - [参考](#参考)
 
 2021-05-31, 09:52
@@ -42,6 +43,18 @@ os.path.exists(path)
 ```
 
 检测 `path` 是否指向已有路径或打开的文件描述符。对断开的符号链接，返回 False。在一些平台上，如果没有在被请求的文件上执行 `os.stat()` 的权限，这个函数也可能返回 `False`，即时该路径物理上存在。
+
+## os.path.realpath
+
+```python
+os.path.realpath(path, *, strict=False)
+```
+
+返回指定文件名的规范路径，消除路径中的符号链接。
+
+如果路径不存在，或者遇到循环符号链接，并且 `strict` 为 `True`，则抛出 `OSError`。如果 `strict` 为 `False`，则尽可能解析路径，余下部分直接放在末尾，不检查路径是否存在。
+
+
 
 ## 参考
 

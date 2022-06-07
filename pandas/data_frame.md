@@ -38,6 +38,7 @@
     - [单个布尔表达式](#单个布尔表达式)
     - [组合逻辑运算](#组合逻辑运算)
     - [isin](#isin)
+    - [filter](#filter)
   - [重复值](#重复值)
     - [查找重复值（duplicated）](#查找重复值duplicated)
     - [删除重复值（drop_duplicates）](#删除重复值drop_duplicates)
@@ -1549,6 +1550,17 @@ dtype: bool
 0    4
 dtype: int64
 ```
+
+### filter
+
+```py
+DataFrame.filter(items=None, like=None, regex=None, axis=None)
+```
+
+根据指定的索引标签对行或列取子集。
+
+> 该方法不对 DataFrame 的内容进行过滤，而是应用于索引标签。
+
 
 ## 重复值
 

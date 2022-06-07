@@ -4,8 +4,8 @@
   - [总结](#总结)
     - [数学函数](#数学函数)
     - [字符串函数](#字符串函数)
-  - [ascii](#ascii)
   - [abs](#abs)
+  - [ascii](#ascii)
   - [all](#all)
   - [any](#any)
   - [enumerate](#enumerate)
@@ -45,6 +45,8 @@ Python 解释器内置了许多函数，如下表所示：
 
 |函数|功能|
 |---|---|
+| [abs(x)](#abs) | 对整数或浮点数返回绝对值；对复数，返回模|
+
 | ascii(object)  | As `repr()`, return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using \x, \u or \U excapes. This generates a string similar to the returned by `repr|()` in Python 2. |
 | dir(a_moduleName)     | 返回当前模块下所有定义的命名(方法和变量)   |
 | enumerate() | 返回可迭代对象索引和对应数据  |
@@ -71,7 +73,7 @@ Python 解释器内置了许多函数，如下表所示：
 | -------- | -------- |
 | round(number[, ndigits]) | rounds the number, you can also specify precision | in the second argument |
 | power(a, b)              | Return a raise to the power of b                  |
-| abs(x)                   | 对整数或浮点数返回绝对值；对复数，返回模          |
+
 | max(x1, x2, …, xn)       | Return largest value among supplied arguments     |
 | min(x1, x2, …, xn)       | Returns smallest value among supplied arguments   |
 
@@ -108,17 +110,13 @@ Python 解释器内置了许多函数，如下表所示：
 | map                      | 以 iterable 和 function 为参数，将 function 作用在 iterable 对象上，返回一个新的 iterable对象 |
 | filter                   | 以 predicate 函数和 iterable 为参数，过滤 iterable 后返回一个新的 iterable |
 
-
-
-## ascii
-
-[`ascii(object)`](../src/python_test/builtin_func/ascii_test.py)
-
-功能和 `repr()` 类似，返回对象可打印形式的字符串表示，但是对 `repr()` 返回字符串中的非 ASCII 字符，使用 `\x`, `\u` 或 `\U` 进行转义。和 Python 2 中 `repr()` 返回的字符串类似。
-
 ## abs
 
-如果 x 为整数或浮点数，返回数值的绝对值；若为复数，返回模。
+```python
+abs(x)
+```
+
+如果 x 为整数或浮点数，返回数值的绝对值；若为复数，返回模；也可以是实现 `__abs__()` 的对象。
 
 - 对数值，返回绝对值
 
@@ -138,6 +136,14 @@ assert abs(complex) == 5
 ```
 
 - 如果 `x` 定义了 `__abs__()` 函数，`abs(x)` 返回 `x.__abs__()`.
+
+
+## ascii
+
+[`ascii(object)`](../src/python_test/builtin_func/ascii_test.py)
+
+功能和 `repr()` 类似，返回对象可打印形式的字符串表示，但是对 `repr()` 返回字符串中的非 ASCII 字符，使用 `\x`, `\u` 或 `\U` 进行转义。和 Python 2 中 `repr()` 返回的字符串类似。
+
 
 ## all
 

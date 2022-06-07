@@ -447,5 +447,4 @@ class TestClass(object):
 ## 参考
 
 - [官方文档](https://docs.pytest.org/en/latest/contents.html)
-- [简易教程](http://pythontesting.net/framework/pytest/pytest-introduction/)
 - [Tutorial](https://semaphoreci.com/community/tutorials/testing-python-applications-with-pytest)
