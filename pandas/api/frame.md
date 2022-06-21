@@ -4,6 +4,9 @@
   - [总结](#总结)
   - [索引、选择、标签操作](#索引选择标签操作)
     - [drop](#drop)
+  - [绘图](#绘图)
+    - [plot](#plot)
+    - [plot.hist](#plothist)
   - [参考](#参考)
 
 ## 总结
@@ -139,6 +142,69 @@ cow    speed    30.0   20.0
 falcon speed   320.0  250.0
        weight    1.0    0.8
 ```
+
+## 绘图
+
+### plot
+
+```py
+DataFrame.plot(*args, **kwargs)
+```
+
+使用 `Series` 或 `DataFrame` 绘图。
+
+使用 `plotting.backend` 选择指定的后端绘图，默认为 matplotlib。
+
+|参数|类型|说明|
+|---|---|---|
+|
+
+### plot.hist
+
+Last updated: 2022-06-13, 14:28
+
+```py
+Series.plot.hist(by=None, bins=10, **kwargs)
+```
+
+使用 DataFrame 的 column 数据绘制直方图。
+
+直方图是数据分布的表示。该函数将数据分为多个 `bins`，并将所有 bins 绘制到一个 `matplotlib.axes.Axes`。
+
+**返回**：直方图对象，`matplotlib.AxesSubplot`。
+
+|参数|类型|说明|
+|---|---|---|
+|`by`|str or sequence, optional|DataFrame 中要分组的 column|
+|`bins`|int, default 10|直方图的 bin 数|
+|`**kwargs`||[DataFrame.plot()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html) 中额外的关键字参数|
+
+- 绘制两个直方图
+
+掷骰子 6000 次，每个点数出现次数的期望值为 1000。但是掷骰子两次，并将点数加和，分布会大不相同。下面用直方图描述该分布。
+
+```py
+>>> df = pd.DataFrame(
+...     np.random.randint(1, 7, 6000),
+...     columns = ['one'])
+>>> df['two'] = df['one'] + np.random.randint(1, 7, 6000)
+>>> ax = df.plot.hist(bins=12, alpha=0.5)
+```
+
+![](images/2022-06-13-14-19-51.png)
+
+- 使用 `by` 参数绘制分组直方图
+
+使用 `gender` 列分组。
+
+```py
+>>> age_list = [8, 10, 12, 14, 72, 74, 76, 78, 20, 25, 30, 35, 60, 85]
+>>> df = pd.DataFrame({"gender": list("MMMMMMMMFFFFFF"), "age": age_list})
+>>> ax = df.plot.hist(column=["age"], by="gender", figsize=(10, 8))
+```
+
+![](images/2022-06-13-14-24-42.png)
+
 
 ## 参考
 

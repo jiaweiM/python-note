@@ -2,12 +2,12 @@
 
 - [pip](#pip)
   - [简介](#简介)
+  - [pip 命令](#pip-命令)
   - [更新 pip](#更新-pip)
-  - [包管理](#包管理)
-    - [安装包](#安装包)
+  - [安装包](#安装包)
     - [安装 Wheels](#安装-wheels)
-    - [查看包](#查看包)
-    - [卸载包](#卸载包)
+  - [查看包](#查看包)
+  - [卸载包](#卸载包)
     - [options](#options)
       - [`--user`](#--user)
   - [pip 镜像](#pip-镜像)
@@ -20,7 +20,8 @@
     - [命令行接口](#命令行接口)
   - [参考](#参考)
 
-2020-04-13, 05:42
+Last updated: 2022-06-21, 14:23
+@author Jiawei Mao
 ****
 
 ## 简介
@@ -30,6 +31,18 @@ Python 打包系统的核心是 Python Packaging Index (PyPI)。PyPI 是一个�
 pip 是 Python 包管理工具。
 
 Python 2>=2.7.9 和 Python 3 >= 3.4 自动安装了 pip，
+
+## pip 命令
+
+```bash
+py -m pip <command> [options]
+```
+
+**选项**
+
+|选项|说明|
+|---|---|
+|`-q, --quiet`|减少输出。选项是加性的，最多用三次，对应 WARNING, ERROR, CRITICAL 日志级别|
 
 ## 更新 pip
 
@@ -45,17 +58,18 @@ pip install --upgrade pip
 python -m pip install -U pip
 ```
 
-## 包管理
-
-### 安装包
+## 安装包
 
 pip 支持从 PyPI、版本控制、本地项目和分发文件安装包。安装命令：
 
 ```bash
-pip install SomePackage # 默认安装最新版
-pip install SomePackage==1.0.4 # 安装特定版本
-pip install 'SomePackage>=1.0.4' # 执行最低版本
+py -m pip install SomePackage            # 默认安装最新版
+py -m pip install SomePackage==1.0.4     # 安装特定版本
+py -m pip install 'SomePackage>=1.0.4'   # 指定最低版本
 ```
+
+|选项|说明|
+|---|----|
 
 ### 安装 Wheels
 
@@ -65,7 +79,63 @@ pip install 'SomePackage>=1.0.4' # 执行最低版本
 pip install SomePackage-1.0-py2.py3-none-any.whl
 ```
 
-### 查看包
+## 查看包
+
+```bash
+py -m pip list [options]
+```
+
+列出已安装软件包，包括可编辑文件。
+
+软件包按字母顺序不区分大小写列出。
+
+|选项  |说明  |
+|---------|---------|
+`-o, --outdated`|List outdated packages
+
+`-u, --uptodate`|List uptodate packages
+
+`-e, --editable`|List editable projects.
+
+-l, --local
+If in a virtualenv that has global access, do not list globally-installed packages.
+
+--user
+Only output packages installed in user-site.
+
+--path <path>
+Restrict to the specified installation path for listing packages (can be used multiple times).
+
+--pre
+Include pre-release and development versions. By default, pip only finds stable versions.
+
+--format <list_format>
+Select the output format among: columns (default), freeze, or json
+
+--not-required
+List packages that are not dependencies of installed packages.
+
+--exclude-editable
+Exclude editable package from output.
+
+--include-editable
+Include editable package from output.
+
+--exclude <package>
+Exclude specified package from the output
+
+
+-i, --index-url <url>
+Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.
+
+--extra-index-url <url>
+Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.
+
+--no-index
+Ignore package index (only looking at --find-links URLs instead).
+
+-f, --find-links <url>
+If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that’s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
 
 - 显示已安装包
 
@@ -91,7 +161,7 @@ pip show 'package_name'
 pip install --upgrade packagename
 ```
 
-### 卸载包
+## 卸载包
 
 ```bash
 pip uninstall packagename

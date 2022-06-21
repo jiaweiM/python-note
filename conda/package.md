@@ -13,6 +13,7 @@
   - [参考](#参考)
 
 2022-01-13, 14:28
+@author Jiawei Mao
 ***
 
 ## 查看已安装包
@@ -130,29 +131,44 @@ conda list
 
 ## 更新包
 
-使用 `conda update` 命令检查更新。如果 conda 发现有更新可用，我提示是否安装更新。
+Last updated: 2022-06-16, 14:27
 
-**例1**，更新指定包
+使用 `conda update` 命令检查更新。如果 conda 发现有更新可用，会提示是否安装更新。
+
+- 更新指定包
 
 ```sh
 conda update biopython
 ```
 
-**例2**，更新 Python
+- 更新 Python
 
 ```sh
 conda update python
 ```
 
-**例3**，更新 conda 自身
+- 更新 conda 自身
 
 ```sh
 conda update conda
 ```
 
-> conda 只能更新到该系列的最高版本，因此，Python 2.7 可以更新到 2.x 系统的最高版本，3.6 可以更新到 3.x 系列的最高版本。
+> conda 只能更新到该系列的最高版本，因此，Python 3.8 智能更新到 3.x 系列的最高版本。
 
+- 更新 Anaconda 元包
 
+```powershell
+conda update conda
+conda update anaconda
+```
+
+不管需要更新哪个包，conda 都会比较版本，然后报告可安装版本。如果没有更新可用，conda 提示 "All requested packages are already installed."。
+
+如果找到了新版本，并且你希望更新，输入 `y` 进行更新：
+
+```powershell
+Proceed ([y]/n)? y
+```
 
 ## 删除包
 
