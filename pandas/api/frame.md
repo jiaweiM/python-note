@@ -2,12 +2,17 @@
 
 - [DataFrame](#dataframe)
   - [总结](#总结)
-  - [索引、选择、标签操作](#索引选择标签操作)
-    - [drop](#drop)
-  - [绘图](#绘图)
-    - [plot](#plot)
-    - [plot.hist](#plothist)
+  - [copy](#copy)
+  - [drop](#drop)
+  - [dropna](#dropna)
+  - [isna](#isna)
+  - [plot](#plot)
+  - [plot.hist](#plothist)
+  - [sum](#sum)
   - [参考](#参考)
+
+@author Jiawei Mao
+***
 
 ## 总结
 
@@ -16,9 +21,107 @@
 |删除行|[drop](#drop)|
 |删除列|[drop](#drop)|
 
-## 索引、选择、标签操作
+## copy
 
-### drop
+Last updated: 2022-06-21, 16:02
+
+```python
+DataFrame.copy(deep=True)
+```
+
+复制对象的索引和数据。
+
+- 当 `deep=True` 时（默认），使用调用对象的数据和索引创建一个新的对象。对拷贝数据或索引的修改不影响原对象。
+- 当 `deep=False` 时，也创建一个新的对象，但不复制调用的数据或索引，只复制对数据和索引的引用。对原始数据的任何修改都会反映到浅拷贝中，反之亦然。
+
+|参数|类型|说明|
+|---|---|---|
+|`deep`|bool, default True|是否深拷贝，包括数据和索引。`deep=False` 不复制索引和数据|
+
+返回 `copy`，`Series` 或 `DataFrame`，类型与调用对象匹配。
+
+> [!NOTE]
+> `deep=True` 时，会复制数据，但不会递归复制 Python 对象，只复制对象的引用。这与标准库的 *copy.deepcopy* 递归复制对象数据不用。
+> 当 `deep=True` 时复制 `Index` 对象，出于性能考虑，不复制底层的 numpy 数组。因为 `Index` 是不可变对象，因此可以安全的共享底层数据，不需要拷贝。
+
+- `Series` 复制
+
+```python
+>>> import pandas as pd
+>>> s = pd.Series([1, 2], index=["a", "b"])
+>>> s
+a    1
+b    2
+dtype: int64
+>>> s_copy = s.copy()
+>>> s_copy
+a    1
+b    2
+dtype: int64
+```
+
+- 浅拷贝 vs. 深拷贝
+
+```python
+>>> s = pd.Series([1, 2], index=["a", "b"])
+>>> deep = s.copy()
+>>> shallow = s.copy(deep=False)
+```
+
+- 浅拷贝与原对象共享数据和索引
+
+```python
+>>> s is shallow
+False
+>>> s.values is shallow.values and s.index is shallow.index
+True
+```
+
+- 深拷贝拥有自己的数据和索引副本
+
+```python
+>>> s is deep
+False
+>>> s.values is deep.values or s.index is deep.index
+False
+```
+
+- 更新浅拷贝数据影响原对象，深拷贝不影响
+
+```python
+>>> s[0] = 3
+>>> shallow[1] = 4
+>>> s
+a    3
+b    4
+dtype: int64
+>>> shallow
+a    3
+b    4
+dtype: int64
+>>> deep
+a    1
+b    2
+dtype: int64
+```
+
+- 复制包含 Python 对象的对象时，深拷贝复制数据，但不会递归复制，更新嵌套数据会影响原对象
+
+```python
+>>> s = pd.Series([[1, 2], [3, 4]])
+>>> deep = s.copy()
+>>> s[0][0] = 10
+>>> s
+0    [10, 2]
+1     [3, 4]
+dtype: object
+>>> deep
+0    [10, 2]
+1     [3, 4]
+dtype: object
+```
+
+## drop
 
 Last updated: 2022-06-13, 13:26
 
@@ -143,9 +246,67 @@ falcon speed   320.0  250.0
        weight    1.0    0.8
 ```
 
-## 绘图
+## dropna
 
-### plot
+```python
+DataFrame.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
+```
+
+删除缺失值。
+
+
+
+## isna
+
+Last updated: 2022-06-21, 16:44
+
+```python
+DataFrame.isna()
+```
+
+检测缺失值。
+
+返回一个相同大小的 boolean 对象，指示对应位置的值是否为 NA。NA 值，如 `None`, `numpy.Nan`，映射为 `True`，其它值映射为 `False`。空字符串 `''` 或 `numpy.inf` 不判定为 NA 值，除非设置 `pandas.options.mode.use_inf_as_na = True`。
+
+返回：`DataFrame`，原 `DataFrame` 中每个元素的 bool 掩码，指示该元素是否为 NA 值。
+
+- 显示 DataFrame 中哪些是 NA
+
+```python
+>>> df = pd.DataFrame(dict(age=[5, 6, np.NaN],
+                   born=[pd.NaT, pd.Timestamp('1939-05-27'),
+                         pd.Timestamp('1940-04-25')],
+                   name=['Alfred', 'Batman', ''],
+                   toy=[None, 'Batmobile', 'Joker']))
+>>> df
+   age       born    name        toy
+0  5.0        NaT  Alfred       None
+1  6.0 1939-05-27  Batman  Batmobile
+2  NaN 1940-04-25              Joker
+>>> df.isna()
+     age   born   name    toy
+0  False   True  False   True
+1  False  False  False  False
+2   True  False  False  False
+```
+
+- 显示 Series 中哪些是 NA
+
+```python
+>>> ser = pd.Series([5, 6, np.NaN])
+>>> ser
+0    5.0
+1    6.0
+2    NaN
+dtype: float64
+>>> ser.isna()
+0    False
+1    False
+2     True
+dtype: bool
+```
+
+## plot
 
 ```py
 DataFrame.plot(*args, **kwargs)
@@ -159,7 +320,7 @@ DataFrame.plot(*args, **kwargs)
 |---|---|---|
 |
 
-### plot.hist
+## plot.hist
 
 Last updated: 2022-06-13, 14:28
 
@@ -204,6 +365,13 @@ Series.plot.hist(by=None, bins=10, **kwargs)
 ```
 
 ![](images/2022-06-13-14-24-42.png)
+
+## sum
+
+```python
+DataFrame.sum(axis=None, skipna=True, level=None, numeric_only=None, min_count=0, **kwargs)
+```
+
 
 
 ## 参考

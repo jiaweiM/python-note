@@ -3,6 +3,7 @@
 - [Python IO](#python-io)
   - [简介](#简介)
   - [函数总结](#函数总结)
+  - [高层模块接口](#高层模块接口)
   - [控制台 IO](#控制台-io)
     - [input](#input)
     - [print](#print)
@@ -16,12 +17,14 @@
     - [readlines](#readlines)
     - [seek](#seek)
     - [tell](#tell)
+  - [类层次结构](#类层次结构)
   - [实例](#实例)
     - [逐行读取](#逐行读取)
     - [二进制读写](#二进制读写)
     - [读写文本数据](#读写文本数据)
     - [StringIO](#stringio)
     - [删除文件](#删除文件)
+  - [参考](#参考)
 
 2021-05-31, 09:23
 ***
@@ -29,6 +32,12 @@
 ## 简介
 
 文件是磁盘上命名地址，用于存储相关信息，用于将数据永久存储在非易失性存储器中。随机存取存储器（random access memory, RAM）是易失性的，计算机关机后数据丢失，因此我们都是使用文件存储数据。
+
+`io` 是 Python 处理各种的 I/O 的主要模块。主要有三种类型的I/O：text I/O, binary I/O 和 raw I/O。对这些通用类别，都有各自的支持存储对象，一般称为文件对象（file object），或者称为流（stream）或类文件（file-like）对象。
+
+每个具体的流对象包含各自功能，可以只读、只写或同时支持读写。还支持任意随机访问（arbitray random access），或者仅允许顺序访问。
+
+所有流都会考虑数据类型。例如，如果将 `str` 对象
 
 ## 函数总结
 
@@ -44,6 +53,10 @@
 | os.rename(old_name, new_name) | 重命名文件或目录 |
 | os.rmdir(dir) | 移除文件或目录。如果目录包含文件，则移除目录失败 |
 | os.rmtree(dir) | 移除目录及其内的所有文件 |
+
+## 高层模块接口
+
+
 
 ## 控制台 IO
 
@@ -201,10 +214,11 @@ Python 操作文件的步骤：
 ### open
 
 ```python
-open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+open(file, mode='r', buffering=-1, encoding=None, 
+           errors=None, newline=None, closefd=True, opener=None)
 ```
 
-`open` 函数打开文件，返回对应的文件对象。如果打开失败抛出 `OSError`。
+`open` 函数打开文件，返回对应的文件对象。打开失败抛出 `OSError`。
 
 1. file
 
@@ -407,6 +421,10 @@ with open('helloworld.txt', encoding='utf-8') as file:
     assert file.tell() == 1
 ```
 
+## 类层次结构
+
+I/O 流的实现为类层次结构。
+
 ## 实例
 
 ### 逐行读取
@@ -502,3 +520,7 @@ os.remove("demofile.txt")
 import os
 os.rmdir("myfolder")
 ```
+
+## 参考
+
+- https://docs.python.org/3/library/io.html
