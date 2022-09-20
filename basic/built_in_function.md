@@ -11,6 +11,8 @@
   - [enumerate](#enumerate)
   - [filter](#filter)
   - [format](#format)
+  - [getattr](#getattr)
+  - [hasattr](#hasattr)
   - [int](#int)
   - [isinstance](#isinstance)
   - [len](#len)
@@ -36,7 +38,7 @@
     - [unzipping](#unzipping)
   - [参考](#参考)
   
-2021-05-27, 13:38
+Last updated: 2022-09-20, 15:00
 ***
 
 ## 总结
@@ -46,11 +48,12 @@ Python 解释器内置了许多函数，如下表所示：
 |函数|功能|
 |---|---|
 | [abs(x)](#abs) | 对整数或浮点数返回绝对值；对复数，返回模|
-
 | ascii(object)  | As `repr()`, return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using \x, \u or \U excapes. This generates a string similar to the returned by `repr|()` in Python 2. |
 | dir(a_moduleName)     | 返回当前模块下所有定义的命名(方法和变量)   |
 | enumerate() | 返回可迭代对象索引和对应数据  |
+|[getattr](#getattr) |查询对象的属性值|
 | globals()   | 以 dict 的形式返回当前 global names 及其值|
+|[hasattr](#hasattr) |对象是否包含指定名称属性|
 | float([x]) | |
 | id()       | 返回一个Python对象的内存地址|
 | int(str)   | 将字符串或另一个数转换为整数，截断，而不是四舍五入 |
@@ -255,6 +258,27 @@ assert not any([])
 `format_spec` 默认为空字符串，结果等效于 `str(value)`。
 
 调用 `format(value, format_spec)` 被转换为 `type(value.__format__(value, format_spec))`，在搜索 `value` 的 `__format__()` 方法时，直接跳过了实例字典。
+
+## getattr
+
+```python
+getattr(object, name[, default])
+```
+
+返回 `object` 的命名属性的值，`name` 为 string 类型。
+
+- 如果 `name` 是 `object` 的属性名称，返回属性值。例如 `getattr(x, 'foobar')` 等价于 `x.foobar`
+- 如果 `object` 没有名称为 `name` 的属性，如果设置了 `default`，则返回 `default`，否则抛出 `AttributeError`。
+
+## hasattr
+
+```python
+hasattr(object, name)
+```
+
+`object` 参数为一个对象，`name` 为字符串。如果 `object` 包含名称为 `name` 的 attribute，返回 True，否则返回 False。
+
+通过 `getattr(object, name)` 实现，通过是否抛出 `AttributeError` 判断。
 
 ## int
 
