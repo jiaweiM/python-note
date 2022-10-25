@@ -2,9 +2,11 @@
 
 - [itertools](#itertools)
   - [简介](#简介)
-  - [总结](#总结)
+    - [组合迭代器](#组合迭代器)
   - [zip_longest](#zip_longest)
   - [groupby](#groupby)
+  - [permutations](#permutations)
+  - [参考](#参考)
 
 2021-06-22, 09:52
 ***
@@ -12,8 +14,6 @@
 ## 简介
 
 `itertools` 模块实现了许多迭代器构造函数，标准化了一套快速的、内存高效的工具集。
-
-## 总结
 
 | 函数         | 功能                                               |
 | ------------ | -------------------------------------------------- |
@@ -24,7 +24,15 @@
 | chain        | 将多个 iterable 合并为一个                         |
 | accumulate   | 进行累加操作，每次累加得到一个值，放在 iterable 中 |
 | product      | 两个 iterable 对象，进行自由组合                   |
-| permutations | itetable 里元素自由组合                            |
+
+### 组合迭代器
+
+|迭代器|参数|结果|
+|---|---|---|
+|`product()`|p, q, … [repeat=1]|笛卡尔乘积，等价于嵌套 for 循环，元素可以重复|
+|`permutations()`|p[, r]|长度为 r 的 tuples，所有可能顺序组合，元素不重复|
+|combinations()|p, r|长度为 r 的 tuples，按顺序排列，元素不重复|
+
 
 ## zip_longest
 
@@ -123,3 +131,66 @@ for row in rows:
 {'date': '07/01/2012', 'address': '5412 N CLARK'}
 {'date': '07/01/2012', 'address': '4801 N BROADWAY'}
 ```
+
+## permutations
+
+Last updated: 2022-10-25, 10:19
+
+```python
+itertools.permutations(iterable, r=None)
+```
+
+返回 `iterable` 中元素的排列，长度为 `r`。
+
+如果 `r` 未指定或为 `None`，则 `r` 默认为 `iterable` 的长度，生成所有可能的全长排列。
+
+返回的排列 tuples 根据输入 `iterable` 按字典顺序生成。因此，如果输入的 `iterable` 已排序，则生成的组合 tuples 按排序后的顺序生成。
+
+元素根据其位置而不是值来判断唯一性。因此，如果输入元素是唯一的，那么在每次排列中都不会有重复值。
+
+该函数大致等价于：
+
+```python
+def permutations(iterable, r=None):
+    # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
+    # permutations(range(3)) --> 012 021 102 120 201 210
+    pool = tuple(iterable)
+    n = len(pool)
+    r = n if r is None else r
+    if r > n:
+        return
+    indices = list(range(n))
+    cycles = list(range(n, n-r, -1))
+    yield tuple(pool[i] for i in indices[:r])
+    while n:
+        for i in reversed(range(r)):
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i+1:] + indices[i:i+1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield tuple(pool[i] for i in indices[:r])
+                break
+        else:
+            return
+```
+
+`permutations()` 的代码也可以表示为 `product()` 的子序列，只需过滤掉包含重复元素的条目：
+
+```python
+def permutations(iterable, r=None):
+    pool = tuple(iterable)
+    n = len(pool)
+    r = n if r is None else r
+    for indices in product(range(n), repeat=r):
+        if len(set(indices)) == r:
+            yield tuple(pool[i] for i in indices)
+```
+
+返回 tuple 个数为 $n!/(n-r)!$，其中 $0\le r \le n$。
+
+## 参考
+
+- https://docs.python.org/3/library/itertools.html
