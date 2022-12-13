@@ -3,6 +3,7 @@
 - [assertions](#assertions)
   - [使用 assert 语句](#使用-assert-语句)
   - [异常断言](#异常断言)
+  - [参考](#参考)
 
 2022-03-19, 23:05
 ***
@@ -114,3 +115,7 @@ pytest.raises(ExpectedException, func, *args, **kwargs)
 def test_f():
     f()
 ```
+
+## 参考
+
+- https://docs.pytest.org/en/latest/how-to/assert.html

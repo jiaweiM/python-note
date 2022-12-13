@@ -26,7 +26,11 @@ PyInstaller 分析 `myscript.py` 脚本，并：
 
 ## 选项
 
+### 如何生成
 
+- `-F, --onefile`
+
+创建单个可执行文件。
 
 ## 加密 Python Bytecode
 
