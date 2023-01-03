@@ -2,7 +2,6 @@
 
 ## 学习笔记
 
-- [快速入门](quickstart.md)
 - [简介](02_intro.md)
 - [数组对象](array.md)
 - [创建数组](array_create.md)
@@ -15,6 +14,9 @@
 - [方法总结]
 - [QA](numpy_qas.md)
 
+## 指南
+
+- [NumPy 快速入门](guide/quickstart.md)
 
 ## API
 
