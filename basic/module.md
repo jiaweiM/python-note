@@ -12,6 +12,11 @@
   - [dir() 函数](#dir-函数)
   - [作为脚本执行模块](#作为脚本执行模块)
   - [编译 Python 文件](#编译-python-文件)
+  - [Package](#package)
+    - [Importing \* From a Package](#importing--from-a-package)
+    - [包内引用](#包内引用)
+    - [Packages in Multiple Directories](#packages-in-multiple-directories)
+  - [参考](#参考)
 
 ***
 
@@ -277,3 +282,127 @@ Python 会检查源文件与编译版的修改日期，以确定编译版是否�
 优化后的模块后缀为 `.pyo`。
 
 - 来自 `.pyc`或 `.pyo` 文件的程序不比来自 `.py` 文件运行快，`.pyc` 或 `.pyo` 只是加载快。
+
+## Package
+
+包（Package）是结构化 Python 命名空间的发放时。例如，模块 `A.B` 表示包 `A` 包含一个名为 `B` 的子模块。
+
+假设你需要设计一组模块（即一个 package）来统一处理声音文件和声音数据。有许多不同的声音文件格式，如 `.wav`, .`aiff`, `.au`，因此你可能需要创建和维护越来越多的模块集合，以便在不同格式之间进行转换。你可能还需要定义用于处理声音数据的不同操作，如混音、添加回声、应用均衡器函数等。下面是包的可能结构：
+
+```txt
+sound/                          Top-level package
+      __init__.py               Initialize the sound package
+      formats/                  Subpackage for file format conversions
+              __init__.py
+              wavread.py
+              wavwrite.py
+              aiffread.py
+              aiffwrite.py
+              auread.py
+              auwrite.py
+              ...
+      effects/                  Subpackage for sound effects
+              __init__.py
+              echo.py
+              surround.py
+              reverse.py
+              ...
+      filters/                  Subpackage for filters
+              __init__.py
+              equalizer.py
+              vocoder.py
+              karaoke.py
+              ...
+```
+
+导入包时，Python 在 `sys.path` 目录中搜索包的子目录。
+
+`__init__.py` 文件用于标识该目录为 Python package。这样可以避免通用名称目录（如 `string`）无意中隐藏了 module 搜索路径中其它有效 module。`__init__.py` 可以是空文件，也可以在其中定义 package 的初始化代码，或设置 `__all__` 变量。
+
+对定义的 Package，可以从中导入单个模块，例如：
+
+```python
+import sound.effects.echo
+```
+
+这将加载子模块 `sound.effects.echo`，使用需要引用全名：
+
+```python
+sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+```
+
+导入子模块的另一种方式：
+
+```python
+from sound.effects import echo
+```
+
+这也会加载子模块 `echo`，使用也不需要 package 前缀：
+
+```python
+echo.echofilter(input, output, delay=0.7, atten=4)
+```
+
+还可以直接导入所需的函数或变量：
+
+```python
+from sound.effects.echo import echofilter
+```
+
+这样也会加载子模块 `echo`，并且可以直接说会用 `echofilter()` 函数：
+
+```python
+echofilter(input, output, delay=0.7, atten=4)
+```
+
+> **NOTE:** 使用 `from package import item`，其中 `item` 可以是子模块，也可以包中定义的函数、类或变量。`import` 语句会先测试包中是否定义有 item；如果没有，则尝试将其作为模块加载；如果没找到，则抛出 `ImportError`。
+
+相反，当使用 `import item.subitem.subsubitem` 语法，除了最后一项前面都必须是 package；最后一项可以是 module 或 package，但不能是前一项中定义的类、函数或变量。
+
+### Importing * From a Package
+
+调用 `from sound.effects import *` 理想情况下，会找到包中所有的子模块，然后导入它们。这可能很耗时，也可能产生不必要的副作用。
+
+唯一的解决方案是包的作者提供包的显式索引。`import` 语句使用以下约定：如果 `__init__.py` 定义了一个名为 `__all__` 的 list，则 `from package import *` 认为该 list 包含所有需要导入的模块。当包更新时，由作者更新该列表。例如，文件 `sound/effects/__init__.py` 可以包含如下代码：
+
+```python
+__all__ = ["echo", "surround", "reverse"]
+```
+
+这表示 `from sound.effects import *` 会从 `sound.effects` 包导入这三个子模块。
+
+如果没有定义 `__all__`，`from sound.effects import *` **并不会**将 `sound.effects` 包中的所有子模块导入当前命名空间；它只确保导入 `sound.effects` 包，执行 `__init__.py` 中的初始化代码，然后导入包中定义的名称。包括 `__init__.py` 中定义的名称以及显式加载的子模块（由单独的 import 语句导入），例如：
+
+```python
+import sound.effects.echo
+import sound.effects.surround
+from sound.effects import *
+```
+
+这里会导入 `echo` 和 `surround` 模块。
+
+并不建议使用 `import *`，推荐使用 `from package import specific_submodule`。
+
+### 包内引用
+
+当一个 package 包含多个 subpackages，可以使用绝对导入来引用同级的 subpackage。例如，如果 `sound.filters.vocoder` 需要使用 sound.effects 中的 `echo` 模块，可以使用 `from sound.effects import echo`。
+
+也可以使用 `from module import name` 形式的相对导入。使用 `.` 或 `..` 来表示当前或 parent package。以 `surround` 模块为例：
+
+```python
+from . import echo
+from .. import formats
+from ..filters import equalizer
+```
+
+相对导入基于当前模块的名称。因为 main 模块的名称总是 `"__main__"`，所以打算用作 Python 程序的 main 模块必须总是使用相对导入。
+
+### Packages in Multiple Directories
+
+Package 支持一个特殊属性 `__path__`，这是一个 list，在代码执行前被初始化为包含 package `__init__.py` 文件的目录名称。可以修改这个变量，这样会影响以后对 package 中的模块和 subpackages 的搜索。
+
+这个特性通常不使用，但是它可以用来扩展 package 中的模块集合。
+
+## 参考
+
+- https://docs.python.org/3/tutorial/modules.html

@@ -8,11 +8,8 @@
   - [使用相对路径导入子模块](#使用相对路径导入子模块)
   - [QAs](#qas)
     - [ImportError: attempted relative import with no known parent package](#importerror-attempted-relative-import-with-no-known-parent-package)
+  - [参考](#参考)
 
-2020-04-17, 11:55
-添加更多内容。
-
-2020-04-12, 16:31
 ***
 
 ## 简介
@@ -195,3 +192,7 @@ import grok # Error (not found)
 1. 使用 `-m` 命令运行脚本；
 2. 手动设置 `__package__`；
 3. 使用绝对引用。
+
+## 参考
+
+- https://docs.python.org/3/tutorial/modules.html#importing-from-a-package
