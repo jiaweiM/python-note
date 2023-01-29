@@ -1,22 +1,22 @@
 # pickle
 
 - [pickle](#pickle)
-  - [简介](#简介)
-  - [序列化字符串](#序列化字符串)
-  - [Stream](#stream)
-  - [重构对象问题](#重构对象问题)
-  - [Unpicklable 对象](#unpicklable-对象)
-  - [循环引用](#循环引用)
-  - [参考](#参考)
+  - [1. 简介](#1-简介)
+  - [2. 序列化字符串](#2-序列化字符串)
+  - [3. Stream](#3-stream)
+  - [4. 重构对象问题](#4-重构对象问题)
+  - [5. Unpicklable 对象](#5-unpicklable-对象)
+  - [6. 循环引用](#6-循环引用)
+  - [7. 参考](#7-参考)
 
 Last updated: 2023-01-17, 15:12
 ****
 
-## 简介
+## 1. 简介
 
-`pickle` 模块实现了序列化方法，将 Python 对象转换为字节序列。生成的字节序列可以传输或存储，并可以重构为相同的新对象。
+`pickle` 模块提供了序列化方法，可将 Python 对象转换为字节序列。生成的字节序列可以传输或存储，并可以重构为相同的新对象。
 
-## 序列化字符串
+## 2. 序列化字符串
 
 下面使用 `dumps()` 序列化字符串，将其转换为字节。序列化的数据结构完全由内置类型组成：
 
@@ -68,9 +68,9 @@ EQUAL?: True
 
 新构建的对象与原始对象**相等但是不相同**。
 
-## Stream
+## 3. Stream
 
-pickle 提供了处理文件流的功能，可以将多个对象写入流，然后从流中读取它们，不需要提前知道这些对象的数目和大小。
+pickle 支持文件流，可以将多个对象写入流，然后从流中读取对象，不需要提前知道这些对象的数目和大小。使用 `dump()` 和 `load()` 这两个方法。
 
 ```python
 class SimpleObject:
@@ -126,7 +126,7 @@ READ : last (tsal)
 
 除了存储数据，pickle 也可以用来进行进程间通信。例如，`os.fork()` 和 `os.pipe()` 可以用来建立从一个管道读取指令并将就结果写入另一个管道的工作进程。
 
-## 重构对象问题
+## 4. 重构对象问题
 
 在使用自定义类时，被 pickle 的类在读取 pickle 进程的命名空间中必须可访问。即被 pickle 的是类实例，不是类定义。类名用于在 unpickling 时查找构造函数创建新对象。例如，将一个类实例写入文件：
 
@@ -176,7 +176,7 @@ with open(filename, 'rb') as in_s:
             print('READ: {} ({})'.format(o.name, o.name_backwards))
 ```
 
-## Unpicklable 对象
+## 5. Unpicklable 对象
 
 Socket, file handles, 数据库连接等状态依赖于操作系统或其它进程的对象可能无法保存。对包含 non-picklable 属性的对象，可以定义 `__getstate__()` 和 `__setstate__()` 定义需要 pickle 的属性。
 
@@ -226,7 +226,7 @@ print('After:', reloaded)
 
 这里用 `State` 对象持有 `MyClass` 的内部状态。
 
-## 循环引用
+## 6. 循环引用
 
 pickle 会自动处理对象之间的循环引用，不需要特殊处理。如下所示的有向图：
 
@@ -234,7 +234,7 @@ pickle 会自动处理对象之间的循环引用，不需要特殊处理。如�
 
 虽然它包含多个环，但依然可以正确地 pickle。
 
-## 参考
+## 7. 参考
 
 - https://docs.python.org/3/library/pickle.html
 - 《The Python 3 Standard Library by Example》, Doug Hellmann
