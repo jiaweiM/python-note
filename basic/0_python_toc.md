@@ -8,7 +8,7 @@
   - [数据分析](#数据分析)
   - [书籍](#书籍)
 
-2020-04-13
+Last updated: 2023-01-29, 16:12
 @author Jiawei Mao
 ***
 
@@ -20,6 +20,7 @@
 - [Python 字符串](string.md)
 - [Python 控制流]
 - [Python 函数](function.md)
+- [实例方法、类方法和静态方法](methods.md)
 - [内置函数](built_in_function.md)
 - [正则表达式](regex.md)
 - [复制](copy.md)
