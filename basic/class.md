@@ -11,16 +11,19 @@
     - [使用建议](#使用建议)
   - [运算符重载](#运算符重载)
   - [Magic Method](#magic-method)
-  - [类方法（class method）](#类方法class-method)
-  - [静态方法（Static Method）](#静态方法static-method)
   - [Properties](#properties)
   - [方法重载](#方法重载)
     - [字符串表示方法](#字符串表示方法)
     - [自定义格式化字符串](#自定义格式化字符串)
     - [with 支持](#with-支持)
+  - [继承](#继承)
+    - [super](#super)
+    - [多重继承](#多重继承)
+    - [MRO](#mro)
+  - [参考](#参考)
 
-2020-04-12, 16:55
-***
+Last updated: 2023-01-31, 18:38
+****
 
 ## 简介
 
@@ -240,15 +243,6 @@ Magic 方法指方法名带两个下划线的方法，如 `__init__`，这些方
 
 常执行的功能如运算符重载。
 
-## 类方法（class method）
-
-其第一个参数是 `cls` 而不是 `self`.常用于创建工厂方法。
-以 `@classmethod` 注释。
-
-## 静态方法（Static Method）
-
-类似于类方法，但是没有额外的参数，和常规函数相同，以：`@staticmethod` 注释。
-
 ## Properties
 
 `@property`
@@ -465,3 +459,283 @@ with conn as s1:
 在这个版本中，`LazyConnection` 可以看作是连接工厂。在内部，一个列表被用来构造一个栈，每次 `__enter__()` 执行创建一个新的连接并加入到栈，`__exit__()`从栈中弹出最后一个连接并关闭它。
 
 在需要管理一些资源比如文件、网络连接和锁的编程环境中，使用上下文管理器是很普遍。 这些资源的一个主要特征是它们必须被手动的关闭或释放来确保程序的正确运行。 例如，如果你请求了一个锁，那么你必须确保之后释放了它，否则就可能产生死锁。 通过实现 `__enter__()` 和 `__exit__()` 方法并使用 `with` 语句可以很容易的避免这些问题， 因为 `__exit__()` 方法可以让你无需担心这些。
+
+## 继承
+
+Python 继承语法如下：
+
+```python
+class DerivedClassName(BaseClassName):
+    <statement-1>
+    .
+    .
+    .
+    <statement-N>
+```
+
+其中 `BaseClassName` 必须定义在 `DerivedClassName` 所在的 scope。如果 `BaseClassName` 在其它模块，可以用如下方式：
+
+```python
+class DerivedClassName(modname.BaseClassName):
+```
+
+### super
+
+```python
+class super(type, object_or_type=None)
+```
+
+`super` 返回一个代理对象，将对方法的调用委托给父类或 `type` 类型的同级类。这对调用父类方法很有用。`super()` 有两个参数：
+
+- `type` 指定 MRO 链的起点，通过类名指定
+- `object_or_type` 指定要搜索的 MRO，一般是 `self`
+
+在 Python 3 中可以用 `super().xxx` 代替 `super(Class, self).xxx`。
+
+例如，如果 `object_or_type` 的 `__mro__` 为 `D -> B -> C -> A -> object`，`type` 值为 `B`，则 `super()` 搜索 `C -> A -> object`。
+
+`object_or_type` 的 `__mro__` 属性列出了 `getattr()` 和 `super()` 使用的方法解析搜索顺序。该属性是动态的，当更新继承层次结构都可以更改。
+
+- 如果忽略该参数，则返回的 `super` 对象没有绑定。
+- 如果为对象，则 `isinstance(obj, type)` 必须为 true
+- 如果是类型，则 `issubclass(type2, type)` 必须为 true。
+
+`super` 有两个典型用法：
+
+- 在单继承中，`super` 可以引用父类，从而不用显式命名，和其它编程语言的 super 用法一致。
+- 对多继承的支持。
+
+例如：
+
+```py
+class C(B):
+    def method(self, arg):
+        super().method(arg)  # 调用父类方法，等价于 super(C, self).method(arg)
+```
+
+即 `type` 默认为当前类，即 `C`，`object_or_type` 默认为 `self`。
+
+- `super()` 常用在 `__init__()` 中确保父类被正确初始化了：
+
+```py
+class A:
+    def __init__(self):
+        self.x = 0
+
+class B(A):
+    def __init__(self):
+        super().__init__()
+        self.y = 1
+```
+
+- `super()` 用于覆盖 Python 的特殊方法
+
+```py
+class Proxy:
+    def __init__(self, obj):
+        self._obj = obj
+
+    # Delegate attribute lookup to internal obj
+    def __getattr__(self, name):
+        return getattr(self._obj, name)
+
+    # Delegate attribute assignment
+    def __setattr__(self, name, value):
+        if name.startswith('_'):
+            super().__setattr__(name, value) # Call original __setattr__
+        else:
+            setattr(self._obj, name, value)
+```
+
+在上例中，`__setattr__()` 的实现包含一个名字检查。如果某个属性名以下划线 `_` 开头，就通过 `super()` 调用父类的 `__setattr__()`，否则就委派给代码对象 `self._obj` 去处理。
+
+子类调用父类的语法有三种：
+
+```py
+super().__init__()
+Parent.__init__(self)
+super(类名, self).__init__()
+```
+
+### 多重继承
+
+Python 支持多重继承，即继承多个基类：
+
+```python
+class DerivedClassName(Base1, Base2, Base3):
+    <statement-1>
+    .
+    .
+    .
+    <statement-N>
+```
+
+在大多数情况，从父类继承的属性的搜索顺序按照深度优先、从左到右的策略，如果要找一个类属性，按照如下顺序：
+
+1. 先在 `DerivedClassName` 找，如果没找到，下一步；
+2. 在 `Base1` 中搜索，然后递归地在 `Base1` 的基类中递归搜索，如果没找到，下一步；
+3. 在 `Base2` 中搜索，依此类推。
+
+实际的情况比这个更复杂一些，方法解析顺序（Method Resolution Order, MRO）会根据 `super()` 调用动态变化。
+
+动态排序是必要的，因为在多重继承中菱形关系不可避免（菱形指从一个派生类到父类可以有多条路径）。例如，所有类都继承自 `object`，因此多重继承中到 `object` 的路径必然不止一条。为了避免多次访问基类，动态算法将搜索顺序线性化，以保证每个派生类的基类都是从左到右的顺序，且只调用每个父类一次。
+
+### MRO
+
+MRO 使用 C3 算法实现，基本步骤：
+
+1. 选择一个入度为 0 的顶点并输出
+2. 从继承网络中删除该顶点以及所有边
+3. 重复 1、2 直到所有点被遍历
+
+使用继承，有时候会看到下面这种直接调用父类的情况：
+
+```py
+class Base:
+    def __init__(self):
+        print('Base.__init__')
+
+class A(Base):
+    def __init__(self):
+        Base.__init__(self)
+        print('A.__init__')
+```
+
+尽管对大部分代码而言没有问题，但是在涉及到多继承的代码中就有可能导致奇怪的问题发生。比如：
+
+```py
+class Base:
+    def __init__(self):
+        print('Base.__init__')
+
+class A(Base):
+    def __init__(self):
+        Base.__init__(self)
+        print('A.__init__')
+
+class B(Base):
+    def __init__(self):
+        Base.__init__(self)
+        print('B.__init__')
+
+class C(A,B):
+    def __init__(self):
+        A.__init__(self)
+        B.__init__(self)
+        print('C.__init__')
+```
+
+如果你运行这段代码就会发现 `Base.__init__()` 被调用两次，如下所示：
+
+```py
+>>> c = C()
+Base.__init__
+A.__init__
+Base.__init__
+B.__init__
+C.__init__
+```
+
+这里两次调用了 `Base.__init__()`，有时候没问题，但有些情况影响很大。而使用 `super()` 可以避免该问题：
+
+```py
+class Base:
+    def __init__(self):
+        print('Base.__init__')
+
+class A(Base):
+    def __init__(self):
+        super().__init__()
+        print('A.__init__')
+
+class B(Base):
+    def __init__(self):
+        super().__init__()
+        print('B.__init__')
+
+class C(A,B):
+    def __init__(self):
+        super().__init__()  # Only one call to super() here
+        print('C.__init__')
+```
+
+运行这个新版本后，你会发现每个 `__init__()` 方法只会被调用一次了：
+
+```py
+>>> c = C()
+Base.__init__
+B.__init__
+A.__init__
+C.__init__
+```
+
+这里我们解释下Python是如何实现继承的。对于定义的每一个类，Python会计算出一个所谓的方法解析顺序(MRO)表。 这个 MRO 就是所有基类的线性顺序表。例如：
+
+```py
+>>> C.__mro__
+(<class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>,
+<class '__main__.Base'>, <class 'object'>)
+```
+
+为了实现继承，Python会在MRO表上从左到右开始查找基类，直到找到第一个匹配这个属性的类为止。
+
+而这个MRO表是通过C3线性化算法实现的。 我们不去深究这个算法的数学原理，它实际上就是合并所有父类的MRO表并遵循如下三条准则：
+
+- 子类会先于父类被检查
+- 多个父类会根据它们在列表中的顺序被检查
+- 如果对下一个类存在两个合法的选择，选择第一个父类
+
+MRO表中的类顺序是的类层级关系变得有意义。
+
+当你使用 `super()` 函数，Python会在MRO表上继续搜索下一个类。 只要每个重定义的方法统一使用 `super()` 并只调用一次， 那么控制流最终会遍历完整个MRO表，每个方法也只会被调用一次。 这也是为什么在第二个例子中你不会调用两次 `Base.__init__()`。
+
+`super()` 一个重要特点是它并不一定会查找某个类在 MRO 中下一个直接父类，你甚至可以在一个没有直接父类的类中使用它。例如，考虑如下这个类：
+
+```py
+class A:
+    def spam(self):
+        print('A.spam')
+        super().spam()
+```
+
+如果直接使用这个类就会出错：
+
+```py
+>>> a = A()
+>>> a.spam()
+A.spam
+Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "<stdin>", line 4, in spam
+AttributeError: 'super' object has no attribute 'spam'
+```
+
+但是，如果你使用多继承的话看看会发生什么：
+
+```py
+>>> class B:
+...     def spam(self):
+...         print('B.spam')
+...
+>>> class C(A,B):
+...     pass
+...
+>>> c = C()
+>>> c.spam()
+A.spam
+B.spam
+```
+
+你可以看到在类A中使用 `super().spam()` 实际上调用的是跟类 `A` 毫无关系的类 `B` 中的 `spam()` 方法。这个用类 `C` 的MRO表就可以完全解释清楚了：
+
+```py
+>>> C.__mro__
+(<class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>,
+<class 'object'>)
+```
+
+## 参考
+
+- https://docs.python.org/3/tutorial/classes.html
+- Expert Python Programming, 4ed
+- https://rhettinger.wordpress.com/2011/05/26/super-considered-super/

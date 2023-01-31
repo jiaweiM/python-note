@@ -7,6 +7,9 @@
   - [4. 重构对象问题](#4-重构对象问题)
   - [5. Unpicklable 对象](#5-unpicklable-对象)
   - [6. 循环引用](#6-循环引用)
+  - [API](#api)
+    - [pickle.load](#pickleload)
+    - [pickle.loads](#pickleloads)
   - [7. 参考](#7-参考)
 
 Last updated: 2023-01-17, 15:12
@@ -233,6 +236,35 @@ pickle 会自动处理对象之间的循环引用，不需要特殊处理。如�
 ![](images/2023-01-17-15-11-30.png)
 
 虽然它包含多个环，但依然可以正确地 pickle。
+
+## API
+
+### pickle.load
+
+```python
+pickle.load(file, *, 
+    fix_imports=True, 
+    encoding='ASCII', 
+    errors='strict', 
+    buffers=None)
+```
+
+从**文件**对象 `file` 读取序列化对象。等价于` Unpickler(file).load()`。
+
+### pickle.loads
+
+```python
+pickle.loads(data, /, *, 
+    fix_imports=True, 
+    encoding='ASCII', 
+    errors='strict', 
+    buffers=None)
+```
+
+从 bytes 读取对象的序列化信息，即 `data` 必须为 bytes 类型。
+
+`fix_imports`, `encoding`, `errors`, `strict` 和 `buffers` 参数含义与 `Unpickler` 构造函数一样。
+
 
 ## 7. 参考
 

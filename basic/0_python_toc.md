@@ -20,10 +20,12 @@ Last updated: 2023-01-29, 16:12
 - [Python 字符串](string.md)
 - [Python 控制流]
 - [Python 函数](function.md)
+- [下划线的使用](underscore.md)
 - [实例方法、类方法和静态方法](methods.md)
 - [内置函数](built_in_function.md)
 - [正则表达式](regex.md)
 - [复制](copy.md)
+- [Python 类](class.md)
 - [PEP 文档简介](pep.md)
 
 ## 参考文档

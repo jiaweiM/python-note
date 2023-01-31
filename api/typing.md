@@ -15,7 +15,7 @@
         - [typing.List](#typinglist)
   - [参考](#参考)
 
-Last updated: 2023-01-30, 10:55
+Last updated: 2023-01-31, 16:32
 ***
 
 ## 简介
@@ -147,13 +147,23 @@ output = UserId(23413) + UserId(54341)
 
 ##### typing.Union
 
-Unionn 类型 `Union[X, Y]` 等价于 `X | Y`，表示 X 或 Y。
+Union 类型 `Union[X, Y]` 等价于 `X | Y`，表示 X 或 Y。定义方式有两种，如：
 
-可以使用 `Union[int, str]` 或简写形式 `int | str` 定义，建议使用简写。
+- `Union[int, str]`
+- `int | str`
+
+后一种更简洁，推荐使用。`Union` 表示变量可以是多种类型中的一个，例如：
+
+```python
+from typing import Union
+
+# vars 可以是 int 或 str 类型
+vars: Union[int, str]
+```
 
 说明：
 
-- 参数必须为 type，且至少一个；
+- Union 参数必须为 type，且至少有一个；
 - Union of unions 被展开，例如：
 
 ```python
