@@ -9,7 +9,6 @@
   - [书籍](#书籍)
 
 Last updated: 2023-01-29, 16:12
-@author Jiawei Mao
 ***
 
 ## 学习笔记
