@@ -251,9 +251,6 @@ pickle.dump(obj,
     buffer_callback=None)
 ```
 
-
-
-
 ### pickle.load
 
 ```python
