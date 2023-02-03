@@ -8,6 +8,7 @@
   - [5. Unpicklable 对象](#5-unpicklable-对象)
   - [6. 循环引用](#6-循环引用)
   - [API](#api)
+    - [pickle.dump](#pickledump)
     - [pickle.load](#pickleload)
     - [pickle.loads](#pickleloads)
   - [7. 参考](#7-参考)
@@ -238,6 +239,20 @@ pickle 会自动处理对象之间的循环引用，不需要特殊处理。如�
 虽然它包含多个环，但依然可以正确地 pickle。
 
 ## API
+
+### pickle.dump
+
+```python
+pickle.dump(obj, 
+    file, 
+    protocol=None, 
+    *, 
+    fix_imports=True, 
+    buffer_callback=None)
+```
+
+
+
 
 ### pickle.load
 

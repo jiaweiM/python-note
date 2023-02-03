@@ -2,22 +2,25 @@
 
 - [Property](#property)
   - [简介](#简介)
-  - [getter 和 setter](#getter-和-setter)
-    - [设置方法](#设置方法)
-    - [用已有方法定义 property](#用已有方法定义-property)
-    - [annotation 定义](#annotation-定义)
+  - [不用 getter 和 setter](#不用-getter-和-setter)
+  - [用 getter 和 setter](#用-getter-和-setter)
+  - [property 类](#property-类)
+  - [装饰器](#装饰器)
   - [使用建议](#使用建议)
+  - [参考](#参考)
 
 2020-04-12, 20:19
 ***
 
 ## 简介
 
-Python 内置对 property 支持，对面向对象编程，简化了 getter 和 setter 方法。
+Python 内置对 property 支持，对面向对象编程，简化了 getter 和 setter 方法的定义。`@property` 装饰器进一步简化了属性定义。
 
-假设我们定义一个摄氏温度的类：
+## 不用 getter 和 setter
 
-```py
+定义一个表示摄氏温度的类，并实现了一个转换为华氏温度的方法：
+
+```python
 class Celsius:
     def __init__(self, temperature=0):
         self.temperature = temperature
@@ -28,114 +31,253 @@ class Celsius:
 
 然后可以直接引用 `temperature` 属性进行操作：
 
-```py
-man = Celsius()
-man.temperature = 37
-assert man.temperature == 37
-assert man.to_fahrenheit() == pytest.approx(98.6)
-```
-
-当我们将属性添加到对象中，例如 `temperature`，Python 将该其放到对象的 `__dict__` 中，此时 `temperature` 的内部形式就是 `man.__dict__['temperature']`。
-
-## getter 和 setter
-
-一个 property 其实是绑定在一起的一系列相关方法。`property()` 是一个函数，其签名如下：
-
-```py
-property(fget=None, fset=None, fdel=None, doc=None):
-```
-
-| 参数  | 说明                 |
-| ----- | -------------------- |
-| fget  | 用于获得属性值的方法 |
-| fset  | 用于设置属性值的方法 |
-| fdel  | 用于删除属性值的方法 |
-| doc() | 属性文档             |
-
-其属性就是类里面的普通方法。
-
-### 设置方法
-
-如果我们想为 `temperature` 提供检查支持，例如温度范围检查，可以采用如下方式：
-
-```py
+```python
+# Basic method of setting and getting attributes in Python
 class Celsius:
     def __init__(self, temperature=0):
-        self.set_temperature(temperature)
-
-    def to_fahrenheit(self):
-        return (self._temperature * 1.8) + 32
-
-    def get_temperature(self):
-        return self._temperature
-
-    def set_temperature(self, value):
-        if value < -273:
-            raise ValueError("Temperature below -273 is not possible")
-        self._temperature = value
-
-
-man = Celsius()
-man.set_temperature(-287)
-```
-
-下划线 `_` 将 `temperature` 设置为了 private 变量。通过 `set_temperature` 方法设置值，而我们在 `set_temperature` 中添加了对温度值的检查。
-
-不过应当注意，Python 其实不支持 private 变量。上面在变量前加下划线定义 private 变量只是定义的一个规范，并非强制；关键通过 set 方法赋值总归更复杂了些，没有直接引用方便。所以 Python 引入了 property。
-
-### 用已有方法定义 property
-
-```py
-class Celsius:
-    def __init__(self, temperature = 0):
         self.temperature = temperature
 
     def to_fahrenheit(self):
         return (self.temperature * 1.8) + 32
 
-    def get_temperature(self):
-        print("Getting value")
-        return self._temperature
 
-    def set_temperature(self, value):
-        if value < -273:
-            raise ValueError("Temperature below -273 is not possible")
-        print("Setting value")
-        self._temperature = value
+# Create a new object
+human = Celsius()
 
-    def del_temperature(self):
-        raise AttributeError("Can't delete attribute")
+# Set the temperature
+human.temperature = 37
 
-    temperature = property(get_temperature,set_temperature, del_temperature)
+# Get the temperature attribute
+print(human.temperature)
+
+# Get the to_fahrenheit method
+print(human.to_fahrenheit())
 ```
 
-property 的功能是，在添加了自定义参数检查的同时，可以通过 `.temperature` 的语法赋值和取值。
+当添加或检索对象的任何属性时，例如 `temperature`，Python 在对象的内置 dict `__dict__` 检索该属性，例如：
 
-### annotation 定义
+```python
+print(human.__dict__) 
+# Output: {'temperature': 37}
+```
 
-上面的语法还可以使用 `@property` decorator 进一步简化：
+所以 `human.temperature` 内部为 `human.__dict__['temperature']`。
 
-```py
+## 用 getter 和 setter
+
+假设想要为 `Celsius` 添加检查功能，如温度不低于 -273.15。新的实现如下：
+
+```python
+# Making Getters and Setter methods
+class Celsius:
+    def __init__(self, temperature=0):
+        self.set_temperature(temperature)
+
+    def to_fahrenheit(self):
+        return (self.get_temperature() * 1.8) + 32
+
+    # getter method
+    def get_temperature(self):
+        return self._temperature
+
+    # setter method
+    def set_temperature(self, value):
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible.")
+        self._temperature = value
+```
+
+上面引入两个新方法 `get_temperature()` 和 `set_temperature()`。将 `temperature` 替换为 `_temperature`，下划线表示为私有变量。
+
+下面使用新的实现：
+
+```python
+# Making Getters and Setter methods
+class Celsius:
+    def __init__(self, temperature=0):
+        self.set_temperature(temperature)
+
+    def to_fahrenheit(self):
+        return (self.get_temperature() * 1.8) + 32
+
+    # getter method
+    def get_temperature(self):
+        return self._temperature
+
+    # setter method
+    def set_temperature(self, value):
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible.")
+        self._temperature = value
+
+
+# Create a new object, set_temperature() internally called by __init__
+human = Celsius(37)
+
+# Get the temperature attribute via a getter
+print(human.get_temperature())
+
+# Get the to_fahrenheit method, get_temperature() called by the method itself
+print(human.to_fahrenheit())
+
+# new constraint implementation
+human.set_temperature(-300)
+
+# Get the to_fahreheit method
+print(human.to_fahrenheit())
+```
+
+新的实现可以检查温度，确保温度不会低于 -273.15。
+
+该更新的主要问题：所有使用上一个类的程序都要修改代码，将 `obj.temperature` 重命名为 `obj.get_temperature()`，将 `obj.temperature = val` 重命名为 `obj.set_temperature(val)`。
+
+## property 类
+
+`property` 进一步简化了属性定义。使用 `property` 更新上述代码：
+
+```python
+# using property class
 class Celsius:
     def __init__(self, temperature=0):
         self.temperature = temperature
 
     def to_fahrenheit(self):
-        return (self._temperature * 1.8) + 32
+        return (self.temperature * 1.8) + 32
+
+    # getter
+    def get_temperature(self):
+        print("Getting value...")
+        return self._temperature
+
+    # setter
+    def set_temperature(self, value):
+        print("Setting value...")
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible")
+        self._temperature = value
+
+    # creating a property object
+    temperature = property(get_temperature, set_temperature)
+```
+
+添加的 `print()` 方法是为了清除观察这些方法在运行。
+
+最后一行 `temperature = property(get_temperature, set_temperature)` 创建了一个 `property` 对象。简而言之，`property` 将一些代码（`get_temperature` 和 `set_temperature`）附加到成员属性 `temperature`。
+
+使用方法：
+
+```python
+# using property class
+class Celsius:
+    def __init__(self, temperature=0):
+        self.temperature = temperature
+
+    def to_fahrenheit(self):
+        return (self.temperature * 1.8) + 32
+
+    # getter
+    def get_temperature(self):
+        print("Getting value...")
+        return self._temperature
+
+    # setter
+    def set_temperature(self, value):
+        print("Setting value...")
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible")
+        self._temperature = value
+
+    # creating a property object
+    temperature = property(get_temperature, set_temperature)
+
+
+human = Celsius(37)
+
+print(human.temperature) # getter
+
+print(human.to_fahrenheit())
+
+human.temperature = -300 # setter
+```
+
+查看 `temperature` 值的操作被自动调用 `get_temperature()`，不再是查询 `__dict__`。
+
+设置 `temperature` 值的操作被自动调用 `set_temperature()`。
+
+另外，下面的操作：
+
+```python
+human = Celsius(37) # prints Setting value...
+```
+
+`__init__` 中的 `self.temperature = temperature` 其实也是用的属性，调用 `set_temperature()`，因此支持数值检查。
+
+## 装饰器
+
+property 其实是绑定在一起的一系列相关方法。`property()` 签名如下：
+
+```py
+class property(fget=None, fset=None, fdel=None, doc=None):
+```
+
+| 参数 | 说明 |
+|---|---|
+| fget | 用于获得属性值的方法 |
+| fset | 用于设置属性值的方法 |
+| fdel | 用于删除属性值的方法 |
+| doc() | 属性文档 |
+
+`property` 对象有三个方法： `getter()`, `setter()` 和 `deleter()`，分别用来指定 `fget`, `fset` 和 `fdel`。所以：
+
+```python
+temperature = property(get_temperature,set_temperature)
+```
+
+与下面是等价的：
+
+```python
+# make empty property
+temperature = property()
+
+# assign fget
+temperature = temperature.getter(get_temperature)
+
+# assign fset
+temperature = temperature.setter(set_temperature)
+```
+
+使用 `@property` decorator 进一步简化前面的示例：
+
+```python
+# Using @property decorator
+class Celsius:
+    def __init__(self, temperature=0):
+        self.temperature = temperature
+
+    def to_fahrenheit(self):
+        return (self.temperature * 1.8) + 32
 
     @property
     def temperature(self):
+        print("Getting value...")
         return self._temperature
 
     @temperature.setter
     def temperature(self, value):
-        if value < -273:
+        print("Setting value...")
+        if value < -273.15:
             raise ValueError("Temperature below -273 is not possible")
         self._temperature = value
 
-    @temperature.deleter
-    def temperature(self):
-        raise AttributeError("Can't delete attribute")
+
+# create an object
+human = Celsius(37)
+
+print(human.temperature)
+
+print(human.to_fahrenheit())
+
+coldest_thing = Celsius(-300)
 ```
 
 上述代码中有三个关联方法，它们名字必须相同。
@@ -145,15 +287,6 @@ class Celsius:
 其它两个方法给 `temperature` 属性添加了 `setter` 和 `deleter` 函数。需要强调的是，只有定义了 `temperature` 属性，后面的连个装饰器 `@temperature.setter` 和 `@temperature.deleter` 才能被定义。
 
 property 看上去和普通的 attribute 类似，但是访问它的时候会自动触发 `getter`, `setter` 和 `deleter` 方法。例如：
-
-```py
-c = Celsius(37)
-assert c.temperature == 37
-with pytest.raises(ValueError):
-    c.temperature = -275
-with pytest.raises(AttributeError):
-    del c.temperature
-```
 
 在实现 property 时，底层数据依然需要存储在某个变量。因此，在 `getter` 和 `setter` 方法中可以看到对 `_temperature` 属性的操作，这也是实际数据保存的地方。
 
@@ -211,3 +344,7 @@ class Circle:
 >>> c.perimeter  # Notice lack of ()
 25.132741228718345
 ```
+
+## 参考
+
+- https://www.programiz.com/python-programming/property

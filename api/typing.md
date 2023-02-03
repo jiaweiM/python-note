@@ -10,6 +10,9 @@
       - [特殊形式](#特殊形式)
         - [typing.Tuple](#typingtuple)
         - [typing.Union](#typingunion)
+      - [Building generic types](#building-generic-types)
+        - [typing.Generic](#typinggeneric)
+        - [typing.TypeVar](#typingtypevar)
     - [Generic concrete collections](#generic-concrete-collections)
       - [对应内置类型](#对应内置类型)
         - [typing.List](#typinglist)
@@ -190,6 +193,60 @@ Union[int, str] == Union[str, int]
 
 - 不能继承或实例化 `Union`
 - 不能用 `Union[X][Y]`
+
+#### Building generic types
+
+不用于注释，而是创建泛型类型。
+
+##### typing.Generic
+
+```python
+class typing.Generic
+```
+
+泛型类型的抽象基类。
+
+泛型类型通过继承包含一个或多个变量的 `typing.Generic` 实例来声明。例如，泛型 map 类型可以定义为：
+
+```python
+class Mapping(Generic[KT, VT]):
+    def __getitem__(self, key: KT) -> VT:
+        ...
+        # Etc.
+```
+
+##### typing.TypeVar
+
+```python
+class typing.TypeVar
+```
+
+类型变量。使用：
+
+```python
+T = TypeVar('T')  # 任意类型
+S = TypeVar('S', bound=str)  # Can be any subtype of str
+A = TypeVar('A', str, bytes)  # Must be exactly str or bytes
+```
+
+类型变量用来支持静态类型检查器。它们用作泛型类型或泛型函数的参数。泛型类型参考 [Generic](#typinggeneric)，泛型函数定义：
+
+```python
+def repeat(x: T, n: int) -> Sequence[T]:
+    """Return a list containing n references to x."""
+    return [x]*n
+
+
+def print_capitalized(x: S) -> S:
+    """Print x capitalized, and return x."""
+    print(x.capitalize())
+    return x
+
+
+def concatenate(x: A, y: A) -> A:
+    """Add two strings or bytes objects together."""
+    return x + y
+```
 
 ### Generic concrete collections
 

@@ -3,6 +3,7 @@
 - [os.path](#ospath)
   - [简介](#简介)
   - [os.path.dirname](#ospathdirname)
+  - [os.path.isfile](#ospathisfile)
   - [os.path.join](#ospathjoin)
   - [os.path.exists](#ospathexists)
   - [os.path.realpath](#ospathrealpath)
@@ -61,6 +62,14 @@ os.path.dirname(path)
 ```
 
 返回路径 `path` 的目录名称。这是 `split()` 函数返回的 pair 的第一个元素。
+
+## os.path.isfile
+
+```python
+os.path.isfile(path)
+```
+
+如果 `path` 是常规文件，返回 `True`。对符号链接也算，因此对相同路径，`islink()` 和 `isfile()` 都可能返回 `True`。
 
 ## os.path.join
 

@@ -26,23 +26,22 @@
       - [PurePath.suffix](#purepathsuffix)
       - [PurePath.suffixes](#purepathsuffixes)
       - [PurePath.stem](#purepathstem)
-      - [PurePath.as_posix()](#purepathas_posix)
-      - [PurePath.as_uri()](#purepathas_uri)
-      - [PurePath.is_absolute()](#purepathis_absolute)
+      - [PurePath.as\_posix()](#purepathas_posix)
+      - [PurePath.as\_uri()](#purepathas_uri)
+      - [PurePath.is\_absolute()](#purepathis_absolute)
   - [实路径](#实路径)
     - [Path.exists](#pathexists)
   - [os 中对应工具](#os-中对应工具)
   - [方法和属性](#方法和属性)
     - [PurePath.joinpath](#purepathjoinpath)
-    - [PurePath.with_suffix](#purepathwith_suffix)
+    - [PurePath.with\_suffix](#purepathwith_suffix)
     - [Path.glob](#pathglob)
     - [Path.iterdir](#pathiterdir)
     - [Path.rename](#pathrename)
   - [参考](#参考)
 
-2021-05-31, 09:41
-@author Jiawei Mao
-***
+Last updated: 2023-02-03, 10:39
+****
 
 ## 简介
 
@@ -524,7 +523,7 @@ False
 下面是 os 函数映射到 PurePath/Path 等效函数列表：
 
 | os and os.path | pathlib |
-| --- | --- |
+|---|---|
 | os.path.abspath() | Path.resolve() |
 | os.chmod() | Path.chmod() |
 | os.mkdir() | Path.mkdir() |

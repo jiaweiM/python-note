@@ -22,6 +22,7 @@
   - [ord](#ord)
   - [pow](#pow)
   - [print](#print)
+  - [property](#property)
   - [range](#range)
   - [reversed](#reversed)
   - [round](#round)
@@ -475,6 +476,86 @@ ord(c)
 ## print
 
 参考 [IO 部分](../io/python_io.md#print)。
+
+## property
+
+Last updated: 2023-02-03, 13:12
+
+```python
+class property(fget=None, fset=None, fdel=None, doc=None)
+```
+
+返回一个 property 属性：
+
+- `fget` 返回属性值；
+- `fset` 设置属性值；
+- `fdel` 删除属性值；
+- `doc` 为属性创建 docstring。
+
+一个典型用法是定义托管属性 `x`：
+
+```python
+class C:
+    def __init__(self):
+        self._x = None
+
+    def getx(self):
+        return self._x
+
+    def setx(self, value):
+        self._x = value
+
+    def delx(self):
+        del self._x
+
+    x = property(getx, setx, delx, "I'm the 'x' property.")
+```
+
+如果 `c` 是类 `C` 的实例，那么：
+
+- `c.x` 将调用 getter；
+- `c.x = value` 将调用 setter；
+- `del c.x` 将调用 deleter；
+
+如果设置了，`doc` 为 property 的文档字符串。否则复制 `fget` 的文档（如果 `fget` 有文档）。 
+
+对只读属性可以使用 `property()` 装饰器直接创建：
+
+```python
+class Parrot:
+    def __init__(self):
+        self._voltage = 100000
+
+    @property
+    def voltage(self):
+        """Get the current voltage."""
+        return self._voltage
+```
+
+`@property` 装饰器将 `voltage()` 方法转换为同名的只读 getter，并将 `voltage` 属性的文档设置为 "Get the current voltage."。
+
+也可以使用装饰器创建包含 getter, setter 和 deleter 方法的属性：
+
+```python
+class C:
+    def __init__(self):
+        self._x = None
+
+    @property
+    def x(self):
+        """I'm the 'x' property."""
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        self._x = value
+
+    @x.deleter
+    def x(self):
+        del self._x
+```
+
+该代码与第一个示例等效。但是其它函数必须与原属性同名（`x`）。
 
 ## range
 
