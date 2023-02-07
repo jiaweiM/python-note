@@ -7,6 +7,7 @@
   - [os.path.join](#ospathjoin)
   - [os.path.exists](#ospathexists)
   - [os.path.realpath](#ospathrealpath)
+  - [os.path.splitext](#ospathsplitext)
   - [参考](#参考)
 
 2021-05-31, 09:52
@@ -97,6 +98,38 @@ os.path.realpath(path, *, strict=False)
 
 如果路径不存在，或者遇到循环符号链接，并且 `strict` 为 `True`，则抛出 `OSError`。如果 `strict` 为 `False`，则尽可能解析路径，余下部分直接放在末尾，不检查路径是否存在。
 
+## os.path.splitext
+
+```python
+os.path.splitext(path)
+```
+
+将路径名 `path` 拆分为 `(root, ext)`，使得 `root + ext == path`，其中扩展 `ext` 为空或者以 `.` 开头，且最多包含一个 `.`。
+
+如果 `path` 不包含扩展名，`ext` 为空字符串 `''`：
+
+```python
+>>> splitext('bar')
+('bar', '')
+```
+
+如果 `path` 包含扩展名，则 `ext` 为该扩展名，包括 `.`。例如：
+
+```python
+>>> splitext('foo.bar.exe')
+('foo.bar', '.exe')
+>>> splitext('/foo/bar.exe')
+('/foo/bar', '.exe')
+```
+
+另外 还有以下情况：
+
+```python
+>>> splitext('.cshrc')
+('.cshrc', '')
+>>> splitext('/foo/....jpg')
+('/foo/....jpg', '')
+```
 
 
 ## 参考
