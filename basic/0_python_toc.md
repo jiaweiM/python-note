@@ -16,7 +16,8 @@ Last updated: 2023-01-29, 16:12
 - [Python 关键字](python_keyword.md)
 - [数据类型](types.md)
   - [二进制序列类型](collect_binary.md)
-- [Python 字符串](string.md)
+- [字符串](string.md)
+- [字符串格式化](string_format.md)
 - [Python 控制流]
 - [Python 函数](function.md)
 - [下划线的使用](underscore.md)

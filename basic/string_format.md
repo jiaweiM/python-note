@@ -14,11 +14,19 @@
     - [动态参数](#动态参数)
     - [日期格式化](#日期格式化)
   - [f-string](#f-string)
+    - [`=` 表达式](#-表达式)
+    - [多行格式化](#多行格式化)
+    - [调用函数](#调用函数)
+    - [对象](#对象)
+    - [转义字符](#转义字符)
+    - [格式化日期](#格式化日期)
+    - [格式化 float](#格式化-float)
     - [指定宽度](#指定宽度)
     - [对齐方式](#对齐方式)
     - [数值类型](#数值类型)
 
-***
+Last updated: 2023-02-07, 10:16
+****
 
 ## format
 
@@ -287,7 +295,7 @@ assert num.format(123.236, align='<', width=8, precision=2) == "123.24  "
 对任意对象类型，可以通过覆盖 `__format__()` 方法自定义格式化。
 ## f-string
 
-f-string 是 Python 3.6 引入用于字符串格式化的语法。f-string 相对来说更快、易读、简明，且更不容易出错。其格式为前缀 `f` 加 `{}`。下面展示三种格式化语法：
+f-string 是 Python 3.6 引入用于字符串格式化的语法。f-string 相对来说更快、易读、简明，且不容易出错。其格式为前缀 `f` 加 `{}`。下面展示三种格式化语法：
 
 ```py
 name = "Peter"
@@ -331,7 +339,7 @@ user = {'name': 'Lilei', 'occupation': 'gardener'}
 assert f"{user['name']} is a {user['occupation']}" == "Lilei is a gardener"
 ```
 
-- `=` 表达式
+### `=` 表达式
 
 在 Python 3.8 中针对 f-string 引入了表达式功能，例如：
 
@@ -345,7 +353,7 @@ print(f"{math.sin(x) = }")
 
 可以看到，输出自动保留了前面的变量表达式。
 
-- 多行格式化
+### 多行格式化
 
 多行 f-string 放在圆括号内，每行以 `f` 开头：
 
@@ -364,14 +372,13 @@ print(msg)
 # Occupation: gardener
 ```
 
-- 调用函数
+### 调用函数
 
 在 f-string 中可以调用函数：
 
 ```py
 def my_max(x, y):
     return x if x > y else y
-
 
 def test_fstring_func():
     a = 3
@@ -381,7 +388,7 @@ def test_fstring_func():
 # Max of 3 and 4 is 4
 ```
 
-- 对象
+### 对象
 
 f-string 也接受任何实现 `__str__()` 或 `__repr__()` 函数的对象：
 
@@ -401,7 +408,7 @@ def test_fstring_obj():
 # Lilei is a gardener
 ```
 
-- 转义字符
+### 转义字符
 
 在 f-string 中转义字符的方式：
 
@@ -416,7 +423,7 @@ print(f'This was a \'great\' file')
 # This was a 'great' file
 ```
 
-- 格式化日期
+### 格式化日期
 
 ```py
 now = datetime.datetime.now()
@@ -424,7 +431,7 @@ print(f'{now:%Y-%m-%d %H:%M}')
 # 2021-04-02 12:50
 ```
 
-- 格式化 float
+### 格式化 float
 
 float 值后带 `f` 后缀。也可以指定小数点位数，例如：
 
