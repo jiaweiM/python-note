@@ -1,30 +1,33 @@
-# numpy.expand_dims
+# 数组操作
+
+## 修改维度数
+
+### numpy.expand_dims
 
 ```python
 numpy.expand_dims(a, axis)
 ```
 
-扩展数组的 shape。
+扩展数组的维度，在 `axis` 位置插入一个新的维度。
 
-在 `axis` 位置插入一个新的轴。
+**参数：**
 
-## 参数
-
-- `a`
+- **a** - array_like
 
 输入数组。
 
-- `axis`
+- **axis** - int or tuple of ints
 
-在扩展数组中新轴的位置。
+插入新维度的位置。
 
-## 示例
+**示例：**
 
 ```python
 >>> x = np.array([1, 2])
 >>> x.shape
 (2,)
 ```
+
 
 - 下面等价于 `x[np.newaxis, :]` 或 `x[np.newaxis]`
 
@@ -94,4 +97,4 @@ array([[1, 2]])
 
 ## 参考
 
-- https://numpy.org/devdocs/reference/generated/numpy.expand_dims.html
+- https://numpy.org/doc/stable/reference/routines.array-manipulation.html

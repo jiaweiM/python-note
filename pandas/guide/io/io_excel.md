@@ -3,8 +3,8 @@
 - [Pandas Excel](#pandas-excel)
   - [简介](#简介)
   - [读 Excel](#读-excel)
-    - [读取单个 Sheet](#读取单个-sheet)
-    - [读取多个 Sheet](#读取多个-sheet)
+    - [单个 Sheet](#单个-sheet)
+    - [多个 Sheet](#多个-sheet)
     - [指定读取的表格](#指定读取的表格)
     - [读取 `MultiIndex`](#读取-multiindex)
     - [解析指定列](#解析指定列)
@@ -18,26 +18,26 @@
   - [样式和格式](#样式和格式)
   - [参考](#参考)
 
-Last updated: 2022-11-01, 12:46
+Last updated: 2023-03-16, 18:39
 ****
 
 ## 简介
 
-读取 Excel 功能：
+pandas `read_excel()` 函数读取 Excel，内部实现为：
 
-- pandas 的 `read_excel()` 函数使用 `xlrd` 模块读取 Excel 2003 (.xls) 文件。
-- 使用 `xlrd` 或 `openpyxl` 读取 Excel 2007+ (.xlsx) 文件。
+- 使用 `xlrd` 模块读取 Excel 2003 (.xls) 文件；
+- 使用 `openpyxl` 读取 Excel 2007+ (.xlsx) 文件；
 - 使用 `pyxlsb` 读取 Binary Excel (.xlsb) 文件。
 
 `to_excel()` 函数将 `DataFrame` 保存为 Excel。
 
-> **Warning:** 用于输出 `.xls` excel 文件的 `xlwt` 包不再维护。`xlrd` 包只用于读取老式的 `.xls` 文件。
+> **Warning:** 不再维护输出 `.xls` 文件的 `xlwt` 包。`xlrd` 包只用于读取老式的 `.xls` 文件。
 > 在 pandas 1.3.0 之前，`read_excel()` 的 `engine=None` 参数默认使用 `xlrd` 引擎，包括 Excel 2007+（`.xlsx`）文件。pandas 现在默认使用 `openpyxl` 引擎。
 > 强烈建议安装 `openpyxl` 来读取 .xlsx 文件。不再支持使用 `xlrd` 读取 `.xlsx` 文件。
 
 ## 读 Excel
 
-### 读取单个 Sheet
+### 单个 Sheet
 
 使用 `read_excel()` 读取 Excel 文件，`sheet_name` 指定读取的 sheet:
 
@@ -48,7 +48,7 @@ pd.read_excel('path_to_file.xls', sheet_name='Sheet1')
 
 如果未指定 `sheet_name`，其默认为 0，即第一个 sheet。
 
-### 读取多个 Sheet
+### 多个 Sheet
 
 要一次读取多个 sheets，需要用到 `ExcelFile` 类，该类包装 Excel 文件。
 
@@ -274,9 +274,9 @@ pd.read_excel('path_to_file.xls', 'Sheet1', parse_dates=['date_strings'])
 pd.read_excel('path_to_file.xls', 'Sheet1', converters={'MyBools': bool})
 ```
 
-该选项能处理缺失值，对 converters 中出现异常的值转换为缺失值。
+该选项能处理缺失值，对 `converters` 中出现异常的值转换为缺失值。
 
-转换逐个 cell 进行，而不是整个 column 一起转换，所以无法保障整个 column 的 dtype 一致。例如，具有缺失值的 interger 类型 column 可能无法转换为 integer dtype 的数组，因为 NaN 严格来说是 float。对这种情况，可以手动转换值：
+转换逐个 cell 进行，而不是整个 column 一起转换，所以无法保障整个 column 的 dtype 一致。例如，包含缺失值的 interger 类型 column 可能无法转换为 integer dtype 的数组，因为 NaN 严格来说是 float。对这种情况，可以手动转换值：
 
 ```py
 def cfun(x):
@@ -287,7 +287,7 @@ pd.read_excel('path_to_file.xls', 'Sheet1', converters={'MyInts': cfun})
 
 ### 指定 dtype
 
-除了使用 converters，整个 column 的类型可以使用 `dtype` 关键字指定，`dtype` 参数使用 dict 类型参数，包含 column 名称到类型的映射。例如：
+除了使用 `converters`，整个 column 的类型可以使用 `dtype` 关键字指定，`dtype` 参数使用 dict 类型参数，包含 column 名称到类型的映射。对无需类型推断的数据，使用 `str` 或 `object` 类型。例如：
 
 ```py
 pd.read_excel('path_to_file.xls', dtype={'MyInts': 'int64', 'MyText': str})

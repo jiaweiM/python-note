@@ -21,18 +21,15 @@
     - [选择单值](#选择单值)
       - [单值标签（at）](#单值标签at)
       - [单值索引（iat）](#单值索引iat)
-    - [选择单列](#选择单列)
-      - [属性（column label）](#属性column-label)
-      - [索引运算符](#索引运算符)
     - [选择多列](#选择多列)
       - [索引运算符（多列）](#索引运算符多列)
-      - [特定类型列（select_dtypes）](#特定类型列select_dtypes)
+      - [特定类型列（select\_dtypes）](#特定类型列select_dtypes)
     - [选择行和列](#选择行和列)
       - [标签（loc）](#标签loc)
       - [位置（iloc）](#位置iloc)
     - [抽样（sample）](#抽样sample)
-    - [设置索引（set_index）](#设置索引set_index)
-    - [重置 index（reset_index）](#重置-indexreset_index)
+    - [设置索引（set\_index）](#设置索引set_index)
+    - [重置 index（reset\_index）](#重置-indexreset_index)
     - [重命名标签（rename）](#重命名标签rename)
   - [过滤](#过滤)
     - [单个布尔表达式](#单个布尔表达式)
@@ -41,7 +38,7 @@
     - [filter](#filter)
   - [重复值](#重复值)
     - [查找重复值（duplicated）](#查找重复值duplicated)
-    - [删除重复值（drop_duplicates）](#删除重复值drop_duplicates)
+    - [删除重复值（drop\_duplicates）](#删除重复值drop_duplicates)
   - [设置值](#设置值)
     - [基于标签设置（loc）](#基于标签设置loc)
   - [添加](#添加)
@@ -54,15 +51,13 @@
   - [删除列](#删除列)
   - [索引和迭代](#索引和迭代)
     - [pop](#pop)
-    - [iterrows](#iterrows)
-    - [itertuples](#itertuples)
   - [应用函数](#应用函数)
     - [apply](#apply)
     - [应用 elementwise 函数](#应用-elementwise-函数)
   - [转置](#转置)
   - [排序](#排序)
-    - [按索引排序（sort_index）](#按索引排序sort_index)
-    - [按值排序（sort_values）](#按值排序sort_values)
+    - [按索引排序（sort\_index）](#按索引排序sort_index)
+    - [按值排序（sort\_values）](#按值排序sort_values)
   - [统计](#统计)
     - [count](#count)
     - [nunique](#nunique)
@@ -520,45 +515,6 @@ property DataFrame.iat
 ```py
 >>> df.loc[0].iat[1]
 2
-```
-
-### 选择单列
-
-#### 属性（column label）
-
-可以直接通过 column 的名称以属性的方式访问 column:
-
-```py
->>> df = pd.DataFrame({'month': [1, 4, 7, 10],
-                   'year': [2012, 2014, 2013, 2014],
-                   'sale': [55, 40, 84, 31]})
->>> df
-   month  year  sale
-0      1  2012    55
-1      4  2014    40
-2      7  2013    84
-3     10  2014    31
->>> df.month
-0     1
-1     4
-2     7
-3    10
-Name: month, dtype: int64
-```
-
-返回 `Series` 类型。
-
-#### 索引运算符
-
-使用语法 `frame[colname]` 可以选择单列，使用该语法的优点是，名称中有空格也可以使用。该语法适用于所有情况，所以推荐使用。
-
-```py
->>> df["month"]
-0     1
-1     4
-2     7
-3    10
-Name: month, dtype: int64
 ```
 
 ### 选择多列
@@ -2015,85 +1971,6 @@ Name: class, dtype: object
 1  parrot       24.0
 2    lion       80.5
 3  monkey        NaN
-```
-
-### iterrows
-
-```py
-DataFrame.iterrows()
-```
-
-以 `(index, Series)` 形式迭代 `DataFrame` 行。
-
-|返回值|类型|说明|
-|---|---|---|
-|`index`|标签或标签 tuple|行的index，对 MultiIndex 为 tuple|
-|`data`|`Series`|以 `Series` 的形式返回行|
-
-由于 `iterrows` 以 `Series` 的形式返回行，所以不保存 `dtype`。例如：
-
-```py
->>> df = pd.DataFrame([[1, 1.5]], columns=['int', 'float'])
->>> row = next(df.iterrows())[1]
->>> row
-int      1.0
-float    1.5
-Name: 0, dtype: float64
->>> print(row['int'].dtype)
-float64
->>> print(df['int'].dtype)
-int64
-```
-
-要保留 `dtype`，最好使用 `itertuples()`，该方法返回命名元组，并且比 `iterrows` 快。
-
-### itertuples
-
-```py
-DataFrame.itertuples(index=True, name='Pandas')
-```
-
-以命名元组的形式迭代 `DataFrame` 的行。
-
-|参数|类型|说明|
-|---|---|---|
-|index|bool, default True|True 表示将索引作为元祖的第一个元素返回|
-|name|str or None, default "Pandas"|命名元祖的名称，`None` 表示常规元祖|
-
-如果列名是无效的 Python 识别符、重复或以下划线开头，则重命名为位置名称。
-
-```py
->>> df = pd.DataFrame({'num_legs': [4, 2], 'num_wings': [0, 2]},
-...                  index=['dog', 'hawk'])
->>> df
-      num_legs  num_wings
-dog          4          0
-hawk         2          2
->>> for row in df.itertuples():
-...    print(row)
-...
-Pandas(Index='dog', num_legs=4, num_wings=0)
-Pandas(Index='hawk', num_legs=2, num_wings=2)
-```
-
-- 如果将 `index` 设置为 `False`，则移除索引
-
-```py
->>> for row in df.itertuples(index=False):
-...    print(row)
-...
-Pandas(num_legs=4, num_wings=0)
-Pandas(num_legs=2, num_wings=2)
-```
-
-- `name` 用于自定义命名元祖的名称
-
-```py
->>> for row in df.itertuples(name='Animal'):
-...    print(row)
-...
-Animal(Index='dog', num_legs=4, num_wings=0)
-Animal(Index='hawk', num_legs=2, num_wings=2)
 ```
 
 ## 应用函数
