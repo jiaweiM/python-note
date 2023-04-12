@@ -6,15 +6,16 @@
   - [搜索](#搜索)
   - [通用配置](#通用配置)
     - [channels](#channels)
-    - [always_yes](#always_yes)
-    - [show_channel_urls](#show_channel_urls)
+    - [always\_yes](#always_yes)
+    - [show\_channel\_urls](#show_channel_urls)
   - [高级配置](#高级配置)
-    - [channel_alias](#channel_alias)
+    - [channel\_alias](#channel_alias)
   - [conda-build 配置](#conda-build-配置)
   - [环境变量扩展](#环境变量扩展)
   - [查询配置信息](#查询配置信息)
   - [配置线程数](#配置线程数)
   - [conda 配置选项](#conda-配置选项)
+    - [自动激活](#自动激活)
   - [参考](#参考)
 
 2022-06-07, 16:30
@@ -647,6 +648,20 @@ channel_alias: https://your.repo/
 # unsatisfiable_hints_check_depth: 2
  PreviousNext
 ```
+
+### 自动激活
+
+在启动终端时，如 WSL 终端，默认自动激活 `base` 环境。
+
+修改该配置的方法有两种：
+
+1. 直接用 `conda config --set` 设置
+2. 修改 `.condarc` 配置文件 
+
+```bash
+$ conda config --set auto_activate_base false
+```
+
 
 ## 参考
 
