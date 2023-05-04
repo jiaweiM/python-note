@@ -11,6 +11,7 @@
   - [sum](#sum)
   - [参考](#参考)
 
+2023-05-04
 @author Jiawei Mao
 ***
 
@@ -125,7 +126,7 @@ dtype: object
 
 Last updated: 2022-06-13, 13:26
 
-```py
+```python
 DataFrame.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
 ```
 
