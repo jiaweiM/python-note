@@ -14,4 +14,3 @@
 |np.mgrid()	||
 |np.nonzero(a)|非0元素的索引。|
 |z[::-1]|数组反转|
-|np.ravel()|	|
